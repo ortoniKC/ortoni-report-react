@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "./components/theme-provider";
 import Dashboard from "./components/ui/dashboard";
 import DashboardLayout from "./components/mvpblocks/ui/layout";
-import { ChartPieInteractive } from "./components/mvpblocks/ui/piechart";
+import { OverallExecutionResult } from "./components/mvpblocks/charts/overallExecutionChart";
 
 export function App() {
   return (
@@ -20,7 +20,7 @@ export function App() {
 }
 
 export function AnalyticsPage() {
-  return <ChartPieInteractive />;
+  return <OverallExecutionResult />;
 }
 
 export function TestsPage() {

@@ -28,79 +28,76 @@ import {
 
 export const description = "An interactive pie chart";
 
-const desktopData = [
-  { month: "january", desktop: 186, fill: "var(--color-january)" },
-  { month: "february", desktop: 305, fill: "var(--color-february)" },
-  { month: "march", desktop: 237, fill: "var(--color-march)" },
-  { month: "april", desktop: 173, fill: "var(--color-april)" },
-  { month: "may", desktop: 209, fill: "var(--color-may)" },
+const summaryChartData = [
+  { status: "pass", tests: 186, fill: "var(--color-pass)" },
+  { status: "failed", tests: 305, fill: "var(--color-failed)" },
+  { status: "skip", tests: 237, fill: "var(--color-skip)" },
+  { status: "retry", tests: 173, fill: "var(--color-retry)" },
+  { status: "flaky", tests: 209, fill: "var(--color-flaky)" },
 ];
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  tests: {
+    label: "Tests",
   },
-  desktop: {
-    label: "Desktop",
-  },
-  mobile: {
-    label: "Mobile",
-  },
-  january: {
-    label: "January",
-    color: "var(--chart-1)",
-  },
-  february: {
-    label: "February",
+  pass: {
+    label: "Passed",
     color: "var(--chart-2)",
   },
-  march: {
-    label: "March",
-    color: "var(--chart-3)",
+  failed: {
+    label: "Failed",
+    color: "var(--chart-5)",
   },
-  april: {
-    label: "April",
+  skip: {
+    label: "Skipped",
+    color: "var(--chart-1)",
+  },
+  retry: {
+    label: "Retry",
     color: "var(--chart-4)",
   },
-  may: {
-    label: "May",
-    color: "var(--chart-5)",
+  flaky: {
+    label: "Flaky",
+    color: "var(--chart-3)",
   },
 } satisfies ChartConfig;
 
-export function ChartPieInteractive() {
-  const id = "pie-interactive";
-  const [activeMonth, setActiveMonth] = React.useState(desktopData[0].month);
+export function OverallExecutionResult() {
+  const id = "overallExecutionChart";
+  const [activestatus, setActivestatus] = React.useState(
+    summaryChartData[0].status
+  );
 
   const activeIndex = React.useMemo(
-    () => desktopData.findIndex((item) => item.month === activeMonth),
-    [activeMonth]
+    () => summaryChartData.findIndex((item) => item.status === activestatus),
+    [activestatus]
   );
-  const months = React.useMemo(() => desktopData.map((item) => item.month), []);
+  const statuss = React.useMemo(
+    () => summaryChartData.map((item) => item.status),
+    []
+  );
 
   return (
     <Card data-chart={id} className="flex flex-col">
       <ChartStyle id={id} config={chartConfig} />
       <CardHeader className="flex-row items-start space-y-0 pb-0">
         <div className="grid gap-1">
-          <CardTitle>Pie Chart - Interactive</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
+          <CardTitle>Summary</CardTitle>
+          <CardDescription>Overall execution results</CardDescription>
         </div>
-        <Select value={activeMonth} onValueChange={setActiveMonth}>
+        <Select value={activestatus} onValueChange={setActivestatus}>
           <SelectTrigger
             className="ml-auto h-7 w-[130px] rounded-lg pl-2.5"
             aria-label="Select a value"
           >
-            <SelectValue placeholder="Select month" />
+            <SelectValue placeholder="Select status" />
           </SelectTrigger>
           <SelectContent align="end" className="rounded-xl">
-            {months.map((key) => {
+            {statuss.map((key) => {
               const config = chartConfig[key as keyof typeof chartConfig];
-
               if (!config) {
                 return null;
               }
-
               return (
                 <SelectItem
                   key={key}
@@ -134,9 +131,9 @@ export function ChartPieInteractive() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={desktopData}
-              dataKey="desktop"
-              nameKey="month"
+              data={summaryChartData}
+              dataKey="tests"
+              nameKey="status"
               innerRadius={60}
               strokeWidth={5}
               activeIndex={activeIndex}
@@ -169,14 +166,14 @@ export function ChartPieInteractive() {
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {desktopData[activeIndex].desktop.toLocaleString()}
+                          {summaryChartData[activeIndex].tests.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Tests
                         </tspan>
                       </text>
                     );

@@ -81,4 +81,4 @@ export const SummaryChart = memo(() => {
   );
 });
 
-SummaryChart.displayName = "RevenueChart";
+SummaryChart.displayName = "SummaryChart";
