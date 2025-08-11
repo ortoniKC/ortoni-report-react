@@ -1,17 +1,19 @@
 "use client";
 
 import {
-  CheckCircle,
   TestTubes,
-  X,
   ChevronRightCircle,
   RefreshCw,
   AlertTriangle,
+  X,
+  CheckCircle,
 } from "lucide-react";
-import { DashboardCard } from "../mvpblocks/ui/summaryCard";
+import { SummaryCard } from "../mvpblocks/ui/summaryCard";
 import { OverallExecutionResult } from "../mvpblocks/charts/overallExecutionChart";
 import { ProjectChart } from "../mvpblocks/charts/projectChart";
 import { EachProjectChart } from "../mvpblocks/charts/projectBarChart";
+import { Separator } from "./separator";
+import { MetaCard } from "../mvpblocks/ui/metaCard";
 
 // Dashboard stats data
 const stats = [
@@ -24,7 +26,7 @@ const stats = [
   },
   {
     title: "Passed",
-    value: "70",
+    value: "68",
     icon: CheckCircle,
     color: "text-green-500",
     bgColor: "bg-green-500/10",
@@ -52,10 +54,27 @@ const stats = [
   },
   {
     title: "Flaky",
-    value: "0",
+    value: "10",
     icon: AlertTriangle,
     color: "text-pink-500",
     bgColor: "bg-pink-500/10",
+  },
+];
+const result = [
+  {
+    successRate: "91.96 %",
+    lastRun: "18-Jul-2025 8:34:41 PM",
+    duration: "01m:02s:120ms",
+  },
+  {
+    successRate: "85.00 %",
+    lastRun: "18-Jul-2025 8:34:41 PM",
+    duration: "02m:15s:300ms",
+  },
+  {
+    successRate: "78.50 %",
+    lastRun: "18-Jul-2025 8:34:41 PM",
+    duration: "03m:10s:450ms",
   },
 ];
 
@@ -77,7 +96,7 @@ export default function Dashboard() {
           {/* Stats Cards */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {stats.map((stat, index) => (
-              <DashboardCard
+              <SummaryCard
                 key={stat.title}
                 stat={stat}
                 index={index}
@@ -85,9 +104,23 @@ export default function Dashboard() {
               />
             ))}
           </div>
+          {/* User meta */}
+          <Separator />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            <div>
+              <MetaCard result={result[0]} />
+            </div>
+            <div>
+              <MetaCard result={result[1]} />
+            </div>
+            <div>
+              <MetaCard result={result[2]} />
+            </div>
+          </div>
+          <Separator />
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
+          {/* Charts */}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {/* Left half */}
             <div>
               <OverallExecutionResult />
@@ -97,9 +130,10 @@ export default function Dashboard() {
             <div>
               <ProjectChart />
             </div>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols h-[150px]">
-            <EachProjectChart />
+
+            <div>
+              <EachProjectChart />
+            </div>
           </div>
         </div>
       </div>

@@ -80,14 +80,14 @@ export function OverallExecutionResult() {
   return (
     <Card data-chart={id} className="flex flex-col">
       <ChartStyle id={id} config={chartConfig} />
-      <CardHeader className="flex-row items-start space-y-0 pb-0">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
         <div className="grid gap-1">
           <CardTitle>Summary</CardTitle>
           <CardDescription>Overall execution results</CardDescription>
         </div>
         <Select value={activestatus} onValueChange={setActivestatus}>
           <SelectTrigger
-            className="ml-auto h-7 w-[130px] rounded-lg pl-2.5"
+            className="h-7 w-[130px] rounded-lg pl-2.5"
             aria-label="Select a value"
           >
             <SelectValue placeholder="Select status" />
