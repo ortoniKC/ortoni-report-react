@@ -13,7 +13,7 @@ import { OverallExecutionResult } from "../mvpblocks/charts/overallExecutionChar
 import { ProjectChart } from "../mvpblocks/charts/projectChart";
 import { EachProjectChart } from "../mvpblocks/charts/projectBarChart";
 import { Separator } from "./separator";
-import { MetaCard } from "../mvpblocks/ui/metaCard";
+import AboutUs1 from "../mvpblocks/about-us-1";
 
 // Dashboard stats data
 const stats = [
@@ -60,23 +60,23 @@ const stats = [
     bgColor: "bg-pink-500/10",
   },
 ];
-const result = [
-  {
-    successRate: "91.96 %",
-    lastRun: "18-Jul-2025 8:34:41 PM",
-    duration: "01m:02s:120ms",
-  },
-  {
-    successRate: "85.00 %",
-    lastRun: "18-Jul-2025 8:34:41 PM",
-    duration: "02m:15s:300ms",
-  },
-  {
-    successRate: "78.50 %",
-    lastRun: "18-Jul-2025 8:34:41 PM",
-    duration: "03m:10s:450ms",
-  },
-];
+// const result = [
+//   {
+//     successRate: "91.96 %",
+//     lastRun: "18-Jul-2025 8:34:41 PM",
+//     duration: "01m:02s:120ms",
+//   },
+//   {
+//     successRate: "85.00 %",
+//     lastRun: "18-Jul-2025 8:34:41 PM",
+//     duration: "02m:15s:300ms",
+//   },
+//   {
+//     successRate: "78.50 %",
+//     lastRun: "18-Jul-2025 8:34:41 PM",
+//     duration: "03m:10s:450ms",
+//   },
+// ];
 
 export default function Dashboard() {
   return (
@@ -105,18 +105,13 @@ export default function Dashboard() {
             ))}
           </div>
           {/* User meta */}
-          <Separator />
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-            <div>
-              <MetaCard result={result[0]} />
-            </div>
-            <div>
-              <MetaCard result={result[1]} />
-            </div>
-            <div>
-              <MetaCard result={result[2]} />
-            </div>
-          </div>
+          {/* <Separator /> */}
+          {/* <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div> */}
+          <AboutUs1 />
           <Separator />
 
           {/* Charts */}
