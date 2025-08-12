@@ -1,45 +1,118 @@
-import { memo } from "react";
+import { motion, useInView } from "framer-motion";
+import { Rocket, Target, Gauge, CalendarClock, Timer } from "lucide-react";
+import { memo, useRef } from "react";
+import { BorderBeam } from "@/components/ui/border-beam";
 
-type Result = {
+type UserResult = {
   successRate: string;
   lastRun: string;
   duration: string;
 };
 
-export const MetaCard = memo(({ result }: { result: Result }) => {
+type UserMeta = {
+  [key: string]: string;
+};
+
+export type UserData = {
+  result: UserResult;
+  meta: UserMeta;
+};
+export const MetaCard = memo((props: UserData) => {
+  const missionRef = useRef(null);
+
+  const missionInView = useInView(missionRef, { once: true, amount: 0.3 });
+
   return (
-    <div className="relative mx-auto w-full max-w-sm rounded-lg border border-dashed border-zinc-300 px-4 sm:px-6 md:px-8 dark:border-zinc-800">
-      <div className="absolute top-4 left-0 -z-0 h-px w-full bg-zinc-400 sm:top-6 md:top-8 dark:bg-zinc-700" />
-      <div className="absolute bottom-4 left-0 z-0 h-px w-full bg-zinc-400 sm:bottom-6 md:bottom-8 dark:bg-zinc-700" />
-      <div className="relative w-full border-x border-zinc-400 dark:border-zinc-700">
-        <div className="absolute z-0 grid h-full w-full items-center">
-          <section className="absolute z-0 grid h-full w-full grid-cols-2 place-content-between">
-            <div className="bg-primary my-4 size-1 -translate-x-[2.5px] rounded-full outline outline-8 outline-gray-50 sm:my-6 md:my-8 dark:outline-gray-950" />
-            <div className="bg-primary my-4 size-1 translate-x-[2.5px] place-self-end rounded-full outline outline-8 outline-gray-50 sm:my-6 md:my-8 dark:outline-gray-950" />
-            <div className="bg-primary my-4 size-1 -translate-x-[2.5px] rounded-full outline outline-8 outline-gray-50 sm:my-6 md:my-8 dark:outline-gray-950" />
-            <div className="bg-primary my-4 size-1 translate-x-[2.5px] place-self-end rounded-full outline outline-8 outline-gray-50 sm:my-6 md:my-8 dark:outline-gray-950" />
-          </section>
-        </div>
-        <div className="relative z-20 mx-auto py-8">
-          <div className="p-6">
-            <h3 className="mb-1 text-lg font-bold text-gray-900 dark:text-gray-100">
-              Result
-            </h3>
-            <div className="mb-2">
-              <span className="font-semibold">Success Rate: </span>
-              <span>{result.successRate}</span>
-            </div>
-            <div className="mb-2">
-              <span className="font-semibold">Last Run: </span>
-              <span>{result.lastRun}</span>
-            </div>
-            <div>
-              <span className="font-semibold">Duration: </span>
-              <span>{result.duration}</span>
-            </div>
-          </div>
+    <section className="relative w-full overflow-hidden">
+      <div className="relative z-10 container mx-auto">
+        <div ref={missionRef} className="relative mx-auto mb-24 max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={
+              missionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }
+            }
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="relative z-10 grid gap-12 md:grid-cols-2"
+          >
+            <motion.div
+              whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+              className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10 backdrop-blur-3xl"
+            >
+              <BorderBeam
+                duration={8}
+                size={300}
+                className="via-primary/40 from-transparent to-transparent"
+              />
+
+              <div className="flex items-center gap-4 mb-6">
+                <div className="from-primary/20 to-primary/5 inline-flex aspect-square h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br backdrop-blur-sm">
+                  <Rocket className="text-primary h-6 w-6" />
+                </div>
+                <h2 className="from-primary/90 to-primary/70 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
+                  {props.meta.project}
+                </h2>
+              </div>
+              <div className="space-y-4">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-2">
+                    <Gauge className="h-5 w-5 text-primary" />
+                    <span className="text-sm">Success Rate:</span>
+                    <span className="font-semibold">
+                      {props.result.successRate}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CalendarClock className="h-5 w-5 text-primary" />
+                    <span className="text-sm">Last Run:</span>
+                    <span className="font-semibold">
+                      {props.result.lastRun}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Timer className="h-5 w-5 text-primary" />
+                    <span className="text-sm">Duration:</span>
+                    <span className="semi-bold">{props.result.duration}</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+              className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10 backdrop-blur-3xl"
+            >
+              <BorderBeam
+                duration={8}
+                size={300}
+                className="from-transparent via-blue-500/40 to-transparent"
+                reverse
+              />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 backdrop-blur-sm">
+                  <Target className="h-6 w-6 text-blue-500" />
+                </div>
+                <h2 className="bg-gradient-to-r from-blue-500/90 to-blue-500/70 bg-clip-text text-xl font-semibold text-transparent mb-0">
+                  Meta Information
+                </h2>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                <ul className="list-disc pl-5 space-y-1">
+                  {Object.entries(props.meta).map(([key, value]) =>
+                    value !== undefined && value !== "" ? (
+                      <li key={key}>
+                        <strong>
+                          {key.charAt(0).toUpperCase() + key.slice(1)}:
+                        </strong>{" "}
+                        {value}
+                      </li>
+                    ) : null
+                  )}
+                </ul>
+              </p>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 });

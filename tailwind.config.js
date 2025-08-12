@@ -53,6 +53,6 @@ export default {
       },
     },
   },
-  safelist: ["bg-pink-500"],
+  safelist: ["bg-pink-500", "bg-teal-500"],
   plugins: [require("tailwindcss-animate")],
 };

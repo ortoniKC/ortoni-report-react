@@ -1,5 +1,4 @@
 "use client";
-
 import {
   TestTubes,
   ChevronRightCircle,
@@ -13,9 +12,8 @@ import { OverallExecutionResult } from "../mvpblocks/charts/overallExecutionChar
 import { ProjectChart } from "../mvpblocks/charts/projectChart";
 import { EachProjectChart } from "../mvpblocks/charts/projectBarChart";
 import { Separator } from "./separator";
-import AboutUs1 from "../mvpblocks/about-us-1";
+import { MetaCard, type UserData } from "../mvpblocks/ui/metaCard";
 
-// Dashboard stats data
 const stats = [
   {
     title: "All tests",
@@ -56,27 +54,25 @@ const stats = [
     title: "Flaky",
     value: "10",
     icon: AlertTriangle,
-    color: "text-pink-500",
-    bgColor: "bg-pink-500/10",
+    color: "text-teal-500",
+    bgColor: "bg-teal-500/10",
   },
 ];
-// const result = [
-//   {
-//     successRate: "91.96 %",
-//     lastRun: "18-Jul-2025 8:34:41 PM",
-//     duration: "01m:02s:120ms",
-//   },
-//   {
-//     successRate: "85.00 %",
-//     lastRun: "18-Jul-2025 8:34:41 PM",
-//     duration: "02m:15s:300ms",
-//   },
-//   {
-//     successRate: "78.50 %",
-//     lastRun: "18-Jul-2025 8:34:41 PM",
-//     duration: "03m:10s:450ms",
-//   },
-// ];
+
+const userData: UserData = {
+  result: {
+    successRate: "91.96 %",
+    lastRun: "18-Jul-2025 8:34:41 PM",
+    duration: "01m:02s:120ms",
+  },
+  meta: {
+    project: "Playwright",
+    version: "3.0.0",
+    description: "Playwright test report - Ortoni Report",
+    environment: "development",
+    testCycle: "100",
+  },
+};
 
 export default function Dashboard() {
   return (
@@ -89,7 +85,7 @@ export default function Dashboard() {
               Welcome Koushik
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base">
-              Here&apos;s what&apos;s happening with your test automation today.
+              Here&apos;s what&apos;s happening with your ${"testType"} today.
             </p>
           </div>
 
@@ -111,7 +107,7 @@ export default function Dashboard() {
             <div></div>
             <div></div>
           </div> */}
-          <AboutUs1 />
+          <MetaCard {...userData} />
           <Separator />
 
           {/* Charts */}
