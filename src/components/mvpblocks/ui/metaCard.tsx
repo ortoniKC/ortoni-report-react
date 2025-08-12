@@ -71,7 +71,9 @@ export const MetaCard = memo((props: UserData) => {
                   <div className="flex items-center gap-2">
                     <Timer className="h-5 w-5 text-primary" />
                     <span className="text-sm">Duration:</span>
-                    <span className="semi-bold">{props.result.duration}</span>
+                    <span className="font-semibold">
+                      {props.result.duration}
+                    </span>
                   </div>
                 </div>
               </div>
