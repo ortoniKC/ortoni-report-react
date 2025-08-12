@@ -41,14 +41,14 @@ export const MetaCard = memo((props: UserData) => {
               <BorderBeam
                 duration={8}
                 size={300}
-                className="via-primary/40 from-transparent to-transparent"
+                className="via-purple-500/40 from-transparent to-transparent"
               />
 
               <div className="flex items-center gap-4 mb-6">
-                <div className="from-primary/20 to-primary/5 inline-flex aspect-square h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br backdrop-blur-sm">
-                  <Rocket className="text-primary h-6 w-6" />
+                <div className="from-purple-500/20 to-purple-500/5 inline-flex aspect-square h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br backdrop-blur-sm">
+                  <Rocket className="text-purple-500 h-6 w-6" />
                 </div>
-                <h2 className="from-primary/90 to-primary/70 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
+                <h2 className="from-purple-500/90 to-purple-500/70 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
                   {props.meta.project}
                 </h2>
               </div>
