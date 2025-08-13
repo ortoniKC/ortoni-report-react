@@ -6,7 +6,7 @@
       "retry": 1,
       "pass": 52,
       "fail": 4,
-      "skip": 0,
+      "skip": 1,
       "flaky": 2,
       "total": 56,
       "totalDuration": "35s:099ms",

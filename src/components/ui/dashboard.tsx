@@ -5,6 +5,7 @@ import {
   AlertTriangle,
   CheckCircle,
   XCircle,
+  RefreshCw,
 } from "lucide-react";
 import { SummaryCard } from "../mvpblocks/ui/summaryCard";
 import { OverallExecutionResult } from "../mvpblocks/charts/overallExecutionChart";
@@ -60,7 +61,7 @@ export default function Dashboard({ reportData }: { reportData: ReportData }) {
     {
       title: "Retry",
       value: String(data.result.summary.retry),
-      icon: TestTubes,
+      icon: RefreshCw,
       color: "text-yellow-500",
       bgColor: "bg-yellow-500/10",
     },
@@ -84,7 +85,7 @@ export default function Dashboard({ reportData }: { reportData: ReportData }) {
             <p className="text-muted-foreground text-sm sm:text-base">
               Here&apos;s what&apos;s happening with your{" "}
               <strong className="text-primary">
-                {reportData.result.meta.type}
+                {reportData.result.meta.type || ""}
               </strong>{" "}
               today.
             </p>
