@@ -5,7 +5,7 @@ import { HashRouter } from "react-router-dom";
 import mockData from "./a.json";
 let reportData: any = {};
 
-const debug = false;
+const debug = !false;
 
 if (debug) {
   console.log("Debug mode is enabled");

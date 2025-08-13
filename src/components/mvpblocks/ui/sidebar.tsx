@@ -1,7 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   Sidebar,
@@ -26,6 +26,7 @@ const menuItems = [
 ];
 
 export const DashboardSidebar = memo(() => {
+  const location = useLocation();
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -54,10 +55,11 @@ export const DashboardSidebar = memo(() => {
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => {
+                const isActive = location.pathname === "/" + item.href;
                 const Icon = item.icon;
                 return (
                   <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive}>
                       <Link to={item.href}>
                         <Icon />
                         <span>{item.title}</span>
