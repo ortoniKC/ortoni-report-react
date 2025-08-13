@@ -25,16 +25,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { ReportData } from "@/lib/types/reportData";
 
 export const description = "An interactive pie chart";
-
-const summaryChartData = [
-  { status: "pass", tests: 186, fill: "var(--color-pass)" },
-  { status: "failed", tests: 305, fill: "var(--color-failed)" },
-  { status: "skip", tests: 237, fill: "var(--color-skip)" },
-  { status: "retry", tests: 173, fill: "var(--color-retry)" },
-  { status: "flaky", tests: 209, fill: "var(--color-flaky)" },
-];
 
 const chartConfig = {
   tests: {
@@ -62,7 +55,26 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function OverallExecutionResult() {
+export function OverallExecutionResult({ result }: ReportData) {
+  const summaryChartData = [
+    { status: "pass", tests: result.summary.pass, fill: "var(--color-pass)" },
+    {
+      status: "failed",
+      tests: result.summary.fail,
+      fill: "var(--color-failed)",
+    },
+    { status: "skip", tests: result.summary.skip, fill: "var(--color-skip)" },
+    {
+      status: "retry",
+      tests: result.summary.retry,
+      fill: "var(--color-retry)",
+    },
+    {
+      status: "flaky",
+      tests: result.summary.flaky,
+      fill: "var(--color-flaky)",
+    },
+  ];
   const id = "overallExecutionChart";
   const [activestatus, setActivestatus] = React.useState(
     summaryChartData[0].status
