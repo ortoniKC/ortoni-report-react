@@ -11,7 +11,6 @@ import { SummaryCard } from "../mvpblocks/ui/summaryCard";
 import { OverallExecutionResult } from "../mvpblocks/charts/overallExecutionChart";
 import { ProjectChart } from "../mvpblocks/charts/projectChart";
 import { EachProjectChart } from "../mvpblocks/charts/projectBarChart";
-import { Separator } from "./separator";
 import { MetaCard } from "../mvpblocks/ui/metaCard";
 import type { ReportData } from "@/lib/types/reportData";
 
@@ -117,7 +116,7 @@ export default function Dashboard({ reportData }: { reportData: ReportData }) {
               <ProjectChart {...reportData} />
             </div>
             <div>
-              <EachProjectChart />
+              <EachProjectChart {...reportData} />
             </div>
           </div>
         </div>

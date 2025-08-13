@@ -17,41 +17,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import type { ReportData } from "@/lib/types/reportData";
 
-export const description = "A bar chart with a custom label";
+export const description = "Each Project Summary";
 
-const chartData = [
-  { project: "Chrome", pass: 10, failed: 2, skipped: 1 },
-  { project: "Firefox", pass: 8, failed: 3, skipped: 2 },
-  { project: "Safari", pass: 7, failed: 1, skipped: 0 },
-  { project: "Edge", pass: 9, failed: 2, skipped: 1 },
-];
+export function EachProjectChart({ result }: ReportData) {
+  const stats = result.summary.stats;
+  const chartData =
+    stats?.projectNames?.map((name: string, idx: number) => ({
+      browser: name,
+      pass: stats.passedTests?.[idx] ?? 0,
+      failed: stats.failedTests?.[idx] ?? 0,
+      skipped: stats.skippedTests?.[idx] ?? 0,
+    })) ?? [];
 
-const chartConfig = {
-  project: {
-    label: "project",
-    color: "var(--chart-2)",
-  },
-  chrome: {
-    label: "Chrome",
-  },
-  firefox: {
-    label: "Firefox",
-  },
-  safari: {
-    label: "Safari",
-  },
-  edge: {
-    label: "Edge",
-  },
-} satisfies ChartConfig;
-
-export function EachProjectChart() {
+  const dynamicChartConfig = Object.fromEntries(
+    (stats?.projectNames ?? []).map((name: string) => [name, { label: name }])
+  );
   return (
     <Card>
       <CardHeader>
@@ -59,7 +45,7 @@ export function EachProjectChart() {
         <CardDescription>Results per projects</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={dynamicChartConfig}>
           <BarChart
             accessibilityLayer
             data={chartData}
@@ -70,12 +56,14 @@ export function EachProjectChart() {
           >
             <CartesianGrid horizontal={false} />
             <YAxis
-              dataKey="project"
+              dataKey="browser"
               type="category"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value}
+              tickFormatter={(value) =>
+                value.length > 7 ? `${value.slice(0, 4)}...` : value
+              }
             />
             <XAxis type="number" hide />
             <ChartTooltip
@@ -85,7 +73,7 @@ export function EachProjectChart() {
             <Bar
               dataKey="pass"
               layout="vertical"
-              fill="#22c55e" // green for pass
+              fill="var(--chart-2)" // green for pass
               radius={4}
             >
               <LabelList
@@ -99,7 +87,7 @@ export function EachProjectChart() {
             <Bar
               dataKey="failed"
               layout="vertical"
-              fill="#ef4444" // red for failed
+              fill="var(--chart-5)" // red for failed
               radius={4}
             >
               <LabelList
@@ -113,7 +101,7 @@ export function EachProjectChart() {
             <Bar
               dataKey="skipped"
               layout="vertical"
-              fill="#3b82f6" // blue for skipped
+              fill="var(--chart-1)" // blue for skipped
               radius={4}
             >
               <LabelList

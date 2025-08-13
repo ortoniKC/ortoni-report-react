@@ -11,12 +11,12 @@
       "total": 56,
       "totalDuration": "35s:099ms",
       "stats": {
-        "projectNames": ["chromium", "firefox"],
-        "totalTests": [28, 28],
-        "passedTests": [26, 26],
-        "failedTests": [2, 2],
-        "skippedTests": [0, 0],
-        "retryTests": [0, 0],
+        "projectNames": ["chromium", "firefox", "webkit"],
+        "totalTests": [2, 28, 100],
+        "passedTests": [26, 26, 26],
+        "failedTests": [2, 2, 2],
+        "skippedTests": [1, 0, 5],
+        "retryTests": [0, 0, 0],
         "flakyTests": [0, 0]
       }
     },
