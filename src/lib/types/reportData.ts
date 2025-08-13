@@ -1,8 +1,10 @@
 export interface ReportData {
-  result: Result;
-  meta: Meta;
-  preferences: Preferences;
-  analytics: Analytics;
+  result: {
+    result: Result;
+    meta: Meta;
+    preferences: Preferences;
+    analytics: Analytics;
+  };
 }
 
 export interface Result {
