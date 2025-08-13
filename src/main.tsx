@@ -5,23 +5,24 @@ import { HashRouter } from "react-router-dom";
 import mockData from "./a.json";
 let reportData: any = {};
 
-const dataTag = document.getElementById("__REPORT_DATA__");
-if (dataTag) {
-  const raw = (dataTag.textContent || "").trim();
-  if (raw && raw !== "__ORTONI_TEST_REPORTDATA__") {
-    try {
-      reportData = JSON.parse(raw);
-    } catch (err) {
-      console.error("Failed to parse report data:", err);
-    }
-  }
+const debug = false;
+
+if (debug) {
+  console.log("Debug mode is enabled");
   if (!Object.keys(reportData).length) {
     reportData = mockData;
   }
+  createRoot(document.getElementById("root")!).render(
+    <HashRouter>
+      <App reportData={reportData} />
+    </HashRouter>
+  );
+} else {
+  const dataTag = document.getElementById("__ORTONI_REPORT_DATA__");
+  const reportData = dataTag ? JSON.parse(dataTag.textContent || "{}") : {};
+  createRoot(document.getElementById("root")!).render(
+    <HashRouter>
+      <App reportData={reportData} />
+    </HashRouter>
+  );
 }
-
-createRoot(document.getElementById("root")!).render(
-  <HashRouter>
-    <App reportData={reportData} />
-  </HashRouter>
-);
