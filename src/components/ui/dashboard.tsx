@@ -114,7 +114,7 @@ export default function Dashboard({ reportData }: { reportData: ReportData }) {
             </div>
             {/* Right half */}
             <div>
-              <ProjectChart />
+              <ProjectChart {...reportData} />
             </div>
             <div>
               <EachProjectChart />

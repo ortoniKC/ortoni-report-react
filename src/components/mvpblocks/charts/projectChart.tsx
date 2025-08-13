@@ -15,44 +15,31 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import type { ReportData } from "@/lib/types/reportData";
 
 export const description = "A radial chart with a label";
 
-const chartData = [
-  { browser: "chrome", projects: 10, fill: "var(--color-chrome)" },
-  { browser: "safari", projects: 20, fill: "var(--color-safari)" },
-  { browser: "firefox", projects: 30, fill: "var(--color-firefox)" },
-  { browser: "edge", projects: 40, fill: "var(--color-edge)" },
-  { browser: "other", projects: 50, fill: "var(--color-other)" },
-];
+export function ProjectChart({ result }: ReportData) {
+  // Helper to generate a random hex color
+  const getRandomColor = () =>
+    `#${Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, "0")}`;
 
-const chartConfig = {
-  project: {
-    label: "Project",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "var(--chart-1)",
-  },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-2)",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "var(--chart-3)",
-  },
-  edge: {
-    label: "Edge",
-    color: "var(--chart-4)",
-  },
-  other: {
-    label: "Other",
-    color: "var(--chart-5)",
-  },
-} satisfies ChartConfig;
+  // Build chart data dynamically from result.stats
+  const stats = result.summary.stats;
+  const chartData =
+    stats?.projectNames?.map((name: string, idx: number) => ({
+      browser: name,
+      projects: stats.totalTests?.[idx] ?? 0,
+      fill: getRandomColor(),
+    })) ?? [];
 
-export function ProjectChart() {
+  // Build chartConfig dynamically for legend/labels if needed
+  const dynamicChartConfig = Object.fromEntries(
+    (stats?.projectNames ?? []).map((name: string) => [name, { label: name }])
+  );
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
@@ -61,7 +48,7 @@ export function ProjectChart() {
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
-          config={chartConfig}
+          config={dynamicChartConfig}
           className="mx-auto aspect-square max-h-[250px]"
         >
           <RadialBarChart
