@@ -3,7 +3,8 @@ import { ThemeProvider } from "./components/theme-provider";
 import Dashboard from "./components/ui/dashboard";
 import DashboardLayout from "./components/mvpblocks/ui/layout";
 import type { ReportData } from "./lib/types/reportData";
-import { TestsPage } from "./components/mvpblocks/ui/testPage";
+// import { TestsPage } from "./components/mvpblocks/ui/testPage";
+import { AnalyticsPage } from "./components/mvpblocks/ui/analytics";
 
 export function App({ reportData }: { reportData: ReportData }) {
   return (
@@ -16,11 +17,8 @@ export function App({ reportData }: { reportData: ReportData }) {
             path="dashboard"
             element={<Dashboard reportData={reportData} />}
           />
-          <Route path="tests" element={<TestsPage reportData={reportData} />} />
-          <Route
-            path="analytics"
-            // element={<AnalyticsPage reportData={reportData} />}
-          />
+          {/* <Route path="tests" element={<TestsPage reportData={reportData} />} /> */}
+          <Route path="analytics" element={<AnalyticsPage {...reportData} />} />
         </Route>
       </Routes>
     </ThemeProvider>

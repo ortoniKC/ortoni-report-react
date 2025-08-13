@@ -103,6 +103,7 @@ export default function Dashboard({ reportData }: { reportData: ReportData }) {
                 />
               ))}
           </div>
+          {/* Meta information */}
           <MetaCard {...reportData} />
 
           {/* Charts */}
