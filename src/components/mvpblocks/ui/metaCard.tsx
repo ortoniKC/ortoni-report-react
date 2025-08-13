@@ -2,8 +2,9 @@ import { motion, useInView } from "framer-motion";
 import { Rocket, Target, Gauge, CalendarClock, Timer } from "lucide-react";
 import { memo, useRef } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
+import type { ReportData } from "@/lib/types/reportData";
 
-export const MetaCard = memo((props: any) => {
+export const MetaCard = memo((props: ReportData) => {
   const missionRef = useRef(null);
 
   const missionInView = useInView(missionRef, { once: true, amount: 0.3 });
@@ -20,6 +21,7 @@ export const MetaCard = memo((props: any) => {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="relative z-10 grid gap-12 md:grid-cols-2"
           >
+            {/* left side -> project */}
             <motion.div
               whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
               className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10 backdrop-blur-3xl"
@@ -35,7 +37,7 @@ export const MetaCard = memo((props: any) => {
                   <Rocket className="text-purple-500 h-6 w-6" />
                 </div>
                 <h2 className="from-purple-500/90 to-purple-500/70 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
-                  {props.result.project}
+                  {props.result.meta.projectName}
                 </h2>
               </div>
               <div className="space-y-4">
@@ -44,27 +46,27 @@ export const MetaCard = memo((props: any) => {
                     <Gauge className="h-5 w-5 text-primary" />
                     <span className="text-sm">Success Rate:</span>
                     <span className="font-semibold">
-                      {props.result.successRate}
+                      {props.result.summary.successRate}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CalendarClock className="h-5 w-5 text-primary" />
                     <span className="text-sm">Last Run:</span>
                     <span className="font-semibold">
-                      {props.result.localRunDate || "N/A"}
+                      {props.result.summary.lastRunDate || "N/A"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Timer className="h-5 w-5 text-primary" />
                     <span className="text-sm">Duration:</span>
                     <span className="font-semibold">
-                      {props.result.totalDuration}
+                      {props.result.summary.totalDuration}
                     </span>
                   </div>
                 </div>
               </div>
             </motion.div>
-
+            {/* Right side - meta */}
             <motion.div
               whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
               className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10 backdrop-blur-3xl"
@@ -85,7 +87,7 @@ export const MetaCard = memo((props: any) => {
               </div>
               <div className="text-muted-foreground text-sm leading-relaxed">
                 <ul className="list-disc divl-5 space-y-1">
-                  {Object.entries(props.result.meta).map(([key, value]) =>
+                  {Object.entries(props.result.meta.meta).map(([key, value]) =>
                     value !== undefined && value !== "" ? (
                       <li key={key}>
                         <strong>
