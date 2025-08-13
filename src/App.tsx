@@ -4,14 +4,22 @@ import Dashboard from "./components/ui/dashboard";
 import DashboardLayout from "./components/mvpblocks/ui/layout";
 import { OverallExecutionResult } from "./components/mvpblocks/charts/overallExecutionChart";
 
-export function App() {
+type AppProps = {
+  reportData: unknown; // Replace 'unknown' with the actual type if known
+};
+
+export function App({ reportData }: AppProps) {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Routes>
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route index path="dashboard" element={<Dashboard />} />
-          <Route path="tests" element={<TestsPage />} />
+          <Route
+            index
+            path="dashboard"
+            element={<Dashboard reportData={reportData} />}
+          />
+          <Route path="tests" element={<TestsPage reportData={reportData} />} />
           <Route path="analytics" element={<AnalyticsPage />} />
         </Route>
       </Routes>
@@ -23,6 +31,6 @@ export function AnalyticsPage() {
   return <OverallExecutionResult />;
 }
 
-export function TestsPage() {
-  return <h1>Tests</h1>;
+export function TestsPage({ reportData }: { reportData: unknown }) {
+  return <h1>reportData={JSON.stringify(reportData)}</h1>;
 }

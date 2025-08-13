@@ -3,21 +3,7 @@ import { Rocket, Target, Gauge, CalendarClock, Timer } from "lucide-react";
 import { memo, useRef } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
 
-type UserResult = {
-  successRate: string;
-  lastRun: string;
-  duration: string;
-};
-
-type UserMeta = {
-  [key: string]: string;
-};
-
-export type UserData = {
-  result: UserResult;
-  meta: UserMeta;
-};
-export const MetaCard = memo((props: UserData) => {
+export const MetaCard = memo((props: any) => {
   const missionRef = useRef(null);
 
   const missionInView = useInView(missionRef, { once: true, amount: 0.3 });
@@ -49,7 +35,7 @@ export const MetaCard = memo((props: UserData) => {
                   <Rocket className="text-purple-500 h-6 w-6" />
                 </div>
                 <h2 className="from-purple-500/90 to-purple-500/70 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
-                  {props.meta.project}
+                  {props.result.project}
                 </h2>
               </div>
               <div className="space-y-4">
@@ -65,14 +51,14 @@ export const MetaCard = memo((props: UserData) => {
                     <CalendarClock className="h-5 w-5 text-primary" />
                     <span className="text-sm">Last Run:</span>
                     <span className="font-semibold">
-                      {props.result.lastRun}
+                      {props.result.localRunDate || "N/A"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Timer className="h-5 w-5 text-primary" />
                     <span className="text-sm">Duration:</span>
                     <span className="font-semibold">
-                      {props.result.duration}
+                      {props.result.totalDuration}
                     </span>
                   </div>
                 </div>
@@ -99,13 +85,13 @@ export const MetaCard = memo((props: UserData) => {
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 <ul className="list-disc pl-5 space-y-1">
-                  {Object.entries(props.meta).map(([key, value]) =>
+                  {Object.entries(props.result.meta).map(([key, value]) =>
                     value !== undefined && value !== "" ? (
                       <li key={key}>
                         <strong>
                           {key.charAt(0).toUpperCase() + key.slice(1)}:
                         </strong>{" "}
-                        {value}
+                        {String(value)}
                       </li>
                     ) : null
                   )}

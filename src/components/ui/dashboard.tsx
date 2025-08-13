@@ -12,7 +12,7 @@ import { OverallExecutionResult } from "../mvpblocks/charts/overallExecutionChar
 import { ProjectChart } from "../mvpblocks/charts/projectChart";
 import { EachProjectChart } from "../mvpblocks/charts/projectBarChart";
 import { Separator } from "./separator";
-import { MetaCard, type UserData } from "../mvpblocks/ui/metaCard";
+import { MetaCard } from "../mvpblocks/ui/metaCard";
 
 const stats = [
   {
@@ -59,22 +59,22 @@ const stats = [
   },
 ];
 
-const userData: UserData = {
-  result: {
-    successRate: "91.96 %",
-    lastRun: "18-Jul-2025 8:34:41 PM",
-    duration: "01m:02s:120ms",
-  },
-  meta: {
-    project: "Playwright",
-    version: "3.0.0",
-    description: "Playwright test report - Ortoni Report",
-    environment: "development",
-    testCycle: "100",
-  },
-};
+// const userData: UserData = {
+//   result: {
+//     successRate: "91.96 %",
+//     lastRun: "18-Jul-2025 8:34:41 PM",
+//     duration: "01m:02s:120ms",
+//   },
+//   meta: {
+//     project: "Playwright",
+//     version: "3.0.0",
+//     description: "Playwright test report - Ortoni Report",
+//     environment: "development",
+//     testCycle: "100",
+//   },
+// };
 
-export default function Dashboard() {
+export default function Dashboard({ reportData }: { reportData: any }) {
   return (
     <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">
       <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
@@ -82,10 +82,11 @@ export default function Dashboard() {
           {/* Header */}
           <div className="px-2 sm:px-0">
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Welcome Koushik
+              Welcome {reportData.result.authorName || ""}!
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base">
-              Here&apos;s what&apos;s happening with your ${"testType"} today.
+              Here&apos;s what&apos;s happening with your
+              {reportData.result.testType}&apos; today.
             </p>
           </div>
 
@@ -107,7 +108,7 @@ export default function Dashboard() {
             <div></div>
             <div></div>
           </div> */}
-          <MetaCard {...userData} />
+          <MetaCard {...reportData} />
           <Separator />
 
           {/* Charts */}
