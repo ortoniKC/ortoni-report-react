@@ -12,7 +12,7 @@ export const MetaCard = memo((props: ReportData) => {
   return (
     <section className="relative w-full overflow-hidden">
       <div className="relative z-10 container mx-auto">
-        <div ref={missionRef} className="relative mx-auto mb-24 max-w-7xl">
+        <div ref={missionRef} className="relative mx-auto mb-1 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={
