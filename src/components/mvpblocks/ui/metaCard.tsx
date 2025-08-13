@@ -83,8 +83,8 @@ export const MetaCard = memo((props: any) => {
                   Meta Information
                 </h2>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                <ul className="list-disc pl-5 space-y-1">
+              <div className="text-muted-foreground text-sm leading-relaxed">
+                <ul className="list-disc divl-5 space-y-1">
                   {Object.entries(props.result.meta).map(([key, value]) =>
                     value !== undefined && value !== "" ? (
                       <li key={key}>
@@ -96,7 +96,7 @@ export const MetaCard = memo((props: any) => {
                     ) : null
                   )}
                 </ul>
-              </p>
+              </div>
             </motion.div>
           </motion.div>
         </div>
