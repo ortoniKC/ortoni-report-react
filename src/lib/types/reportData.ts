@@ -4,11 +4,11 @@ export interface ReportData {
     meta: Meta;
     preferences: Preferences;
     analytics: Analytics;
+    summary: Summary;
   };
 }
 
 export interface Result {
-  summary: Summary;
   results: Results;
   testHistories: TestHistory[];
   allTags: string[];
