@@ -12,7 +12,7 @@ export default function DashboardLayout() {
       <DashboardSidebar />
       <SidebarInset>
         <SidebarTrigger className="ml-1" />
-        <Outlet /> {/* Page content here */}
+        <Outlet />
       </SidebarInset>
     </SidebarProvider>
   );
