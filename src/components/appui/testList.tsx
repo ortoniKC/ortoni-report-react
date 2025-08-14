@@ -1,41 +1,49 @@
+import { groupTests } from "@/lib/groupTest";
 import type { GroupedTests } from "@/lib/types/reportData";
 import React from "react";
 
 interface TestListProps {
   tests: GroupedTests;
+  showProject: boolean;
 }
 
-export const TestList: React.FC<TestListProps> = ({ tests }) => {
+export const TestList: React.FC<TestListProps> = ({ tests, showProject }) => {
+  const groupedData = groupTests(tests, showProject);
+
   return (
     <div>
-      {Object.entries(tests).map(([fileName, suites]) => (
+      {groupedData.map(({ fileName, projects }) => (
         <div key={fileName} className="mb-6">
-          {/* File name */}
           <h2 className="text-lg font-bold mb-2">{fileName}</h2>
 
-          {/* Loop through suites */}
-          {Object.entries(suites).map(([suiteName, suiteTests]) => {
-            const hideSuiteName = suiteTests.every(
-              (t) => t.suite?.trim() === t.title?.trim()
-            );
+          {projects.map(({ projectName, suites }) => (
+            <div key={projectName} className="ml-4">
+              {showProject && (
+                <h3 className="text-md font-semibold">{projectName}</h3>
+              )}
 
-            return (
-              <div key={suiteName} className="ml-4">
-                {/* Show suite name only if not identical to test title */}
-                {!hideSuiteName && (
-                  <h3 className="text-md font-semibold">{suiteName}</h3>
-                )}
+              {suites.map(({ suiteName, tests }) => {
+                const hideSuiteName = tests.every(
+                  (t) => t.suite?.trim() === t.title?.trim()
+                );
 
-                <ul className="ml-4 list-disc">
-                  {suiteTests.map((test) => (
-                    <li key={test.title + test.projectName} className="text-sm">
-                      {test.title}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
+                return (
+                  <div key={suiteName} className="ml-4">
+                    {!hideSuiteName && (
+                      <h4 className="text-sm font-medium">{suiteName}</h4>
+                    )}
+                    <ul className="ml-4 list-disc">
+                      {tests.map((test) => (
+                        <li key={test.testId} className="text-sm">
+                          {test.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
         </div>
       ))}
     </div>
