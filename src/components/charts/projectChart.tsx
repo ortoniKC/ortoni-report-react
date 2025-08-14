@@ -48,7 +48,7 @@ export function ProjectChart({ result }: ReportData) {
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={dynamicChartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[250px] max-w-[300px]"
         >
           <RadialBarChart
             data={chartData}

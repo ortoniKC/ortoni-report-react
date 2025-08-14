@@ -135,7 +135,7 @@ export function OverallExecutionResult({ result }: ReportData) {
         <ChartContainer
           id={id}
           config={chartConfig}
-          className="mx-auto aspect-square w-full max-w-[300px]"
+          className="mx-auto aspect-square w-full max-w-[300px] h-[250px]"
         >
           <PieChart>
             <ChartTooltip

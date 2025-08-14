@@ -45,7 +45,10 @@ export function EachProjectChart({ result }: ReportData) {
         <CardDescription>Results per projects</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={dynamicChartConfig}>
+        <ChartContainer
+          config={dynamicChartConfig}
+          className="mx-auto aspect-square w-full max-h-[250px] max-w-[300px]"
+        >
           <BarChart
             accessibilityLayer
             data={chartData}
