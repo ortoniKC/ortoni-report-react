@@ -51,6 +51,20 @@ export interface TestResultData {
   testId: string;
 }
 
+export interface GroupedTests {
+  [fileName: string]: {
+    [suiteName: string]: TestResultData[];
+  };
+}
+
+export interface GroupedTestsWithProject {
+  [fileName: string]: {
+    [suiteName: string]: {
+      [projectName: string]: TestResultData[];
+    };
+  };
+}
+
 export interface Summary {
   successRate: string;
   lastRunDate: string;
@@ -119,7 +133,7 @@ export interface ProjectMeta {
 
 export interface Preferences {
   logo: string;
-  show: boolean;
+  showProject: boolean;
 }
 
 export interface Analytics {
