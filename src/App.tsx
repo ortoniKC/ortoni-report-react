@@ -1,9 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "./hooks/theme-provider";
 import { AnalyticsPage } from "./components/appui/analytics";
-import Dashboard from "./components/appui/dashboard";
 import DashboardLayout from "./components/appui/layout";
 import type { ReportData } from "./lib/types/reportData";
+import { TestsPage } from "./components/appui/testPage";
+import { Dashboard } from "./components/appui/dashboard";
 
 export function App({ reportData }: { reportData: ReportData }) {
   return (
@@ -14,9 +15,9 @@ export function App({ reportData }: { reportData: ReportData }) {
           <Route
             index
             path="dashboard"
-            element={<Dashboard reportData={reportData} />}
+            element={<Dashboard {...reportData} />}
           />
-          {/* <Route path="tests" element={<TestsPage reportData={reportData} />} /> */}
+          <Route path="tests" element={<TestsPage {...reportData} />} />
           <Route path="analytics" element={<AnalyticsPage {...reportData} />} />
         </Route>
       </Routes>

@@ -14,17 +14,18 @@ import { EachProjectChart } from "../charts/projectBarChart";
 import { ProjectChart } from "../charts/projectChart";
 import TextGenerateEffect from "../ui/typewriter";
 import { MetaCard } from "./metaCard";
+import { memo } from "react";
 
-export default function Dashboard({ reportData }: { reportData: ReportData }) {
+export const Dashboard = memo((props: ReportData) => {
   const data = {
     result: {
       summary: {
-        retry: reportData.result.summary.retry,
-        pass: reportData.result.summary.pass,
-        fail: reportData.result.summary.fail,
-        skip: reportData.result.summary.skip,
-        flaky: reportData.result.summary.flaky,
-        total: reportData.result.summary.total,
+        retry: props.result.summary.retry,
+        pass: props.result.summary.pass,
+        fail: props.result.summary.fail,
+        skip: props.result.summary.skip,
+        flaky: props.result.summary.flaky,
+        total: props.result.summary.total,
       },
     },
   };
@@ -78,13 +79,13 @@ export default function Dashboard({ reportData }: { reportData: ReportData }) {
         <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
           <div className="px-2 sm:px-0">
             <TextGenerateEffect
-              words={`Welcome ${reportData.result.meta.authorName || ""}!`}
+              words={`Welcome ${props.result.meta.authorName || ""}!`}
               className="text-3xl font-bold tracking-tight sm:text-3xl"
             />
             <p className="text-muted-foreground text-sm sm:text-base">
               Here&apos;s what&apos;s happening with your{" "}
               <strong className="text-primary">
-                {reportData.result.meta.type || ""}
+                {props.result.meta.type || ""}
               </strong>{" "}
               today.
             </p>
@@ -104,24 +105,24 @@ export default function Dashboard({ reportData }: { reportData: ReportData }) {
               ))}
           </div>
           {/* Meta information */}
-          <MetaCard {...reportData} />
+          <MetaCard {...props} />
 
           {/* Charts */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {/* Left half */}
             <div>
-              <OverallExecutionResult {...reportData} />
+              <OverallExecutionResult {...props} />
             </div>
             {/* Right half */}
             <div>
-              <ProjectChart {...reportData} />
+              <ProjectChart {...props} />
             </div>
             <div>
-              <EachProjectChart {...reportData} />
+              <EachProjectChart {...props} />
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+});
