@@ -1,15 +1,16 @@
 export interface ReportData {
   result: {
-    result: Result;
+    summary: Summary;
+    results: Result;
     meta: Meta;
     preferences: Preferences;
     analytics: Analytics;
-    summary: Summary;
   };
 }
 
 export interface Result {
-  results: Results;
+  list: TestResultData[];
+  grouped: Results;
   testHistories: TestHistory[];
   allTags: string[];
   set: Record<string, unknown>;
@@ -39,7 +40,7 @@ export interface Stats {
 }
 
 export interface Results {
-  list: TestResult[];
+  list: TestResultData[];
 }
 
 export type TestStatus =
@@ -51,31 +52,42 @@ export type TestStatus =
 export type FlakyStatus = "expected" | "unexpected" | "";
 export type ReportType = "e2e" | "unit" | "integration";
 
-export interface TestResult {
-  annotations: string[];
+export interface Steps {
+  snippet: string | undefined;
+  title: string;
+  location: string;
+}
+export interface TestResultData {
+  annotations: any;
   testTags: string[];
   location: string;
   retry: string;
   isRetry: number;
-  projectName: string;
-  suite: string;
+  projectName: any;
+  suite: any;
   title: string;
-  status: TestStatus;
-  flaky: FlakyStatus;
+  status:
+    | "passed"
+    | "failed"
+    | "timedOut"
+    | "skipped"
+    | "interrupted"
+    | "expected"
+    | "unexpected"
+    | "flaky";
+  flaky: string;
   duration: string;
-  errors: string[];
-  steps: Step[];
+  errors: any[];
+  steps: Steps[];
   logs: string;
+  screenshotPath?: string | null | undefined;
+  screenshots?: string[];
   filePath: string;
-  filters: Record<string, unknown>;
-  base64Image: boolean;
-  screenshots: string[];
-}
-
-export interface Step {
-  snippet: string;
-  title: string;
-  location: string;
+  filters: Set<string>;
+  tracePath?: string;
+  videoPath?: string;
+  markdownPath?: string;
+  base64Image: boolean | undefined;
 }
 
 export interface TestHistory {

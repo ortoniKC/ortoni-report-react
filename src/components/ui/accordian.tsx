@@ -118,27 +118,27 @@ export function FAQItem({ suite, tests, index }: FAQItemProps) {
 export default function Faq3() {
   const faqs: Omit<FAQItemProps, "index">[] = [
     {
-      question: "What makes MVPBlocks unique?",
+      suite: "What makes MVPBlocks unique?",
       tests:
         "MVPBlocks stands out through its intuitive design, powerful component library, and seamless integration options. We've focused on creating a user experience that combines simplicity with advanced features, all while maintaining excellent performance and accessibility.",
     },
     {
-      question: "How can I customize the components?",
+      suite: "How can I customize the components?",
       tests:
         "All components are built with Tailwind CSS, making them highly customizable. You can modify colors, spacing, typography, and more by simply adjusting the class names or using our theme variables to match your brand identity.",
     },
     {
-      question: "Do the components work with dark mode?",
+      suite: "Do the components work with dark mode?",
       tests:
         "Yes, all MVPBlocks components are designed to work seamlessly with both light and dark modes. They automatically adapt to your site's theme settings, providing a consistent user experience regardless of the user's preference.",
     },
     {
-      question: "How can I get started with MVPBlocks?",
+      suite: "How can I get started with MVPBlocks?",
       tests:
         "You can get started by browsing our component library and copying the code for the components you need. Our documentation provides clear instructions for installation and usage, and you can always reach out to our support team if you need assistance.",
     },
     {
-      question: "Can I use MVPBlocks for commercial projects?",
+      suite: "Can I use MVPBlocks for commercial projects?",
       tests:
         "Absolutely! MVPBlocks is free to use for both personal and commercial projects. There are no licensing fees or attribution requirements—just build and launch your MVP faster than ever before.",
     },
