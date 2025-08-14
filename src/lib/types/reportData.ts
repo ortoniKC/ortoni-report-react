@@ -9,56 +9,16 @@ export interface ReportData {
 }
 
 export interface Result {
-  list: TestResultData[];
-  grouped: Results;
+  grouped: Record<string, Record<string, TestResultData[]>>;
   testHistories: TestHistory[];
   allTags: string[];
   set: Record<string, unknown>;
 }
-
-export interface Summary {
-  successRate: string;
-  lastRunDate: string;
-  retry: number;
-  pass: number;
-  fail: number;
-  skip: number;
-  flaky: number;
-  total: number;
-  totalDuration: string;
-  stats: Stats;
-}
-
-export interface Stats {
-  projectNames: string[];
-  totalTests: number[];
-  passedTests: number[];
-  failedTests: number[];
-  skippedTests: number[];
-  retryTests: number[];
-  flakyTests: number[];
-}
-
-export interface Results {
-  list: TestResultData[];
-}
-
-export type TestStatus =
-  | "passed"
-  | "failed"
-  | "skipped"
-  | "timedOut"
-  | "interrupted";
-export type FlakyStatus = "expected" | "unexpected" | "";
-export type ReportType = "e2e" | "unit" | "integration";
-
-export interface Steps {
-  snippet: string | undefined;
-  title: string;
-  location: string;
-}
 export interface TestResultData {
-  annotations: any;
+  annotations: {
+    type: string;
+    location: { file: string; line: number; column: number };
+  };
   testTags: string[];
   location: string;
   retry: string;
@@ -88,6 +48,43 @@ export interface TestResultData {
   videoPath?: string;
   markdownPath?: string;
   base64Image: boolean | undefined;
+  testId: string;
+}
+
+export interface Summary {
+  successRate: string;
+  lastRunDate: string;
+  retry: number;
+  pass: number;
+  fail: number;
+  skip: number;
+  flaky: number;
+  total: number;
+  totalDuration: string;
+  stats: Stats;
+}
+
+export interface Stats {
+  projectNames: string[];
+  totalTests: number[];
+  passedTests: number[];
+  failedTests: number[];
+  skippedTests: number[];
+  retryTests: number[];
+  flakyTests: number[];
+}
+
+export type TestStatus =
+  | "passed"
+  | "failed"
+  | "skipped"
+  | "timedOut"
+  | "interrupted";
+
+export interface Steps {
+  snippet: string | undefined;
+  title: string;
+  location: string;
 }
 
 export interface TestHistory {
@@ -106,7 +103,7 @@ export interface Meta {
   projectName: string;
   authorName: string;
   meta: ProjectMeta;
-  type: ReportType;
+  type: string;
   title: string;
 }
 

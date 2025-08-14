@@ -3,7 +3,7 @@ import { memo } from "react";
 import { TestList } from "./testList";
 
 export const TestsPage = memo(({ result }: ReportData) => {
-  const tests = result.results.list;
+  const tests = result.results.grouped;
 
   return (
     <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">

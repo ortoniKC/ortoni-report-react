@@ -2,20 +2,20 @@
   "result": {
     "summary": {
       "successRate": "100.00",
-      "lastRunDate": "Aug 14, 2025, 11:41 PM GMT+5:30",
+      "lastRunDate": "Aug 14, 2025, 11:07 PM GMT+5:30",
       "retry": 0,
       "pass": 4,
       "fail": 0,
-      "skip": 0,
+      "skip": 2,
       "flaky": 0,
       "total": 4,
-      "totalDuration": "07s:231ms",
+      "totalDuration": "03s:818ms",
       "stats": {
         "projectNames": ["chromium", "firefox"],
         "totalTests": [2, 2],
         "passedTests": [2, 2],
         "failedTests": [0, 0],
-        "skippedTests": [0, 0],
+        "skippedTests": [1, 1],
         "retryTests": [0, 0],
         "flakyTests": [0, 0]
       }
@@ -25,6 +25,105 @@
         "demo-todo-app.spec.ts": {
           "New Todo": [
             {
+              "annotations": [
+                {
+                  "type": "skip",
+                  "location": {
+                    "file": "/Users/letcode/Documents/GitHub/pw-test/tests/demo-todo-app.spec.ts",
+                    "line": 53,
+                    "column": 8
+                  }
+                }
+              ],
+              "testTags": [],
+              "location": "demo-todo-app.spec.ts:53:8",
+              "retry": "",
+              "isRetry": 0,
+              "projectName": "chromium",
+              "suite": "New Todo",
+              "title": "should append new items to the bottom of the list",
+              "status": "skipped",
+              "flaky": "skipped",
+              "duration": "",
+              "errors": [],
+              "steps": [],
+              "logs": "",
+              "filePath": "demo-todo-app.spec.ts",
+              "filters": {},
+              "base64Image": false,
+              "screenshots": [],
+              "index": 0,
+              "testId": "demo-todo-app.spec.ts:chromium:should append new items to the bottom of the list"
+            },
+            {
+              "annotations": [],
+              "testTags": [],
+              "location": "demo-todo-app.spec.ts:38:7",
+              "retry": "",
+              "isRetry": 0,
+              "projectName": "chromium",
+              "suite": "New Todo",
+              "title": "should clear text input field when an item is added",
+              "status": "passed",
+              "flaky": "expected",
+              "duration": "01s:410ms",
+              "errors": [],
+              "steps": [
+                { "snippet": "", "title": "Before Hooks", "location": "" },
+                {
+                  "snippet": "",
+                  "title": "Fill \"buy some cheese\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                {
+                  "snippet": "",
+                  "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                { "snippet": "", "title": "toBeEmpty", "location": "" },
+                { "snippet": "", "title": "Wait for function", "location": "" },
+                { "snippet": "", "title": "After Hooks", "location": "" }
+              ],
+              "logs": "",
+              "filePath": "demo-todo-app.spec.ts",
+              "filters": {},
+              "base64Image": false,
+              "screenshots": [],
+              "index": 1,
+              "testId": "demo-todo-app.spec.ts:chromium:should clear text input field when an item is added"
+            },
+            {
+              "annotations": [
+                {
+                  "type": "skip",
+                  "location": {
+                    "file": "/Users/letcode/Documents/GitHub/pw-test/tests/demo-todo-app.spec.ts",
+                    "line": 53,
+                    "column": 8
+                  }
+                }
+              ],
+              "testTags": [],
+              "location": "demo-todo-app.spec.ts:53:8",
+              "retry": "",
+              "isRetry": 0,
+              "projectName": "firefox",
+              "suite": "New Todo",
+              "title": "should append new items to the bottom of the list",
+              "status": "skipped",
+              "flaky": "skipped",
+              "duration": "",
+              "errors": [],
+              "steps": [],
+              "logs": "",
+              "filePath": "demo-todo-app.spec.ts",
+              "filters": {},
+              "base64Image": false,
+              "screenshots": [],
+              "index": 2,
+              "testId": "demo-todo-app.spec.ts:firefox:should append new items to the bottom of the list"
+            },
+            {
               "annotations": [],
               "testTags": [],
               "location": "demo-todo-app.spec.ts:14:7",
@@ -35,7 +134,7 @@
               "title": "should allow me to add todo items",
               "status": "passed",
               "flaky": "expected",
-              "duration": "765ms",
+              "duration": "01s:418ms",
               "errors": [],
               "steps": [
                 { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -44,32 +143,46 @@
                   "title": "Fill \"buy some cheese\" getByPlaceholder('What needs to be done?')",
                   "location": ""
                 },
+                {
+                  "snippet": "",
+                  "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                { "snippet": "", "title": "toHaveText", "location": "" },
+                {
+                  "snippet": "",
+                  "title": "Fill \"feed the cat\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                {
+                  "snippet": "",
+                  "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                { "snippet": "", "title": "toHaveText", "location": "" },
+                { "snippet": "", "title": "Wait for function", "location": "" },
                 { "snippet": "", "title": "After Hooks", "location": "" }
               ],
               "logs": "",
               "filePath": "demo-todo-app.spec.ts",
               "filters": {},
               "base64Image": false,
-              "screenshots": [
-                "ortoni-data/attachments/849da1cee0c412ce5534-de14671fd2e5e71cfcf4/test-finished-1.png"
-              ],
-              "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-de14671fd2e5e71cfcf4/video.webm",
-              "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-de14671fd2e5e71cfcf4/trace.zip",
-              "index": 0,
+              "screenshots": [],
+              "index": 3,
               "testId": "demo-todo-app.spec.ts:chromium:should allow me to add todo items"
             },
             {
               "annotations": [],
               "testTags": [],
-              "location": "demo-todo-app.spec.ts:14:7",
+              "location": "demo-todo-app.spec.ts:38:7",
               "retry": "",
               "isRetry": 0,
               "projectName": "firefox",
               "suite": "New Todo",
-              "title": "should allow me to add todo items",
+              "title": "should clear text input field when an item is added",
               "status": "passed",
               "flaky": "expected",
-              "duration": "01s:185ms",
+              "duration": "996ms",
               "errors": [],
               "steps": [
                 { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -78,123 +191,255 @@
                   "title": "Fill \"buy some cheese\" getByPlaceholder('What needs to be done?')",
                   "location": ""
                 },
+                {
+                  "snippet": "",
+                  "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                { "snippet": "", "title": "toBeEmpty", "location": "" },
+                { "snippet": "", "title": "Wait for function", "location": "" },
                 { "snippet": "", "title": "After Hooks", "location": "" }
               ],
               "logs": "",
               "filePath": "demo-todo-app.spec.ts",
               "filters": {},
               "base64Image": false,
-              "screenshots": [
-                "ortoni-data/attachments/849da1cee0c412ce5534-d0e081deb82d930532c8/test-finished-1.png"
-              ],
-              "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-d0e081deb82d930532c8/video.webm",
-              "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-d0e081deb82d930532c8/trace.zip",
-              "index": 1,
-              "testId": "demo-todo-app.spec.ts:firefox:should allow me to add todo items"
-            }
-          ]
-        },
-        "cart.spec.ts": {
-          "Product total amount should not exceed 2 decimal places when quantity is 10": [
-            {
-              "annotations": [],
-              "testTags": [],
-              "location": "cart.spec.ts:30:6",
-              "retry": "",
-              "isRetry": 0,
-              "projectName": "chromium",
-              "suite": "Product total amount should not exceed 2 decimal places when quantity is 10",
-              "title": "Product total amount should not exceed 2 decimal places when quantity is 10",
-              "status": "passed",
-              "flaky": "expected",
-              "duration": "02s:137ms",
-              "errors": [],
-              "steps": [
-                { "snippet": "", "title": "Before Hooks", "location": "" },
-                {
-                  "snippet": "",
-                  "title": "Navigate to \"/login\"",
-                  "location": ""
-                },
-                { "snippet": "", "title": "After Hooks", "location": "" }
-              ],
-              "logs": "",
-              "filePath": "cart.spec.ts",
-              "filters": {},
-              "base64Image": false,
-              "screenshots": [
-                "ortoni-data/attachments/1981448f0b79506fb670-0468d13a5fcc654fe9c2/test-finished-1.png"
-              ],
-              "videoPath": "ortoni-data/attachments/1981448f0b79506fb670-0468d13a5fcc654fe9c2/video.webm",
-              "tracePath": "ortoni-data/attachments/1981448f0b79506fb670-0468d13a5fcc654fe9c2/trace.zip",
-              "index": 2,
-              "testId": "cart.spec.ts:chromium:Product total amount should not exceed 2 decimal places when quantity is 10"
+              "screenshots": [],
+              "index": 4,
+              "testId": "demo-todo-app.spec.ts:firefox:should clear text input field when an item is added"
             },
             {
               "annotations": [],
               "testTags": [],
-              "location": "cart.spec.ts:30:6",
+              "location": "demo-todo-app.spec.ts:14:7",
               "retry": "",
               "isRetry": 0,
               "projectName": "firefox",
-              "suite": "Product total amount should not exceed 2 decimal places when quantity is 10",
-              "title": "Product total amount should not exceed 2 decimal places when quantity is 10",
+              "suite": "New Todo",
+              "title": "should allow me to add todo items",
               "status": "passed",
               "flaky": "expected",
-              "duration": "05s:354ms",
+              "duration": "01s:550ms",
               "errors": [],
               "steps": [
                 { "snippet": "", "title": "Before Hooks", "location": "" },
                 {
                   "snippet": "",
-                  "title": "Navigate to \"/login\"",
+                  "title": "Fill \"buy some cheese\" getByPlaceholder('What needs to be done?')",
                   "location": ""
                 },
+                {
+                  "snippet": "",
+                  "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                { "snippet": "", "title": "toHaveText", "location": "" },
+                {
+                  "snippet": "",
+                  "title": "Fill \"feed the cat\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                {
+                  "snippet": "",
+                  "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
+                  "location": ""
+                },
+                { "snippet": "", "title": "toHaveText", "location": "" },
+                { "snippet": "", "title": "Wait for function", "location": "" },
                 { "snippet": "", "title": "After Hooks", "location": "" }
               ],
               "logs": "",
-              "filePath": "cart.spec.ts",
+              "filePath": "demo-todo-app.spec.ts",
               "filters": {},
               "base64Image": false,
-              "screenshots": [
-                "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/test-finished-1.png"
-              ],
-              "videoPath": "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/video.webm",
-              "tracePath": "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/trace.zip",
-              "index": 3,
-              "testId": "cart.spec.ts:firefox:Product total amount should not exceed 2 decimal places when quantity is 10"
+              "screenshots": [],
+              "index": 5,
+              "testId": "demo-todo-app.spec.ts:firefox:should allow me to add todo items"
             }
           ]
         }
       },
       "testHistories": [
         {
-          "testId": "demo-todo-app.spec.ts:chromium:should allow me to add todo items",
+          "testId": "demo-todo-app.spec.ts:chromium:should append new items to the bottom of the list",
+          "history": [
+            {
+              "status": "skipped",
+              "duration": "",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 11:07 PM GMT+5:30"
+            },
+            {
+              "status": "skipped",
+              "duration": "",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 11:07 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "674ms",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 05:06 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:821ms",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 05:04 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "547ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:34 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "494ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:32 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "690ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:24 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "794ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 09:30 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "813ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 09:24 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "565ms",
+              "error_message": "",
+              "run_date": "Jul 18, 2025, 08:34 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should clear text input field when an item is added",
           "history": [
             {
               "status": "passed",
-              "duration": "765ms",
+              "duration": "01s:410ms",
               "error_message": "",
-              "run_date": "Aug 14, 2025, 11:41 PM GMT+5:30"
+              "run_date": "Aug 14, 2025, 11:07 PM GMT+5:30"
             },
             {
               "status": "passed",
-              "duration": "865ms",
+              "duration": "01s:641ms",
               "error_message": "",
-              "run_date": "Aug 14, 2025, 11:40 PM GMT+5:30"
+              "run_date": "Aug 14, 2025, 11:07 PM GMT+5:30"
             },
             {
               "status": "passed",
-              "duration": "02s:209ms",
+              "duration": "792ms",
               "error_message": "",
-              "run_date": "Aug 14, 2025, 11:39 PM GMT+5:30"
+              "run_date": "Aug 14, 2025, 05:06 PM GMT+5:30"
             },
             {
               "status": "passed",
-              "duration": "958ms",
+              "duration": "01s:760ms",
               "error_message": "",
-              "run_date": "Aug 14, 2025, 11:16 PM GMT+5:30"
+              "run_date": "Aug 14, 2025, 05:04 PM GMT+5:30"
             },
+            {
+              "status": "passed",
+              "duration": "01s:226ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:34 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:653ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:32 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:199ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:24 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:469ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 09:30 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:288ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 09:24 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:765ms",
+              "error_message": "",
+              "run_date": "Jul 18, 2025, 08:34 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should append new items to the bottom of the list",
+          "history": [
+            {
+              "status": "skipped",
+              "duration": "",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 11:07 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "834ms",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 05:06 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "909ms",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 05:04 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "911ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:34 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:136ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:32 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "898ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:24 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "739ms",
+              "error_message": "",
+              "run_date": "Jul 18, 2025, 08:34 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should allow me to add todo items",
+          "history": [
             {
               "status": "passed",
               "duration": "01s:418ms",
@@ -230,36 +475,83 @@
               "duration": "01s:669ms",
               "error_message": "",
               "run_date": "Aug 13, 2025, 11:32 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:160ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:24 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:490ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 09:30 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:319ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 09:24 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:800ms",
+              "error_message": "",
+              "run_date": "Jul 18, 2025, 08:34 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should clear text input field when an item is added",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "996ms",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 11:07 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:141ms",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 05:06 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:408ms",
+              "error_message": "",
+              "run_date": "Aug 14, 2025, 05:04 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:309ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:34 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "635ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:32 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:177ms",
+              "error_message": "",
+              "run_date": "Aug 13, 2025, 11:24 PM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:126ms",
+              "error_message": "",
+              "run_date": "Jul 18, 2025, 08:34 PM GMT+5:30"
             }
           ]
         },
         {
           "testId": "demo-todo-app.spec.ts:firefox:should allow me to add todo items",
           "history": [
-            {
-              "status": "passed",
-              "duration": "01s:185ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:41 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:202ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:40 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:229ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:39 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:235ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:16 PM GMT+5:30"
-            },
             {
               "status": "passed",
               "duration": "01s:550ms",
@@ -295,136 +587,12 @@
               "duration": "01s:244ms",
               "error_message": "",
               "run_date": "Aug 13, 2025, 11:24 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "cart.spec.ts:chromium:Product total amount should not exceed 2 decimal places when quantity is 10",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "02s:137ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:41 PM GMT+5:30"
             },
             {
               "status": "passed",
-              "duration": "01s:864ms",
+              "duration": "01s:120ms",
               "error_message": "",
-              "run_date": "Aug 14, 2025, 11:40 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "02s:869ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:39 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "03s:036ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:23 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "07s:186ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 14, 2025, 05:06 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "07s:724ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 14, 2025, 05:04 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "08s:024ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 14, 2025, 03:07 AM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "07s:617ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:38:5</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 13, 2025, 11:34 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "07s:551ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:38:5</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 13, 2025, 11:32 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "08s:119ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:38:5</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 13, 2025, 11:24 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "cart.spec.ts:firefox:Product total amount should not exceed 2 decimal places when quantity is 10",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "05s:354ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:41 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "04s:840ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:40 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "02s:891ms",
-              "error_message": "",
-              "run_date": "Aug 14, 2025, 11:39 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "07s:936ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 14, 2025, 05:06 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "09s:098ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 14, 2025, 05:04 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "08s:251ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:38:5</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 13, 2025, 11:34 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "08s:506ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:38:5</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 13, 2025, 11:32 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "09s:238ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:38:5</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 13, 2025, 11:24 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "09s:448ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:38:5</span></span></span></span></span></span></span></span></span>",
               "run_date": "Jul 18, 2025, 08:34 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "09s:590ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:38:5</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Jul 13, 2025, 01:14 AM GMT+5:30"
             }
           ]
         }
@@ -451,14 +619,44 @@
     "analytics": {
       "reportData": {
         "summary": {
-          "totalRuns": 124,
-          "totalTests": 884,
-          "passed": 704,
+          "totalRuns": 119,
+          "totalTests": 865,
+          "passed": 687,
           "failed": 146,
-          "passRate": 79.64,
-          "avgDuration": 349
+          "passRate": 79.42,
+          "avgDuration": 351
         },
         "trends": [
+          {
+            "run_date": "Jul 12, 2025, 01:04 PM GMT+5:30",
+            "passed": 1,
+            "failed": 0,
+            "avg_duration": 4
+          },
+          {
+            "run_date": "Jul 12, 2025, 01:05 PM GMT+5:30",
+            "passed": 1,
+            "failed": 0,
+            "avg_duration": 5
+          },
+          {
+            "run_date": "Jul 12, 2025, 01:07 PM GMT+5:30",
+            "passed": 0,
+            "failed": 0,
+            "avg_duration": 30
+          },
+          {
+            "run_date": "Jul 12, 2025, 01:08 PM GMT+5:30",
+            "passed": 1,
+            "failed": 0,
+            "avg_duration": 6
+          },
+          {
+            "run_date": "Jul 12, 2025, 01:10 PM GMT+5:30",
+            "passed": 1,
+            "failed": 0,
+            "avg_duration": 5
+          },
           {
             "run_date": "Jul 12, 2025, 01:10 PM GMT+5:30",
             "passed": 0,
@@ -1028,36 +1226,6 @@
             "passed": 4,
             "failed": 0,
             "avg_duration": 167
-          },
-          {
-            "run_date": "Aug 14, 2025, 11:16 PM GMT+5:30",
-            "passed": 4,
-            "failed": 0,
-            "avg_duration": 466
-          },
-          {
-            "run_date": "Aug 14, 2025, 11:23 PM GMT+5:30",
-            "passed": 1,
-            "failed": 0,
-            "avg_duration": 3
-          },
-          {
-            "run_date": "Aug 14, 2025, 11:39 PM GMT+5:30",
-            "passed": 4,
-            "failed": 0,
-            "avg_duration": 2
-          },
-          {
-            "run_date": "Aug 14, 2025, 11:40 PM GMT+5:30",
-            "passed": 4,
-            "failed": 0,
-            "avg_duration": 218
-          },
-          {
-            "run_date": "Aug 14, 2025, 11:41 PM GMT+5:30",
-            "passed": 4,
-            "failed": 0,
-            "avg_duration": 193
           }
         ],
         "flakyTests": [],
@@ -1106,6 +1274,11 @@
       },
       "chartTrendData": {
         "labels": [
+          "Jul 12, 2025, 1:04 PM",
+          "Jul 12, 2025, 1:05 PM",
+          "Jul 12, 2025, 1:07 PM",
+          "Jul 12, 2025, 1:08 PM",
+          "Jul 12, 2025, 1:10 PM",
           "Jul 12, 2025, 1:10 PM",
           "Jul 12, 2025, 1:11 PM",
           "Jul 12, 2025, 1:12 PM",
@@ -1200,33 +1373,28 @@
           "Aug 14, 2025, 5:04 PM",
           "Aug 14, 2025, 5:06 PM",
           "Aug 14, 2025, 11:07 PM",
-          "Aug 14, 2025, 11:07 PM",
-          "Aug 14, 2025, 11:16 PM",
-          "Aug 14, 2025, 11:23 PM",
-          "Aug 14, 2025, 11:39 PM",
-          "Aug 14, 2025, 11:40 PM",
-          "Aug 14, 2025, 11:41 PM"
+          "Aug 14, 2025, 11:07 PM"
         ],
         "passed": [
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 3, 7, 9, 9, 0, 9, 0, 0, 0, 0, 0, 0, 9, 7, 7, 9, 3, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 103, 1, 1, 1, 1, 1, 1, 1, 1, 26, 26, 0, 52, 52, 52,
-          0, 129, 128, 2, 4, 4, 1, 4, 4, 4
+          1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 3, 7, 9, 9, 0, 9, 0, 0, 0, 0, 0, 0, 9, 7, 7,
+          9, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 103, 1, 1, 1, 1, 1, 1, 1, 1, 26, 26,
+          0, 52, 52, 52, 0, 129, 128, 2, 4
         ],
         "failed": [
-          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
-          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1,
-          1, 1, 1, 1, 2, 3, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3,
-          3, 3, 3, 2, 3, 3, 8, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 4, 4, 4, 1, 5,
-          5, 0, 0, 0, 0, 0, 0, 0
+          0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1,
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+          3, 0, 3, 3, 3, 3, 3, 3, 2, 3, 3, 8, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1,
+          4, 4, 4, 1, 5, 5, 0, 0
         ],
         "avgDuration": [
-          7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 4, 4, 4, 7, 4, 8, 6, 7, 8, 8, 7,
-          7, 6, 7, 7, 7, 8, 9, 7, 9, 7, 7, 7, 7, 20, 6, 7, 6, 7, 8, 4, 6, 7, 7,
-          7, 7, 7, 6, 13, 7, 7, 2, 10, 8, 8, 7, 7, 7, 7, 7, 10, 10, 7, 5, 9, 8,
-          8, 8, 8, 8, 15, 9, 9, 481, 6, 5, 7, 9, 7, 8, 6, 6, 409, 451, 7, 456,
-          479, 393, 8, 529, 531, 1, 167, 466, 3, 2, 218, 193
+          4, 5, 30, 6, 5, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 4, 4, 4, 7, 4, 8,
+          6, 7, 8, 8, 7, 7, 6, 7, 7, 7, 8, 9, 7, 9, 7, 7, 7, 7, 20, 6, 7, 6, 7,
+          8, 4, 6, 7, 7, 7, 7, 7, 6, 13, 7, 7, 2, 10, 8, 8, 7, 7, 7, 7, 7, 10,
+          10, 7, 5, 9, 8, 8, 8, 8, 8, 15, 9, 9, 481, 6, 5, 7, 9, 7, 8, 6, 6,
+          409, 451, 7, 456, 479, 393, 8, 529, 531, 1, 167
         ]
       }
     }
