@@ -1,5 +1,7 @@
-// lib/groupTests.ts
-import type { GroupedTests, TestResultData } from "@/lib/types/reportData";
+import type {
+  GroupedTests as InputGrouped,
+  TestResultData,
+} from "@/lib/types/reportData";
 
 export interface GroupedView {
   fileName: string;
@@ -11,16 +13,24 @@ export interface GroupedView {
     }[];
   }[];
 }
+// type ProjectGroup = {
+//   projectName: string;
+//   suites: {
+//     suiteName: string;
+//     tests: { testId: string; title: string }[];
+//   }[];
+// };
+
+// type GroupedView = ProjectGroup[];
 
 export function groupTests(
-  tests: GroupedTests,
+  data: InputGrouped,
   showProject: boolean
 ): GroupedView[] {
   const out: GroupedView[] = [];
 
-  for (const [fileName, suites] of Object.entries(tests)) {
+  for (const [fileName, suites] of Object.entries(data)) {
     if (showProject) {
-      // 1) file → project
       const byProject: Record<string, TestResultData[]> = {};
       for (const arr of Object.values(suites)) {
         for (const t of arr) {
@@ -28,8 +38,6 @@ export function groupTests(
           (byProject[proj] ||= []).push(t);
         }
       }
-
-      // 2) project → suites
       const projects = Object.entries(byProject).map(([projectName, arr]) => {
         const bySuite: Record<string, TestResultData[]> = {};
         for (const t of arr) {
@@ -44,16 +52,12 @@ export function groupTests(
           })),
         };
       });
-
       out.push({ fileName, projects });
     } else {
-      // Skip project level entirely
-      const suitesArr = Object.entries(suites).map(
-        ([suiteName, suiteTests]) => ({
-          suiteName,
-          tests: suiteTests,
-        })
-      );
+      const suitesArr = Object.entries(suites).map(([suiteName, tests]) => ({
+        suiteName,
+        tests,
+      }));
       out.push({
         fileName,
         projects: [{ projectName: "Default Project", suites: suitesArr }],

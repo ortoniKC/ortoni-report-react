@@ -3,11 +3,11 @@
     "summary": {
       "successRate": "96.00",
       "lastRunDate": "Aug 14, 2025, 11:56 PM GMT+5:30",
-      "retry": 0,
+      "retry": 1,
       "pass": 48,
       "fail": 2,
       "skip": 2,
-      "flaky": 0,
+      "flaky": 1,
       "total": 50,
       "totalDuration": "47s:872ms",
       "stats": {
