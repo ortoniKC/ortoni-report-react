@@ -1,10 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "./components/theme-provider";
-import Dashboard from "./components/ui/dashboard";
-import DashboardLayout from "./components/mvpblocks/ui/layout";
+import { ThemeProvider } from "./hooks/theme-provider";
+import { AnalyticsPage } from "./components/appui/analytics";
+import Dashboard from "./components/appui/dashboard";
+import DashboardLayout from "./components/appui/layout";
 import type { ReportData } from "./lib/types/reportData";
-// import { TestsPage } from "./components/mvpblocks/ui/testPage";
-import { AnalyticsPage } from "./components/mvpblocks/ui/analytics";
 
 export function App({ reportData }: { reportData: ReportData }) {
   return (

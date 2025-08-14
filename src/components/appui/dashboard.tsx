@@ -7,15 +7,15 @@ import {
   XCircle,
   RefreshCw,
 } from "lucide-react";
-import { SummaryCard } from "../mvpblocks/ui/summaryCard";
-import { OverallExecutionResult } from "../mvpblocks/charts/overallExecutionChart";
-import { ProjectChart } from "../mvpblocks/charts/projectChart";
-import { EachProjectChart } from "../mvpblocks/charts/projectBarChart";
-import { MetaCard } from "../mvpblocks/ui/metaCard";
+import { SummaryCard } from "./summaryCard";
 import type { ReportData } from "@/lib/types/reportData";
+import { OverallExecutionResult } from "../charts/overallExecutionChart";
+import { EachProjectChart } from "../charts/projectBarChart";
+import { ProjectChart } from "../charts/projectChart";
+import TextGenerateEffect from "../ui/typewriter";
+import { MetaCard } from "./metaCard";
 
 export default function Dashboard({ reportData }: { reportData: ReportData }) {
-  console.log("reportData", reportData);
   const data = {
     result: {
       summary: {
@@ -76,11 +76,11 @@ export default function Dashboard({ reportData }: { reportData: ReportData }) {
     <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">
       <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
         <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
-          {/* Header */}
           <div className="px-2 sm:px-0">
-            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Welcome {reportData.result.meta.authorName || ""}!
-            </h1>
+            <TextGenerateEffect
+              words={`Welcome ${reportData.result.meta.authorName || ""}!`}
+              className="text-3xl font-bold tracking-tight sm:text-3xl"
+            />
             <p className="text-muted-foreground text-sm sm:text-base">
               Here&apos;s what&apos;s happening with your{" "}
               <strong className="text-primary">

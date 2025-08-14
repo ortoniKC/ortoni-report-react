@@ -17,7 +17,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { LayoutDashboard, BarChart3, TestTube2 } from "lucide-react";
-import { ModeToggle } from "@/components/toggle-theme";
+import { ModeToggle } from "@/hooks/toggle-theme";
 
 const menuItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "dashboard" },
