@@ -3,7 +3,6 @@ import { cn, formatDuration, statusClass } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { Badge } from "./badge";
 
 interface TestAccordionItemProps {
   title: string;
@@ -104,14 +103,9 @@ export function TestAccordionItem({
                   >
                     {/* Test item content remains the same */}
                     <div className="flex items-center justify-between gap-3">
-                      <span className="truncate">{t.title}</span>
-                      <span
-                        className={cn(
-                          "px-2 py-0.5 rounded-full text-xs",
-                          statusClass(t.status)
-                        )}
-                      >
-                        {t.status}
+                      <span className="inline-flex items-center gap-2">
+                        <StatusDot status={t.status} />
+                        <span className="truncate">{t.title}</span>
                       </span>
                     </div>
                     <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
@@ -142,4 +136,18 @@ export function TestAccordionItem({
       </AnimatePresence>
     </motion.div>
   );
+}
+
+export function StatusDot({ status }: { status: string }) {
+  const color =
+    status === "passed"
+      ? "bg-emerald-500"
+      : status === "failed"
+      ? "bg-red-500"
+      : status === "flaky"
+      ? "bg-amber-500"
+      : status === "skipped"
+      ? "bg-slate-400"
+      : "bg-muted-foreground";
+  return <span className={`inline-block h-2.5 w-2.5 rounded-full ${color}`} />;
 }
