@@ -6,12 +6,6 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
 
-/**
- * Discriminated props:
- * - showProject: true  -> tests[filePath][suite] is { [project]: TestResultData[] }
- * - showProject: false -> tests[filePath][suite] is TestResultData[]
- */
-
 export function TestList(props: TestListProps) {
   const { tests, showProject } = props;
 
@@ -108,15 +102,6 @@ export function TestList(props: TestListProps) {
                     ))}
                   </>
                 ) : (
-                  // Render tests directly without suite level
-                  // // testArray.map((test) => (
-                  // //   <TestAccordionItem
-                  // //     key={test.testId}
-                  // //     title={test.title}
-                  // //     tests={[test]}
-                  // //     isParent={false}
-                  // //   />
-                  // ))
                   // Normal rendering with suite level
                   <TestAccordionItem
                     key={suiteName}
@@ -133,7 +118,6 @@ export function TestList(props: TestListProps) {
     </div>
   );
 }
-/** Guards */
 
 function ensureArray(value: unknown): TestResultData[] {
   if (Array.isArray(value)) return value;
