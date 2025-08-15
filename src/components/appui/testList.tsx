@@ -40,8 +40,8 @@ export function TestList(props: TestListProps) {
                       // Render tests directly without suite level
                       testArray.map((test) => (
                         <TestAccordionItem
-                          key={`${test.testId ?? test.title}-${test.location}`}
-                          title={`${projectName} - ${test.title}`}
+                          key={`${test.testId}`}
+                          title={projectName}
                           tests={[test]}
                           isParent={false}
                         />

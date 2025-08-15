@@ -48,7 +48,8 @@ export function TestAccordionItem({
             isOpen && "text-foreground"
           )}
         >
-          {title + " title"}
+          {/* specname */}
+          {title}
         </h3>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
@@ -113,7 +114,7 @@ export function TestAccordionItem({
                         {t.status}
                       </span>
                     </div>
-                    <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3">
+                    <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
                       <span>Duration: {formatDuration(t.duration)}</span>
                       {t.retry && Number(t.retry) > 0 && (
                         <span>Retry: {t.retry}</span>
