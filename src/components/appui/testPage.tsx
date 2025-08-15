@@ -7,11 +7,9 @@ import { TestList } from "./testList";
 export const TestsPage = memo((props: { result: ReportData["result"] }) => {
   const { result } = props;
 
-  // Safe defaults in case backend sends undefined
   const grouped = result?.results?.grouped ?? {};
   const showProject = Boolean(result?.preferences?.showProject);
 
-  // Build the correctly-typed `tests` prop for TestList
   const testsForList = useMemo(() => {
     if (showProject) {
       // { filePath: { suite: { project: TestResultData[] } } }

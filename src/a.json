@@ -3530,7 +3530,7 @@
       "type": "e2e",
       "title": "Ortoni Test Report"
     },
-    "preferences": { "logo": "logo.png", "showProject": true },
+    "preferences": { "logo": "logo.png", "showProject": false },
     "analytics": {
       "reportData": {
         "summary": {
