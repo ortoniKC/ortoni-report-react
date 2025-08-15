@@ -9,6 +9,7 @@ interface TestAccordionItemProps {
   tests: TestResultData[];
   isParent: boolean;
   children?: React.ReactNode;
+  onTestClick?: (test: TestResultData) => void; // NEW
 }
 
 export function TestAccordionItem({
@@ -16,6 +17,7 @@ export function TestAccordionItem({
   tests,
   isParent,
   children,
+  onTestClick,
 }: TestAccordionItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -47,7 +49,6 @@ export function TestAccordionItem({
             isOpen && "text-foreground"
           )}
         >
-          {/* specname */}
           {title}
         </h3>
         <motion.div
@@ -99,9 +100,9 @@ export function TestAccordionItem({
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -8, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="text-sm leading-relaxed"
+                    className="text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded"
+                    onClick={() => onTestClick?.(t)} // NEW
                   >
-                    {/* Test item content remains the same */}
                     <div className="flex items-center justify-between gap-3">
                       <span className="inline-flex items-center gap-2">
                         <StatusDot status={t.status} />
@@ -137,7 +138,6 @@ export function TestAccordionItem({
     </motion.div>
   );
 }
-
 export function StatusDot({ status }: { status: string }) {
   const color =
     status === "passed"
