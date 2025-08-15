@@ -1,7 +1,4 @@
-import type {
-  GroupedTests as InputGrouped,
-  TestResultData,
-} from "@/lib/types/reportData";
+import type { GroupedTests, TestResultData } from "@/lib/types/reportData";
 
 export interface GroupedView {
   fileName: string;
@@ -13,57 +10,70 @@ export interface GroupedView {
     }[];
   }[];
 }
-// type ProjectGroup = {
-//   projectName: string;
-//   suites: {
-//     suiteName: string;
-//     tests: { testId: string; title: string }[];
-//   }[];
-// };
-
-// type GroupedView = ProjectGroup[];
 
 export function groupTests(
-  data: InputGrouped,
+  tests: GroupedTests,
   showProject: boolean
 ): GroupedView[] {
-  const out: GroupedView[] = [];
+  const result: GroupedView[] = [];
 
-  for (const [fileName, suites] of Object.entries(data)) {
+  Object.entries(tests).forEach(([fileName, suites]) => {
     if (showProject) {
-      const byProject: Record<string, TestResultData[]> = {};
-      for (const arr of Object.values(suites)) {
-        for (const t of arr) {
-          const proj = (t.projectName as string) || "Unknown Project";
-          (byProject[proj] ||= []).push(t);
+      // Group all tests in file by project
+      const testsByProject = Object.values(suites)
+        .flat()
+        .reduce((acc: Record<string, TestResultData[]>, test) => {
+          const proj = test.projectName || "Unknown Project";
+          if (!acc[proj]) acc[proj] = [];
+          acc[proj].push(test);
+          return acc;
+        }, {});
+
+      const projects = Object.entries(testsByProject).map(
+        ([projectName, projectTests]) => {
+          const suitesInProject = projectTests.reduce(
+            (acc: Record<string, TestResultData[]>, test) => {
+              const suite = test.suite || "No Suite";
+              if (!acc[suite]) acc[suite] = [];
+              acc[suite].push(test);
+              return acc;
+            },
+            {}
+          );
+
+          return {
+            projectName,
+            suites: Object.entries(suitesInProject).map(
+              ([suiteName, suiteTests]) => ({
+                suiteName,
+                tests: suiteTests,
+              })
+            ),
+          };
         }
-      }
-      const projects = Object.entries(byProject).map(([projectName, arr]) => {
-        const bySuite: Record<string, TestResultData[]> = {};
-        for (const t of arr) {
-          const s = (t.suite as string) || "No Suite";
-          (bySuite[s] ||= []).push(t);
-        }
-        return {
-          projectName,
-          suites: Object.entries(bySuite).map(([suiteName, tests]) => ({
-            suiteName,
-            tests,
-          })),
-        };
-      });
-      out.push({ fileName, projects });
+      );
+
+      result.push({ fileName, projects });
     } else {
-      const suitesArr = Object.entries(suites).map(([suiteName, tests]) => ({
-        suiteName,
-        tests,
-      }));
-      out.push({
+      // No project grouping → single "Default Project" bucket
+      const suitesArr = Object.entries(suites).map(
+        ([suiteName, suiteTests]) => ({
+          suiteName,
+          tests: suiteTests,
+        })
+      );
+
+      result.push({
         fileName,
-        projects: [{ projectName: "Default Project", suites: suitesArr }],
+        projects: [
+          {
+            projectName: "Default Project",
+            suites: suitesArr,
+          },
+        ],
       });
     }
-  }
+  });
 
-  return out;
+  return result;
 }
