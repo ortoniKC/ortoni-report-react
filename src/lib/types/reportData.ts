@@ -9,7 +9,7 @@ export interface ReportData {
 }
 
 export interface Result {
-  grouped: GroupedResults;
+  grouped: TestListProps;
   testHistories: TestHistory[];
   allTags: string[];
   set: Record<string, unknown>;
@@ -172,7 +172,7 @@ export interface ChartTrendData {
 
 export type TestListProps =
   | {
-      showProject: true;
+      showProject?: true;
       tests: {
         [filePath: string]: {
           [suite: string]: { [projectName: string]: TestResultData[] };
@@ -180,7 +180,7 @@ export type TestListProps =
       };
     }
   | {
-      showProject: false;
+      showProject?: false;
       tests: {
         [filePath: string]: {
           [suite: string]: TestResultData[];

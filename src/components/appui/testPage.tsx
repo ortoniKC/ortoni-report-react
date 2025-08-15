@@ -1,16 +1,16 @@
 "use client";
 
 import { memo, useMemo } from "react";
-import type { ReportData } from "@/lib/types/reportData";
+import type { ReportData, TestListProps } from "@/lib/types/reportData";
 import { TestList } from "./testList";
 
 export const TestsPage = memo((props: { result: ReportData["result"] }) => {
   const { result } = props;
 
-  const grouped = result?.results?.grouped ?? {};
+  const grouped = result?.results?.grouped;
   const showProject = Boolean(result?.preferences?.showProject);
 
-  const testsForList = useMemo(() => {
+  const testsForList: TestListProps = useMemo(() => {
     if (showProject) {
       // { filePath: { suite: { project: TestResultData[] } } }
       return grouped as Extract<
@@ -30,10 +30,7 @@ export const TestsPage = memo((props: { result: ReportData["result"] }) => {
       <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
         <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
           <h1 className="text-xl font-semibold">Test Page</h1>
-          <TestList
-            tests={testsForList as any}
-            showProject={showProject as any}
-          />
+          <TestList tests={testsForList} showProject={showProject as boolean} />
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { cn, formatDuration, statusClass } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { Badge } from "./badge";
 
 interface TestAccordionItemProps {
   title: string;
@@ -47,12 +48,7 @@ export function TestAccordionItem({
             isOpen && "text-foreground"
           )}
         >
-          {title}
-          {!isParent && tests.length > 0 && (
-            <span className="text-xs text-muted-foreground ml-2">
-              ({tests.length} tests)
-            </span>
-          )}
+          {title + " title"}
         </h3>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
