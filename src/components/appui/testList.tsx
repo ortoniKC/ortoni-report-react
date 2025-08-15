@@ -3,7 +3,7 @@
 import type { TestListProps, TestResultData } from "@/lib/types/reportData";
 import { StatusDot, TestAccordionItem } from "../ui/accordian";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { cn, formatDuration } from "@/lib/utils";
+import { formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 /**

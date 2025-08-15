@@ -1,21 +1,21 @@
 {
   "result": {
     "summary": {
-      "successRate": "96.00",
-      "lastRunDate": "Aug 15, 2025, 01:19 PM GMT+5:30",
+      "successRate": "91.84",
+      "lastRunDate": "Aug 15, 2025, 11:53 PM GMT+5:30",
       "retry": 0,
-      "pass": 48,
-      "fail": 2,
-      "skip": 2,
+      "pass": 45,
+      "fail": 4,
+      "skip": 3,
       "flaky": 0,
-      "total": 50,
-      "totalDuration": "31s:619ms",
+      "total": 49,
+      "totalDuration": "36s:040ms",
       "stats": {
         "projectNames": ["chromium", "firefox"],
-        "totalTests": [25, 25],
-        "passedTests": [24, 24],
-        "failedTests": [1, 1],
-        "skippedTests": [1, 1],
+        "totalTests": [25, 24],
+        "passedTests": [22, 23],
+        "failedTests": [3, 1],
+        "skippedTests": [1, 2],
         "retryTests": [0, 0],
         "flakyTests": [0, 0]
       }
@@ -94,7 +94,16 @@
           "Product total amount should not exceed 2 decimal places when quantity is 10": {
             "firefox": [
               {
-                "annotations": [],
+                "annotations": [
+                  {
+                    "type": "skip",
+                    "location": {
+                      "file": "/Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts",
+                      "line": 34,
+                      "column": 39
+                    }
+                  }
+                ],
                 "testTags": [],
                 "location": "cart.spec.ts:30:5",
                 "retry": "",
@@ -102,11 +111,42 @@
                 "projectName": "firefox",
                 "suite": "Product total amount should not exceed 2 decimal places when quantity is 10",
                 "title": "Product total amount should not exceed 2 decimal places when quantity is 10",
+                "status": "skipped",
+                "flaky": "skipped",
+                "duration": "01s:184ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "cart.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/video.webm",
+                "tracePath": "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/trace.zip",
+                "index": 24,
+                "testId": "cart.spec.ts:firefox:Product total amount should not exceed 2 decimal places when quantity is 10"
+              }
+            ],
+            "chromium": [
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "cart.spec.ts:30:5",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "chromium",
+                "suite": "Product total amount should not exceed 2 decimal places when quantity is 10",
+                "title": "Product total amount should not exceed 2 decimal places when quantity is 10",
                 "status": "failed",
                 "flaky": "unexpected",
-                "duration": "08s:990ms",
+                "duration": "07s:952ms",
                 "errors": [
-                  "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>"
+                  "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:42:3</span></span></span></span></span></span></span></span></span>"
                 ],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -143,53 +183,12 @@
                 "filters": {},
                 "base64Image": false,
                 "screenshots": [
-                  "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/test-failed-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/video.webm",
-                "markdownPath": "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/error-context.html",
-                "tracePath": "ortoni-data/attachments/1981448f0b79506fb670-9ee39bbbbc817ac9f7a6/trace.zip",
-                "index": 48,
-                "testId": "cart.spec.ts:firefox:Product total amount should not exceed 2 decimal places when quantity is 10"
-              }
-            ],
-            "chromium": [
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "cart.spec.ts:30:5",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "chromium",
-                "suite": "Product total amount should not exceed 2 decimal places when quantity is 10",
-                "title": "Product total amount should not exceed 2 decimal places when quantity is 10",
-                "status": "timedOut",
-                "flaky": "unexpected",
-                "duration": "30s:269ms",
-                "errors": [
-                  "<span style=\"color:#A00\">Test timeout of 30000ms exceeded.<span style=\"color:var(--snippet-color)\"></span></span>",
-                  "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n  - navigating to &quot;https://letcode.in/login&quot;, waiting until &quot;load&quot;<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.goto (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:7:25)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:39:19</span>"
-                ],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "<span style=\"color:#555\">   at <span style=\"color:var(--snippet-color)\">../pages/login.page.ts:7\n\n</span></span> <span style=\"color:#555\">  5 |<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\">  6 |<span style=\"color:var(--snippet-color)\">     <span style=\"color:#0AA\">async<span style=\"color:var(--snippet-color)\"> goto() {\n<span style=\"color:#A00\"><b>><span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:var(--snippet-color)\"><span style=\"color:#555\">  7 |<span style=\"color:var(--snippet-color)\">         <span style=\"color:#0AA\">await<span style=\"color:var(--snippet-color)\"> <span style=\"color:#0AA\">this<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">page<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">goto(<span style=\"color:#0A0\">&#039;/login&#039;<span style=\"color:var(--snippet-color)\">)<span style=\"color:#A50\">;<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\">    |<span style=\"color:var(--snippet-color)\">                         <span style=\"color:#A00\"><b>^<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\">  8 |<span style=\"color:var(--snippet-color)\">     }\n <span style=\"color:#555\">  9 |<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\"> 10 |<span style=\"color:var(--snippet-color)\">     <span style=\"color:#0AA\">async<span style=\"color:var(--snippet-color)\"> login(username<span style=\"color:#A50\">:<span style=\"color:var(--snippet-color)\"> string<span style=\"color:#A50\">,<span style=\"color:var(--snippet-color)\"> password<span style=\"color:#A50\">:<span style=\"color:var(--snippet-color)\"> string) {</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span>",
-                    "title": "Navigate to \"/login\"",
-                    "location": "../pages/login.page.ts:7:25"
-                  },
-                  { "snippet": "", "title": "After Hooks", "location": "" },
-                  { "snippet": "", "title": "Worker Cleanup", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "cart.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
                   "ortoni-data/attachments/1981448f0b79506fb670-0468d13a5fcc654fe9c2/test-failed-1.png"
                 ],
                 "videoPath": "ortoni-data/attachments/1981448f0b79506fb670-0468d13a5fcc654fe9c2/video.webm",
                 "markdownPath": "ortoni-data/attachments/1981448f0b79506fb670-0468d13a5fcc654fe9c2/error-context.html",
                 "tracePath": "ortoni-data/attachments/1981448f0b79506fb670-0468d13a5fcc654fe9c2/trace.zip",
-                "index": 51,
+                "index": 26,
                 "testId": "cart.spec.ts:chromium:Product total amount should not exceed 2 decimal places when quantity is 10"
               }
             ]
@@ -209,7 +208,7 @@
                 "title": "should allow me to add todo items",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "01s:558ms",
+                "duration": "975ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -245,7 +244,7 @@
                 "title": "should allow me to add todo items",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "01s:183ms",
+                "duration": "466ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -265,7 +264,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-d0e081deb82d930532c8/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-d0e081deb82d930532c8/trace.zip",
-                "index": 26,
+                "index": 25,
                 "testId": "demo-todo-app.spec.ts:firefox:should allow me to add todo items"
               }
             ]
@@ -283,7 +282,7 @@
                 "title": "should allow me to mark all items as completed",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "01s:782ms",
+                "duration": "01s:193ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -323,7 +322,7 @@
                 "title": "should allow me to clear the complete state of all items",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "01s:823ms",
+                "duration": "01s:212ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -363,7 +362,7 @@
                 "title": "complete all checkbox should update state when items are completed / cleared",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "628ms",
+                "duration": "534ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -414,46 +413,6 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:97:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "Mark all as completed",
-                "title": "should allow me to clear the complete state of all items",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "776ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByLabel('Mark all as complete')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Uncheck getByLabel('Mark all as complete')",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveClass", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-316c9f0de23306b27464/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-316c9f0de23306b27464/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-316c9f0de23306b27464/trace.zip",
-                "index": 27,
-                "testId": "demo-todo-app.spec.ts:firefox:should allow me to clear the complete state of all items"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
                 "location": "demo-todo-app.spec.ts:84:7",
                 "retry": "",
                 "isRetry": 0,
@@ -462,7 +421,7 @@
                 "title": "should allow me to mark all items as completed",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "01s:319ms",
+                "duration": "646ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -488,7 +447,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-7e9d6193d9400cfc1cca/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-7e9d6193d9400cfc1cca/trace.zip",
-                "index": 28,
+                "index": 27,
                 "testId": "demo-todo-app.spec.ts:firefox:should allow me to mark all items as completed"
               },
               {
@@ -502,7 +461,7 @@
                 "title": "complete all checkbox should update state when items are completed / cleared",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "985ms",
+                "duration": "818ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -545,8 +504,48 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-299f354feca99d051088/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-299f354feca99d051088/trace.zip",
-                "index": 30,
+                "index": 28,
                 "testId": "demo-todo-app.spec.ts:firefox:complete all checkbox should update state when items are completed / cleared"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:97:7",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "Mark all as completed",
+                "title": "should allow me to clear the complete state of all items",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "01s:200ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByLabel('Mark all as complete')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Uncheck getByLabel('Mark all as complete')",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveClass", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-316c9f0de23306b27464/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-316c9f0de23306b27464/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-316c9f0de23306b27464/trace.zip",
+                "index": 30,
+                "testId": "demo-todo-app.spec.ts:firefox:should allow me to clear the complete state of all items"
               }
             ]
           },
@@ -555,7 +554,212 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:133:7",
+                "location": "demo-todo-app.spec.ts:142:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "chromium",
+                "suite": "Item",
+                "title": "should allow me to display active items",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "453ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Active' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "toHaveText", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-a7855609c377423a8eaa/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-a7855609c377423a8eaa/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-a7855609c377423a8eaa/trace.zip",
+                "index": 5,
+                "testId": "demo-todo-app.spec.ts:chromium:should allow me to display active items"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:152:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "chromium",
+                "suite": "Item",
+                "title": "should respect the back button",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "775ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Showing all items",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Showing active items",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Showing completed items",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "Go back", "location": "" },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "Go back", "location": "" },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-efd6f10179bcbc6423bf/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-efd6f10179bcbc6423bf/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-efd6f10179bcbc6423bf/trace.zip",
+                "index": 6,
+                "testId": "demo-todo-app.spec.ts:chromium:should respect the back button"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:178:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "chromium",
+                "suite": "Item",
+                "title": "should allow me to display completed items",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "611ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Completed' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-8b76f095b14c15a1deab/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-8b76f095b14c15a1deab/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-8b76f095b14c15a1deab/trace.zip",
+                "index": 7,
+                "testId": "demo-todo-app.spec.ts:chromium:should allow me to display completed items"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:185:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "chromium",
+                "suite": "Item",
+                "title": "should allow me to display all items",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "700ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Active' })",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Completed' })",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'All' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-645cba6bdf48ce22f78b/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-645cba6bdf48ce22f78b/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-645cba6bdf48ce22f78b/trace.zip",
+                "index": 8,
+                "testId": "demo-todo-app.spec.ts:chromium:should allow me to display all items"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:212:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -563,7 +767,7 @@
                 "title": "should allow me to mark items as complete",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "552ms",
+                "duration": "395ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -612,13 +816,55 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-489ea41f87390de41c21/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-489ea41f87390de41c21/trace.zip",
-                "index": 5,
+                "index": 9,
                 "testId": "demo-todo-app.spec.ts:chromium:should allow me to mark items as complete"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:158:7",
+                "location": "demo-todo-app.spec.ts:194:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "chromium",
+                "suite": "Item",
+                "title": "should highlight the currently applied filter",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "541ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  { "snippet": "", "title": "toHaveClass", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Active' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveClass", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Completed' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveClass", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-47c3714f181c2454eee9/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-47c3714f181c2454eee9/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-47c3714f181c2454eee9/trace.zip",
+                "index": 10,
+                "testId": "demo-todo-app.spec.ts:chromium:should highlight the currently applied filter"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:237:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -626,7 +872,7 @@
                 "title": "should allow me to un-mark items as complete",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "594ms",
+                "duration": "518ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -685,13 +931,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-5710470e4e4a966b2f75/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-5710470e4e4a966b2f75/trace.zip",
-                "index": 6,
+                "index": 11,
                 "testId": "demo-todo-app.spec.ts:chromium:should allow me to un-mark items as complete"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:183:7",
+                "location": "demo-todo-app.spec.ts:262:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -699,7 +945,7 @@
                 "title": "should allow me to edit an item",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "634ms",
+                "duration": "428ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -766,7 +1012,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-1a97b61d023a429bd040/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-1a97b61d023a429bd040/trace.zip",
-                "index": 7,
+                "index": 12,
                 "testId": "demo-todo-app.spec.ts:chromium:should allow me to edit an item"
               }
             ],
@@ -774,7 +1020,254 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:133:7",
+                "location": "demo-todo-app.spec.ts:142:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "Item",
+                "title": "should allow me to display active items",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "605ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Active' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "toHaveText", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-ebb13fd3b0eb6cc7d18c/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-ebb13fd3b0eb6cc7d18c/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-ebb13fd3b0eb6cc7d18c/trace.zip",
+                "index": 29,
+                "testId": "demo-todo-app.spec.ts:firefox:should allow me to display active items"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:152:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "Item",
+                "title": "should respect the back button",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "760ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Showing all items",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Showing active items",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Showing completed items",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "Go back", "location": "" },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "Go back", "location": "" },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-05e6589800c03d1d5395/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-05e6589800c03d1d5395/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-05e6589800c03d1d5395/trace.zip",
+                "index": 31,
+                "testId": "demo-todo-app.spec.ts:firefox:should respect the back button"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:178:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "Item",
+                "title": "should allow me to display completed items",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "746ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Completed' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-222ae0c82e199af02dab/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-222ae0c82e199af02dab/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-222ae0c82e199af02dab/trace.zip",
+                "index": 32,
+                "testId": "demo-todo-app.spec.ts:firefox:should allow me to display completed items"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:185:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "Item",
+                "title": "should allow me to display all items",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "772ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Active' })",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Completed' })",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'All' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveCount", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-4b6b633c7d37f117b87b/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-4b6b633c7d37f117b87b/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-4b6b633c7d37f117b87b/trace.zip",
+                "index": 33,
+                "testId": "demo-todo-app.spec.ts:firefox:should allow me to display all items"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:194:9",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "Item",
+                "title": "should highlight the currently applied filter",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "790ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  { "snippet": "", "title": "toHaveClass", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Active' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveClass", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('link', { name: 'Completed' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveClass", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-20f01f3651bd5a0fc073/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-20f01f3651bd5a0fc073/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-20f01f3651bd5a0fc073/trace.zip",
+                "index": 35,
+                "testId": "demo-todo-app.spec.ts:firefox:should highlight the currently applied filter"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:212:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -782,7 +1275,7 @@
                 "title": "should allow me to mark items as complete",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "752ms",
+                "duration": "557ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -831,86 +1324,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-df5e93d3e2a87722fd3f/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-df5e93d3e2a87722fd3f/trace.zip",
-                "index": 29,
+                "index": 36,
                 "testId": "demo-todo-app.spec.ts:firefox:should allow me to mark items as complete"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:158:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "Item",
-                "title": "should allow me to un-mark items as complete",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "596ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Fill \"buy some cheese\" getByPlaceholder('What needs to be done?')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Fill \"feed the cat\" getByPlaceholder('What needs to be done?')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').first().getByRole('checkbox')",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveClass", "location": "" },
-                  { "snippet": "", "title": "not toHaveClass", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Uncheck getByTestId('todo-item').first().getByRole('checkbox')",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "not toHaveClass", "location": "" },
-                  { "snippet": "", "title": "not toHaveClass", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-3e24ee5219218082ece4/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-3e24ee5219218082ece4/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-3e24ee5219218082ece4/trace.zip",
-                "index": 31,
-                "testId": "demo-todo-app.spec.ts:firefox:should allow me to un-mark items as complete"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:183:7",
+                "location": "demo-todo-app.spec.ts:262:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -918,7 +1338,7 @@
                 "title": "should allow me to edit an item",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "547ms",
+                "duration": "607ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -985,8 +1405,81 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-bc069df90e27180c7c29/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-bc069df90e27180c7c29/trace.zip",
-                "index": 32,
+                "index": 37,
                 "testId": "demo-todo-app.spec.ts:firefox:should allow me to edit an item"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:237:7",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "Item",
+                "title": "should allow me to un-mark items as complete",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "01s:881ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Fill \"buy some cheese\" getByPlaceholder('What needs to be done?')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Fill \"feed the cat\" getByPlaceholder('What needs to be done?')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Press \"Enter\" getByPlaceholder('What needs to be done?')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Check getByTestId('todo-item').first().getByRole('checkbox')",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toHaveClass", "location": "" },
+                  { "snippet": "", "title": "not toHaveClass", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Uncheck getByTestId('todo-item').first().getByRole('checkbox')",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "not toHaveClass", "location": "" },
+                  { "snippet": "", "title": "not toHaveClass", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Wait for function",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-3e24ee5219218082ece4/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-3e24ee5219218082ece4/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-3e24ee5219218082ece4/trace.zip",
+                "index": 43,
+                "testId": "demo-todo-app.spec.ts:firefox:should allow me to un-mark items as complete"
               }
             ]
           },
@@ -995,7 +1488,7 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:213:7",
+                "location": "demo-todo-app.spec.ts:292:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1003,7 +1496,7 @@
                 "title": "should hide other controls when editing",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "570ms",
+                "duration": "455ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1030,13 +1523,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-28fb607624050fd82521/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-28fb607624050fd82521/trace.zip",
-                "index": 8,
+                "index": 13,
                 "testId": "demo-todo-app.spec.ts:chromium:should hide other controls when editing"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:225:7",
+                "location": "demo-todo-app.spec.ts:304:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1044,7 +1537,7 @@
                 "title": "should save edits on blur",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "563ms",
+                "duration": "491ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1080,13 +1573,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-1bd6ee2fec1beaaf42aa/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-1bd6ee2fec1beaaf42aa/trace.zip",
-                "index": 9,
+                "index": 14,
                 "testId": "demo-todo-app.spec.ts:chromium:should save edits on blur"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:245:7",
+                "location": "demo-todo-app.spec.ts:324:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1094,7 +1587,7 @@
                 "title": "should trim entered text",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "455ms",
+                "duration": "500ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1130,13 +1623,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-53f971c12bed0d92be82/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-53f971c12bed0d92be82/trace.zip",
-                "index": 10,
+                "index": 15,
                 "testId": "demo-todo-app.spec.ts:chromium:should trim entered text"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:265:7",
+                "location": "demo-todo-app.spec.ts:344:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1144,7 +1637,7 @@
                 "title": "should remove the item if an empty text string was entered",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "450ms",
+                "duration": "501ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1175,13 +1668,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-10ce05380c00810d697e/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-10ce05380c00810d697e/trace.zip",
-                "index": 11,
+                "index": 16,
                 "testId": "demo-todo-app.spec.ts:chromium:should remove the item if an empty text string was entered"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:279:7",
+                "location": "demo-todo-app.spec.ts:358:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1189,7 +1682,7 @@
                 "title": "should cancel edits on escape",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "422ms",
+                "duration": "375ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1220,7 +1713,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-f1199d69dfa0655fa016/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-f1199d69dfa0655fa016/trace.zip",
-                "index": 12,
+                "index": 17,
                 "testId": "demo-todo-app.spec.ts:chromium:should cancel edits on escape"
               }
             ],
@@ -1228,7 +1721,7 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:213:7",
+                "location": "demo-todo-app.spec.ts:292:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1236,7 +1729,7 @@
                 "title": "should hide other controls when editing",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "662ms",
+                "duration": "581ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1263,13 +1756,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-deb8bfa32dfcca2995a2/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-deb8bfa32dfcca2995a2/trace.zip",
-                "index": 33,
+                "index": 38,
                 "testId": "demo-todo-app.spec.ts:firefox:should hide other controls when editing"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:225:7",
+                "location": "demo-todo-app.spec.ts:304:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1277,7 +1770,7 @@
                 "title": "should save edits on blur",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "636ms",
+                "duration": "663ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1313,13 +1806,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-3a180179889ddd421df8/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-3a180179889ddd421df8/trace.zip",
-                "index": 34,
+                "index": 39,
                 "testId": "demo-todo-app.spec.ts:firefox:should save edits on blur"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:245:7",
+                "location": "demo-todo-app.spec.ts:324:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1327,7 +1820,7 @@
                 "title": "should trim entered text",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "570ms",
+                "duration": "794ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1363,13 +1856,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-f92c8ca0ade55fc7f2e9/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-f92c8ca0ade55fc7f2e9/trace.zip",
-                "index": 35,
+                "index": 40,
                 "testId": "demo-todo-app.spec.ts:firefox:should trim entered text"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:265:7",
+                "location": "demo-todo-app.spec.ts:344:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1377,7 +1870,7 @@
                 "title": "should remove the item if an empty text string was entered",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "560ms",
+                "duration": "726ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1408,13 +1901,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-71063c9734374b8f65de/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-71063c9734374b8f65de/trace.zip",
-                "index": 36,
+                "index": 41,
                 "testId": "demo-todo-app.spec.ts:firefox:should remove the item if an empty text string was entered"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:279:7",
+                "location": "demo-todo-app.spec.ts:358:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1422,7 +1915,7 @@
                 "title": "should cancel edits on escape",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "512ms",
+                "duration": "646ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1453,7 +1946,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-f93e273318ebea8d5154/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-f93e273318ebea8d5154/trace.zip",
-                "index": 38,
+                "index": 42,
                 "testId": "demo-todo-app.spec.ts:firefox:should cancel edits on escape"
               }
             ]
@@ -1463,7 +1956,7 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:295:7",
+                "location": "demo-todo-app.spec.ts:374:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1471,7 +1964,7 @@
                 "title": "should display the current number of todo items",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "307ms",
+                "duration": "332ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1513,7 +2006,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-bbb1bb0c9c77cda96f15/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-bbb1bb0c9c77cda96f15/trace.zip",
-                "index": 13,
+                "index": 18,
                 "testId": "demo-todo-app.spec.ts:chromium:should display the current number of todo items"
               }
             ],
@@ -1521,7 +2014,7 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:295:7",
+                "location": "demo-todo-app.spec.ts:374:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1529,7 +2022,7 @@
                 "title": "should display the current number of todo items",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "421ms",
+                "duration": "679ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1571,7 +2064,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-f58458c82bba319fbc2d/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-f58458c82bba319fbc2d/trace.zip",
-                "index": 37,
+                "index": 44,
                 "testId": "demo-todo-app.spec.ts:firefox:should display the current number of todo items"
               }
             ]
@@ -1581,7 +2074,7 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:320:7",
+                "location": "demo-todo-app.spec.ts:399:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1589,7 +2082,7 @@
                 "title": "should display the correct text",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "405ms",
+                "duration": "391ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1610,13 +2103,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-d1d24c10b0b14b6d95da/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-d1d24c10b0b14b6d95da/trace.zip",
-                "index": 14,
+                "index": 19,
                 "testId": "demo-todo-app.spec.ts:chromium:should display the correct text"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:327:7",
+                "location": "demo-todo-app.spec.ts:406:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1624,7 +2117,7 @@
                 "title": "should remove completed items when clicked",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "465ms",
+                "duration": "425ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1651,13 +2144,13 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-afaa39a2add3b845087f/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-afaa39a2add3b845087f/trace.zip",
-                "index": 15,
+                "index": 20,
                 "testId": "demo-todo-app.spec.ts:chromium:should remove completed items when clicked"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:335:7",
+                "location": "demo-todo-app.spec.ts:414:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1665,7 +2158,7 @@
                 "title": "should be hidden when there are no items that are completed",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "411ms",
+                "duration": "430ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1691,7 +2184,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-4ebb083191c59dda5f31/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-4ebb083191c59dda5f31/trace.zip",
-                "index": 16,
+                "index": 21,
                 "testId": "demo-todo-app.spec.ts:chromium:should be hidden when there are no items that are completed"
               }
             ],
@@ -1699,7 +2192,7 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:320:7",
+                "location": "demo-todo-app.spec.ts:399:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1707,7 +2200,7 @@
                 "title": "should display the correct text",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "480ms",
+                "duration": "870ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1728,13 +2221,53 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-818aa76789539fa419fa/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-818aa76789539fa419fa/trace.zip",
-                "index": 39,
+                "index": 45,
                 "testId": "demo-todo-app.spec.ts:firefox:should display the correct text"
               },
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:327:7",
+                "location": "demo-todo-app.spec.ts:414:7",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "Clear completed button",
+                "title": "should be hidden when there are no items that are completed",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "663ms",
+                "errors": [],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Check locator('.todo-list li .toggle').first()",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('button', { name: 'Clear completed' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toBeHidden", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "demo-todo-app.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/849da1cee0c412ce5534-37d63d4cfa37c0585327/test-finished-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-37d63d4cfa37c0585327/video.webm",
+                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-37d63d4cfa37c0585327/trace.zip",
+                "index": 46,
+                "testId": "demo-todo-app.spec.ts:firefox:should be hidden when there are no items that are completed"
+              },
+              {
+                "annotations": [],
+                "testTags": [],
+                "location": "demo-todo-app.spec.ts:406:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1742,7 +2275,7 @@
                 "title": "should remove completed items when clicked",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "540ms",
+                "duration": "748ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1769,48 +2302,8 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-44ac2385e68697b5158d/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-44ac2385e68697b5158d/trace.zip",
-                "index": 40,
+                "index": 47,
                 "testId": "demo-todo-app.spec.ts:firefox:should remove completed items when clicked"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:335:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "Clear completed button",
-                "title": "should be hidden when there are no items that are completed",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "549ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check locator('.todo-list li .toggle').first()",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('button', { name: 'Clear completed' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toBeHidden", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-37d63d4cfa37c0585327/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-37d63d4cfa37c0585327/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-37d63d4cfa37c0585327/trace.zip",
-                "index": 41,
-                "testId": "demo-todo-app.spec.ts:firefox:should be hidden when there are no items that are completed"
               }
             ]
           },
@@ -1819,7 +2312,7 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:347:7",
+                "location": "demo-todo-app.spec.ts:426:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "chromium",
@@ -1827,7 +2320,7 @@
                 "title": "should persist its data",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "449ms",
+                "duration": "456ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1879,7 +2372,7 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-67ccbc7dc463cf92ee08/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-67ccbc7dc463cf92ee08/trace.zip",
-                "index": 17,
+                "index": 22,
                 "testId": "demo-todo-app.spec.ts:chromium:should persist its data"
               }
             ],
@@ -1887,7 +2380,7 @@
               {
                 "annotations": [],
                 "testTags": [],
-                "location": "demo-todo-app.spec.ts:347:7",
+                "location": "demo-todo-app.spec.ts:426:7",
                 "retry": "",
                 "isRetry": 0,
                 "projectName": "firefox",
@@ -1895,7 +2388,7 @@
                 "title": "should persist its data",
                 "status": "passed",
                 "flaky": "expected",
-                "duration": "691ms",
+                "duration": "833ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -1947,508 +2440,8 @@
                 ],
                 "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-0613a48ca4365c09c8bb/video.webm",
                 "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-0613a48ca4365c09c8bb/trace.zip",
-                "index": 42,
+                "index": 48,
                 "testId": "demo-todo-app.spec.ts:firefox:should persist its data"
-              }
-            ]
-          },
-          "Routing": {
-            "chromium": [
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:383:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "chromium",
-                "suite": "Routing",
-                "title": "should allow me to display active items",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "503ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Active' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "toHaveText", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-168ac99248367a9c5f75/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-168ac99248367a9c5f75/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-168ac99248367a9c5f75/trace.zip",
-                "index": 18,
-                "testId": "demo-todo-app.spec.ts:chromium:should allow me to display active items"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:393:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "chromium",
-                "suite": "Routing",
-                "title": "should respect the back button",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "541ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Showing all items",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Showing active items",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Showing completed items",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "Go back", "location": "" },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "Go back", "location": "" },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-f4a7bfde65c589b439d6/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-f4a7bfde65c589b439d6/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-f4a7bfde65c589b439d6/trace.zip",
-                "index": 19,
-                "testId": "demo-todo-app.spec.ts:chromium:should respect the back button"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:419:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "chromium",
-                "suite": "Routing",
-                "title": "should allow me to display completed items",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "507ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Completed' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-b038b6fb9d0061cc555a/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-b038b6fb9d0061cc555a/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-b038b6fb9d0061cc555a/trace.zip",
-                "index": 20,
-                "testId": "demo-todo-app.spec.ts:chromium:should allow me to display completed items"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:426:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "chromium",
-                "suite": "Routing",
-                "title": "should allow me to display all items",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "518ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Active' })",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Completed' })",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'All' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-ac5122dabccbd5dd6ae5/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-ac5122dabccbd5dd6ae5/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-ac5122dabccbd5dd6ae5/trace.zip",
-                "index": 21,
-                "testId": "demo-todo-app.spec.ts:chromium:should allow me to display all items"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:435:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "chromium",
-                "suite": "Routing",
-                "title": "should highlight the currently applied filter",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "524ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  { "snippet": "", "title": "toHaveClass", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Active' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveClass", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Completed' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveClass", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-237c74ea6ef08dd9500e/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-237c74ea6ef08dd9500e/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-237c74ea6ef08dd9500e/trace.zip",
-                "index": 22,
-                "testId": "demo-todo-app.spec.ts:chromium:should highlight the currently applied filter"
-              }
-            ],
-            "firefox": [
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:383:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "Routing",
-                "title": "should allow me to display active items",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "530ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Active' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "toHaveText", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-b4dbecb3d65675e34949/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-b4dbecb3d65675e34949/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-b4dbecb3d65675e34949/trace.zip",
-                "index": 43,
-                "testId": "demo-todo-app.spec.ts:firefox:should allow me to display active items"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:393:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "Routing",
-                "title": "should respect the back button",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "695ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Showing all items",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Showing active items",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Showing completed items",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "Go back", "location": "" },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "Go back", "location": "" },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-708a24b151249fe4409f/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-708a24b151249fe4409f/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-708a24b151249fe4409f/trace.zip",
-                "index": 44,
-                "testId": "demo-todo-app.spec.ts:firefox:should respect the back button"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:419:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "Routing",
-                "title": "should allow me to display completed items",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "546ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Completed' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-a8d39448c97f37ed6bec/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-a8d39448c97f37ed6bec/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-a8d39448c97f37ed6bec/trace.zip",
-                "index": 45,
-                "testId": "demo-todo-app.spec.ts:firefox:should allow me to display completed items"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:426:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "Routing",
-                "title": "should allow me to display all items",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "689ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Check getByTestId('todo-item').nth(1).getByRole('checkbox')",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Wait for function",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Active' })",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Completed' })",
-                    "location": ""
-                  },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'All' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveCount", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-e9294e44b25a18873b83/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-e9294e44b25a18873b83/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-e9294e44b25a18873b83/trace.zip",
-                "index": 46,
-                "testId": "demo-todo-app.spec.ts:firefox:should allow me to display all items"
-              },
-              {
-                "annotations": [],
-                "testTags": [],
-                "location": "demo-todo-app.spec.ts:435:7",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "Routing",
-                "title": "should highlight the currently applied filter",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "652ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  { "snippet": "", "title": "toHaveClass", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Active' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveClass", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Click getByRole('link', { name: 'Completed' })",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "toHaveClass", "location": "" },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "demo-todo-app.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/849da1cee0c412ce5534-04a7508a754bbbea756a/test-finished-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-04a7508a754bbbea756a/video.webm",
-                "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-04a7508a754bbbea756a/trace.zip",
-                "index": 47,
-                "testId": "demo-todo-app.spec.ts:firefox:should highlight the currently applied filter"
               }
             ]
           }
@@ -2465,10 +2458,12 @@
                 "projectName": "chromium",
                 "suite": "User can log in successfully",
                 "title": "User can log in successfully",
-                "status": "passed",
-                "flaky": "expected",
-                "duration": "01s:491ms",
-                "errors": [],
+                "status": "failed",
+                "flaky": "unexpected",
+                "duration": "07s:178ms",
+                "errors": [
+                  "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>"
+                ],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
                   {
@@ -2476,18 +2471,40 @@
                     "title": "Navigate to \"/login\"",
                     "location": ""
                   },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
+                  {
+                    "snippet": "",
+                    "title": "Fill \"mor_2314\" getByPlaceholder('Enter Username')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Fill \"credentials.password\" getByPlaceholder('Enter Password')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('button', { name: 'Login' })",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "<span style=\"color:#555\">   at <span style=\"color:var(--snippet-color)\">../pages/login.page.ts:14\n\n</span></span> <span style=\"color:#555\"> 12 |<span style=\"color:var(--snippet-color)\">         <span style=\"color:#0AA\">await<span style=\"color:var(--snippet-color)\"> <span style=\"color:#0AA\">this<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">page<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">getByPlaceholder(<span style=\"color:#0A0\">&#039;Enter Password&#039;<span style=\"color:var(--snippet-color)\">)<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">fill(password)<span style=\"color:#A50\">;<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\"> 13 |<span style=\"color:var(--snippet-color)\">         <span style=\"color:#0AA\">await<span style=\"color:var(--snippet-color)\"> <span style=\"color:#0AA\">this<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">page<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">getByRole(<span style=\"color:#0A0\">&#039;button&#039;<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">,<span style=\"color:var(--snippet-color)\"> { name<span style=\"color:#A50\">:<span style=\"color:var(--snippet-color)\"> <span style=\"color:#0A0\">&#039;Login&#039;<span style=\"color:var(--snippet-color)\"> })<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">click()<span style=\"color:#A50\">;<span style=\"color:var(--snippet-color)\">\n<span style=\"color:#A00\"><b>><span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:var(--snippet-color)\"><span style=\"color:#555\"> 14 |<span style=\"color:var(--snippet-color)\">         <span style=\"color:#0AA\">await<span style=\"color:var(--snippet-color)\"> expect(<span style=\"color:#0AA\">this<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">page<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">locator(<span style=\"color:#0A0\">&quot;//i[@class=&#039;fas fa-sign-out-alt&#039;]&quot;<span style=\"color:var(--snippet-color)\">))<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">toBeVisible({ timeout<span style=\"color:#A50\">:<span style=\"color:var(--snippet-color)\"> <span style=\"color:#A0A\">5000<span style=\"color:var(--snippet-color)\"> })<span style=\"color:#A50\">;<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\">    |<span style=\"color:var(--snippet-color)\">                                                                              <span style=\"color:#A00\"><b>^<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\"> 15 |<span style=\"color:var(--snippet-color)\">     }\n <span style=\"color:#555\"> 16 |<span style=\"color:var(--snippet-color)\"> }\n <span style=\"color:#555\"> 17 |<span style=\"color:var(--snippet-color)\"></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>",
+                    "title": "toBeVisible",
+                    "location": "../pages/login.page.ts:14:78"
+                  },
+                  { "snippet": "", "title": "After Hooks", "location": "" },
+                  { "snippet": "", "title": "Worker Cleanup", "location": "" }
                 ],
                 "logs": "",
                 "filePath": "login.spec.ts",
                 "filters": {},
                 "base64Image": false,
                 "screenshots": [
-                  "ortoni-data/attachments/41d3fd2474a19feb00a1-c60d9c78d07f7d16f083/test-finished-1.png"
+                  "ortoni-data/attachments/41d3fd2474a19feb00a1-c60d9c78d07f7d16f083/test-failed-1.png"
                 ],
                 "videoPath": "ortoni-data/attachments/41d3fd2474a19feb00a1-c60d9c78d07f7d16f083/video.webm",
+                "markdownPath": "ortoni-data/attachments/41d3fd2474a19feb00a1-c60d9c78d07f7d16f083/error-context.html",
                 "tracePath": "ortoni-data/attachments/41d3fd2474a19feb00a1-c60d9c78d07f7d16f083/trace.zip",
-                "index": 24,
+                "index": 34,
                 "testId": "login.spec.ts:chromium:User can log in successfully"
               }
             ],
@@ -2501,9 +2518,82 @@
                 "projectName": "firefox",
                 "suite": "User can log in successfully",
                 "title": "User can log in successfully",
+                "status": "failed",
+                "flaky": "unexpected",
+                "duration": "07s:922ms",
+                "errors": [
+                  "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>"
+                ],
+                "steps": [
+                  { "snippet": "", "title": "Before Hooks", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Navigate to \"/login\"",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Fill \"mor_2314\" getByPlaceholder('Enter Username')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Fill \"credentials.password\" getByPlaceholder('Enter Password')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('button', { name: 'Login' })",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "<span style=\"color:#555\">   at <span style=\"color:var(--snippet-color)\">../pages/login.page.ts:14\n\n</span></span> <span style=\"color:#555\"> 12 |<span style=\"color:var(--snippet-color)\">         <span style=\"color:#0AA\">await<span style=\"color:var(--snippet-color)\"> <span style=\"color:#0AA\">this<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">page<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">getByPlaceholder(<span style=\"color:#0A0\">&#039;Enter Password&#039;<span style=\"color:var(--snippet-color)\">)<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">fill(password)<span style=\"color:#A50\">;<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\"> 13 |<span style=\"color:var(--snippet-color)\">         <span style=\"color:#0AA\">await<span style=\"color:var(--snippet-color)\"> <span style=\"color:#0AA\">this<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">page<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">getByRole(<span style=\"color:#0A0\">&#039;button&#039;<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">,<span style=\"color:var(--snippet-color)\"> { name<span style=\"color:#A50\">:<span style=\"color:var(--snippet-color)\"> <span style=\"color:#0A0\">&#039;Login&#039;<span style=\"color:var(--snippet-color)\"> })<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">click()<span style=\"color:#A50\">;<span style=\"color:var(--snippet-color)\">\n<span style=\"color:#A00\"><b>><span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:var(--snippet-color)\"><span style=\"color:#555\"> 14 |<span style=\"color:var(--snippet-color)\">         <span style=\"color:#0AA\">await<span style=\"color:var(--snippet-color)\"> expect(<span style=\"color:#0AA\">this<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">page<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">locator(<span style=\"color:#0A0\">&quot;//i[@class=&#039;fas fa-sign-out-alt&#039;]&quot;<span style=\"color:var(--snippet-color)\">))<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">toBeVisible({ timeout<span style=\"color:#A50\">:<span style=\"color:var(--snippet-color)\"> <span style=\"color:#A0A\">5000<span style=\"color:var(--snippet-color)\"> })<span style=\"color:#A50\">;<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\">    |<span style=\"color:var(--snippet-color)\">                                                                              <span style=\"color:#A00\"><b>^<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\"> 15 |<span style=\"color:var(--snippet-color)\">     }\n <span style=\"color:#555\"> 16 |<span style=\"color:var(--snippet-color)\"> }\n <span style=\"color:#555\"> 17 |<span style=\"color:var(--snippet-color)\"></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>",
+                    "title": "toBeVisible",
+                    "location": "../pages/login.page.ts:14:78"
+                  },
+                  { "snippet": "", "title": "After Hooks", "location": "" },
+                  { "snippet": "", "title": "Worker Cleanup", "location": "" }
+                ],
+                "logs": "",
+                "filePath": "login.spec.ts",
+                "filters": {},
+                "base64Image": false,
+                "screenshots": [
+                  "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/test-failed-1.png"
+                ],
+                "videoPath": "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/video.webm",
+                "markdownPath": "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/error-context.html",
+                "tracePath": "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/trace.zip",
+                "index": 50,
+                "testId": "login.spec.ts:firefox:User can log in successfully"
+              }
+            ]
+          }
+        },
+        "product.spec.ts": {
+          "User can view product details and add to cart": {
+            "firefox": [
+              {
+                "annotations": [
+                  {
+                    "type": "fail",
+                    "location": {
+                      "file": "/Users/letcode/Documents/GitHub/pw-test/tests/product.spec.ts",
+                      "line": 7,
+                      "column": 6
+                    }
+                  }
+                ],
+                "testTags": [],
+                "location": "product.spec.ts:7:6",
+                "retry": "",
+                "isRetry": 0,
+                "projectName": "firefox",
+                "suite": "User can view product details and add to cart",
+                "title": "User can view product details and add to cart",
                 "status": "passed",
-                "flaky": "expected",
-                "duration": "01s:925ms",
+                "flaky": "unexpected",
+                "duration": "05s:265ms",
                 "errors": [],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
@@ -2512,25 +2602,59 @@
                     "title": "Navigate to \"/login\"",
                     "location": ""
                   },
-                  { "snippet": "", "title": "After Hooks", "location": "" }
+                  {
+                    "snippet": "",
+                    "title": "Fill \"mor_2314\" getByPlaceholder('Enter Username')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Fill \"83r5^_\" getByPlaceholder('Enter Password')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('button', { name: 'Login' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toBeVisible", "location": "" },
+                  {
+                    "snippet": "",
+                    "title": "Navigate to \"/home\"",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('heading', { name: 'Fake Store' })",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click locator('.card').first().getByRole('button')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('button', { name: 'Add to Cart' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toContainText", "location": "" },
+                  { "snippet": "", "title": "After Hooks", "location": "" },
+                  { "snippet": "", "title": "Worker Cleanup", "location": "" }
                 ],
                 "logs": "",
-                "filePath": "login.spec.ts",
+                "filePath": "product.spec.ts",
                 "filters": {},
                 "base64Image": false,
                 "screenshots": [
-                  "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/test-finished-1.png"
+                  "ortoni-data/attachments/2fa8ab87beca8e7f39ce-2a4bf6e7f1b90de79aaf/test-failed-1.png"
                 ],
-                "videoPath": "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/video.webm",
-                "tracePath": "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/trace.zip",
+                "videoPath": "ortoni-data/attachments/2fa8ab87beca8e7f39ce-2a4bf6e7f1b90de79aaf/video.webm",
+                "tracePath": "ortoni-data/attachments/2fa8ab87beca8e7f39ce-2a4bf6e7f1b90de79aaf/trace.zip",
                 "index": 49,
-                "testId": "login.spec.ts:firefox:User can log in successfully"
+                "testId": "product.spec.ts:firefox:User can view product details and add to cart"
               }
-            ]
-          }
-        },
-        "product.spec.ts": {
-          "User can view product details and add to cart": {
+            ],
             "chromium": [
               {
                 "annotations": [
@@ -2550,16 +2674,40 @@
                 "projectName": "chromium",
                 "suite": "User can view product details and add to cart",
                 "title": "User can view product details and add to cart",
-                "status": "passed",
+                "status": "timedOut",
                 "flaky": "unexpected",
-                "duration": "02s:221ms",
-                "errors": [],
+                "duration": "30s:409ms",
+                "errors": [
+                  "<span style=\"color:#A00\">Test timeout of 30000ms exceeded.<span style=\"color:var(--snippet-color)\"></span></span>",
+                  "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n  - navigating to &quot;https://letcode.in/home&quot;, waiting until &quot;load&quot;<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at HomePage.goto (/Users/letcode/Documents/GitHub/pw-test/pages/home.page.ts:7:25)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/product.spec.ts:15:18</span>"
+                ],
                 "steps": [
                   { "snippet": "", "title": "Before Hooks", "location": "" },
                   {
                     "snippet": "",
                     "title": "Navigate to \"/login\"",
                     "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Fill \"mor_2314\" getByPlaceholder('Enter Username')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Fill \"83r5^_\" getByPlaceholder('Enter Password')",
+                    "location": ""
+                  },
+                  {
+                    "snippet": "",
+                    "title": "Click getByRole('button', { name: 'Login' })",
+                    "location": ""
+                  },
+                  { "snippet": "", "title": "toBeVisible", "location": "" },
+                  {
+                    "snippet": "<span style=\"color:#555\">   at <span style=\"color:var(--snippet-color)\">../pages/home.page.ts:7\n\n</span></span> <span style=\"color:#555\">  5 |<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\">  6 |<span style=\"color:var(--snippet-color)\">     <span style=\"color:#0AA\">async<span style=\"color:var(--snippet-color)\"> goto() {\n<span style=\"color:#A00\"><b>><span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:var(--snippet-color)\"><span style=\"color:#555\">  7 |<span style=\"color:var(--snippet-color)\">         <span style=\"color:#0AA\">await<span style=\"color:var(--snippet-color)\"> <span style=\"color:#0AA\">this<span style=\"color:var(--snippet-color)\"><span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">page<span style=\"color:#A50\">.<span style=\"color:var(--snippet-color)\">goto(<span style=\"color:#0A0\">&#039;/home&#039;<span style=\"color:var(--snippet-color)\">)<span style=\"color:#A50\">;<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\">    |<span style=\"color:var(--snippet-color)\">                         <span style=\"color:#A00\"><b>^<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\">  8 |<span style=\"color:var(--snippet-color)\">     }\n <span style=\"color:#555\">  9 |<span style=\"color:var(--snippet-color)\">\n <span style=\"color:#555\"> 10 |<span style=\"color:var(--snippet-color)\">     <span style=\"color:#0AA\">async<span style=\"color:var(--snippet-color)\"> selectFirstProduct() {</span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span>",
+                    "title": "Navigate to \"/home\"",
+                    "location": "../pages/home.page.ts:7:25"
                   },
                   { "snippet": "", "title": "After Hooks", "location": "" },
                   { "snippet": "", "title": "Worker Cleanup", "location": "" }
@@ -2572,55 +2720,10 @@
                   "ortoni-data/attachments/2fa8ab87beca8e7f39ce-95385f0d8632183ef2d2/test-failed-1.png"
                 ],
                 "videoPath": "ortoni-data/attachments/2fa8ab87beca8e7f39ce-95385f0d8632183ef2d2/video.webm",
+                "markdownPath": "ortoni-data/attachments/2fa8ab87beca8e7f39ce-95385f0d8632183ef2d2/error-context.html",
                 "tracePath": "ortoni-data/attachments/2fa8ab87beca8e7f39ce-95385f0d8632183ef2d2/trace.zip",
-                "index": 25,
+                "index": 51,
                 "testId": "product.spec.ts:chromium:User can view product details and add to cart"
-              }
-            ],
-            "firefox": [
-              {
-                "annotations": [
-                  {
-                    "type": "fail",
-                    "location": {
-                      "file": "/Users/letcode/Documents/GitHub/pw-test/tests/product.spec.ts",
-                      "line": 7,
-                      "column": 6
-                    }
-                  }
-                ],
-                "testTags": [],
-                "location": "product.spec.ts:7:6",
-                "retry": "",
-                "isRetry": 0,
-                "projectName": "firefox",
-                "suite": "User can view product details and add to cart",
-                "title": "User can view product details and add to cart",
-                "status": "passed",
-                "flaky": "unexpected",
-                "duration": "01s:983ms",
-                "errors": [],
-                "steps": [
-                  { "snippet": "", "title": "Before Hooks", "location": "" },
-                  {
-                    "snippet": "",
-                    "title": "Navigate to \"/login\"",
-                    "location": ""
-                  },
-                  { "snippet": "", "title": "After Hooks", "location": "" },
-                  { "snippet": "", "title": "Worker Cleanup", "location": "" }
-                ],
-                "logs": "",
-                "filePath": "product.spec.ts",
-                "filters": {},
-                "base64Image": false,
-                "screenshots": [
-                  "ortoni-data/attachments/2fa8ab87beca8e7f39ce-2a4bf6e7f1b90de79aaf/test-failed-1.png"
-                ],
-                "videoPath": "ortoni-data/attachments/2fa8ab87beca8e7f39ce-2a4bf6e7f1b90de79aaf/video.webm",
-                "tracePath": "ortoni-data/attachments/2fa8ab87beca8e7f39ce-2a4bf6e7f1b90de79aaf/trace.zip",
-                "index": 50,
-                "testId": "product.spec.ts:firefox:User can view product details and add to cart"
               }
             ]
           }
@@ -2634,13 +2737,7 @@
               "status": "skipped",
               "duration": "",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "skipped",
-              "duration": "",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -2649,15 +2746,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "01s:558ms",
+              "duration": "975ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "02s:755ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -2666,15 +2757,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "01s:782ms",
+              "duration": "01s:193ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "02s:965ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -2683,15 +2768,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "01s:823ms",
+              "duration": "01s:212ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "02s:977ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -2700,236 +2779,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "628ms",
+              "duration": "534ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "525ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should allow me to mark items as complete",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "552ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "465ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should allow me to un-mark items as complete",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "594ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "551ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should allow me to edit an item",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "634ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "496ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should hide other controls when editing",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "570ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "509ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should save edits on blur",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "563ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "436ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should trim entered text",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "455ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "615ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should remove the item if an empty text string was entered",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "450ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "561ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should cancel edits on escape",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "422ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "491ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should display the current number of todo items",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "307ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "334ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should display the correct text",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "405ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "497ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should remove completed items when clicked",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "465ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "483ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should be hidden when there are no items that are completed",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "411ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "438ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:chromium:should persist its data",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "449ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "500ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -2938,15 +2790,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "503ms",
+              "duration": "453ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "496ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -2955,15 +2801,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "541ms",
+              "duration": "775ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "649ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -2972,15 +2812,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "507ms",
+              "duration": "611ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "554ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -2989,15 +2823,20 @@
           "history": [
             {
               "status": "passed",
-              "duration": "518ms",
+              "duration": "700ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should allow me to mark items as complete",
+          "history": [
             {
               "status": "passed",
-              "duration": "615ms",
+              "duration": "395ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3006,15 +2845,141 @@
           "history": [
             {
               "status": "passed",
-              "duration": "524ms",
+              "duration": "541ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should allow me to un-mark items as complete",
+          "history": [
             {
               "status": "passed",
-              "duration": "519ms",
+              "duration": "518ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should allow me to edit an item",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "428ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should hide other controls when editing",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "455ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should save edits on blur",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "491ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should trim entered text",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "500ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should remove the item if an empty text string was entered",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "501ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should cancel edits on escape",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "375ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should display the current number of todo items",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "332ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should display the correct text",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "391ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should remove completed items when clicked",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "425ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should be hidden when there are no items that are completed",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "430ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should persist its data",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "456ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3025,47 +2990,18 @@
               "status": "skipped",
               "duration": "",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "cart.spec.ts:firefox:Product total amount should not exceed 2 decimal places when quantity is 10",
+          "history": [
             {
               "status": "skipped",
-              "duration": "",
+              "duration": "01s:184ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "login.spec.ts:chromium:User can log in successfully",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "01s:491ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "03s:252ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "product.spec.ts:chromium:User can view product details and add to cart",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "02s:221ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "03s:414ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3074,32 +3010,20 @@
           "history": [
             {
               "status": "passed",
-              "duration": "01s:183ms",
+              "duration": "466ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:101ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
         {
-          "testId": "demo-todo-app.spec.ts:firefox:should allow me to clear the complete state of all items",
+          "testId": "cart.spec.ts:chromium:Product total amount should not exceed 2 decimal places when quantity is 10",
           "history": [
             {
-              "status": "passed",
-              "duration": "776ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:869ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "status": "failed",
+              "duration": "07s:952ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:42:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3108,32 +3032,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "01s:319ms",
+              "duration": "646ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:905ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should allow me to mark items as complete",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "752ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "858ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3142,219 +3043,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "985ms",
+              "duration": "818ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:363ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should allow me to un-mark items as complete",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "596ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "850ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should allow me to edit an item",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "547ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:101ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should hide other controls when editing",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "662ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "981ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should save edits on blur",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "636ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "01s:015ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should trim entered text",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "570ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "772ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should remove the item if an empty text string was entered",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "560ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "675ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should display the current number of todo items",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "421ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "724ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should cancel edits on escape",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "512ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "732ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should display the correct text",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "480ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "671ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should remove completed items when clicked",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "540ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "656ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should be hidden when there are no items that are completed",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "549ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "743ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
-            }
-          ]
-        },
-        {
-          "testId": "demo-todo-app.spec.ts:firefox:should persist its data",
-          "history": [
-            {
-              "status": "passed",
-              "duration": "691ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "969ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3363,15 +3054,20 @@
           "history": [
             {
               "status": "passed",
-              "duration": "530ms",
+              "duration": "605ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should allow me to clear the complete state of all items",
+          "history": [
             {
               "status": "passed",
-              "duration": "776ms",
+              "duration": "01s:200ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3380,15 +3076,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "695ms",
+              "duration": "760ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "812ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3397,15 +3087,9 @@
           "history": [
             {
               "status": "passed",
-              "duration": "546ms",
+              "duration": "746ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "619ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3414,15 +3098,20 @@
           "history": [
             {
               "status": "passed",
-              "duration": "689ms",
+              "duration": "772ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "login.spec.ts:chromium:User can log in successfully",
+          "history": [
             {
-              "status": "passed",
-              "duration": "722ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "status": "failed",
+              "duration": "07s:178ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3431,49 +3120,152 @@
           "history": [
             {
               "status": "passed",
-              "duration": "652ms",
+              "duration": "790ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "533ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
         {
-          "testId": "cart.spec.ts:firefox:Product total amount should not exceed 2 decimal places when quantity is 10",
+          "testId": "demo-todo-app.spec.ts:firefox:should allow me to mark items as complete",
           "history": [
             {
-              "status": "failed",
-              "duration": "08s:990ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "10s:521ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "status": "passed",
+              "duration": "557ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
         {
-          "testId": "login.spec.ts:firefox:User can log in successfully",
+          "testId": "demo-todo-app.spec.ts:firefox:should allow me to edit an item",
           "history": [
             {
               "status": "passed",
-              "duration": "01s:925ms",
+              "duration": "607ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should hide other controls when editing",
+          "history": [
             {
               "status": "passed",
-              "duration": "02s:564ms",
+              "duration": "581ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should save edits on blur",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "663ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should trim entered text",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "794ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should remove the item if an empty text string was entered",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "726ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should cancel edits on escape",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "646ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should allow me to un-mark items as complete",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "01s:881ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should display the current number of todo items",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "679ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should display the correct text",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "870ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should be hidden when there are no items that are completed",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "663ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should remove completed items when clicked",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "748ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should persist its data",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "833ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
@@ -3482,32 +3274,31 @@
           "history": [
             {
               "status": "passed",
-              "duration": "01s:983ms",
+              "duration": "05s:265ms",
               "error_message": "",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "passed",
-              "duration": "02s:438ms",
-              "error_message": "",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         },
         {
-          "testId": "cart.spec.ts:chromium:Product total amount should not exceed 2 decimal places when quantity is 10",
+          "testId": "login.spec.ts:firefox:User can log in successfully",
+          "history": [
+            {
+              "status": "failed",
+              "duration": "07s:922ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "product.spec.ts:chromium:User can view product details and add to cart",
           "history": [
             {
               "status": "timedOut",
-              "duration": "30s:269ms",
-              "error_message": "<span style=\"color:#A00\">Test timeout of 30000ms exceeded.<span style=\"color:var(--snippet-color)\"></span></span>\nError: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n  - navigating to &quot;https://letcode.in/login&quot;, waiting until &quot;load&quot;<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.goto (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:7:25)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:39:19</span>",
-              "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30"
-            },
-            {
-              "status": "failed",
-              "duration": "09s:950ms",
-              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/cart.spec.ts:40:3</span></span></span></span></span></span></span></span></span>",
-              "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30"
+              "duration": "30s:409ms",
+              "error_message": "<span style=\"color:#A00\">Test timeout of 30000ms exceeded.<span style=\"color:var(--snippet-color)\"></span></span>\nError: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n  - navigating to &quot;https://letcode.in/home&quot;, waiting until &quot;load&quot;<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at HomePage.goto (/Users/letcode/Documents/GitHub/pw-test/pages/home.page.ts:7:25)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/product.spec.ts:15:18</span>",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
             }
           ]
         }
@@ -3534,76 +3325,70 @@
     "analytics": {
       "reportData": {
         "summary": {
-          "totalRuns": 2,
-          "totalTests": 104,
-          "passed": 96,
+          "totalRuns": 1,
+          "totalTests": 52,
+          "passed": 45,
           "failed": 3,
-          "passRate": 92.31,
-          "avgDuration": 421
+          "passRate": 86.54,
+          "avgDuration": 468
         },
         "trends": [
           {
-            "run_date": "Aug 15, 2025, 12:25 PM GMT+5:30",
-            "passed": 48,
-            "failed": 2,
-            "avg_duration": 421
-          },
-          {
-            "run_date": "Aug 15, 2025, 01:19 PM GMT+5:30",
-            "passed": 48,
-            "failed": 1,
-            "avg_duration": 422
+            "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30",
+            "passed": 45,
+            "failed": 3,
+            "avg_duration": 468
           }
         ],
         "flakyTests": [],
         "slowTests": [
           {
+            "test_id": "demo-todo-app.spec.ts:chromium:should allow me to add todo items",
+            "avg_duration": 975
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should display the correct text",
+            "avg_duration": 870
+          },
+          {
             "test_id": "demo-todo-app.spec.ts:firefox:should persist its data",
-            "avg_duration": 830
+            "avg_duration": 833
           },
           {
-            "test_id": "demo-todo-app.spec.ts:firefox:should hide other controls when editing",
-            "avg_duration": 822
-          },
-          {
-            "test_id": "demo-todo-app.spec.ts:firefox:should allow me to mark items as complete",
-            "avg_duration": 805
-          },
-          {
-            "test_id": "demo-todo-app.spec.ts:firefox:should respect the back button",
-            "avg_duration": 754
-          },
-          {
-            "test_id": "demo-todo-app.spec.ts:firefox:should allow me to un-mark items as complete",
-            "avg_duration": 723
-          },
-          {
-            "test_id": "demo-todo-app.spec.ts:firefox:should allow me to display all items",
-            "avg_duration": 706
+            "test_id": "demo-todo-app.spec.ts:firefox:complete all checkbox should update state when items are completed / cleared",
+            "avg_duration": 818
           },
           {
             "test_id": "demo-todo-app.spec.ts:firefox:should trim entered text",
-            "avg_duration": 671
+            "avg_duration": 794
           },
           {
-            "test_id": "demo-todo-app.spec.ts:firefox:should allow me to display active items",
-            "avg_duration": 653
+            "test_id": "demo-todo-app.spec.ts:firefox:should highlight the currently applied filter",
+            "avg_duration": 790
           },
           {
-            "test_id": "demo-todo-app.spec.ts:firefox:should be hidden when there are no items that are completed",
-            "avg_duration": 646
+            "test_id": "demo-todo-app.spec.ts:chromium:should respect the back button",
+            "avg_duration": 775
           },
           {
-            "test_id": "demo-todo-app.spec.ts:firefox:should cancel edits on escape",
-            "avg_duration": 622
+            "test_id": "demo-todo-app.spec.ts:firefox:should allow me to display all items",
+            "avg_duration": 772
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should respect the back button",
+            "avg_duration": 760
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should remove completed items when clicked",
+            "avg_duration": 748
           }
         ]
       },
       "chartTrendData": {
-        "labels": ["Aug 15, 2025, 12:25 PM", "Aug 15, 2025, 1:19 PM"],
-        "passed": [48, 48],
-        "failed": [2, 1],
-        "avgDuration": [421, 422]
+        "labels": ["Aug 15, 2025, 11:53 PM"],
+        "passed": [45],
+        "failed": [3],
+        "avgDuration": [468]
       }
     }
   }

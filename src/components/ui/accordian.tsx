@@ -1,5 +1,5 @@
 import type { TestResultData } from "@/lib/types/reportData";
-import { cn, formatDuration, statusClass } from "@/lib/utils";
+import { cn, formatDuration } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
@@ -142,7 +142,7 @@ export function StatusDot({ status }: { status: string }) {
   const color =
     status === "passed"
       ? "bg-emerald-500"
-      : status === "failed"
+      : status === "failed" || status === "timedOut"
       ? "bg-red-500"
       : status === "flaky"
       ? "bg-amber-500"
