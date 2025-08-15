@@ -1,0 +1,43 @@
+{
+  "result": {
+    "summary": {},
+    "results": {
+      "grouped": {
+        "demo-todo-app.spec.ts": {
+          "Mark all as completed": {
+            "chromium": [
+              {
+                "projectName": "chromium",
+                "suite": "Mark all as completed",
+                "title": "should allow me to mark all items as completed",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "01s:782ms",
+                "filePath": "demo-todo-app.spec.ts",
+                "testId": "demo-todo-app.spec.ts:chromium:should allow me to mark all items as completed"
+              }
+            ],
+            "firefox": [
+              {
+                "projectName": "firefox",
+                "suite": "Mark all as completed",
+                "title": "should allow me to mark all items as completed",
+                "status": "passed",
+                "flaky": "expected",
+                "duration": "01s:319ms",
+                "filePath": "demo-todo-app.spec.ts",
+                "testId": "demo-todo-app.spec.ts:firefox:should allow me to mark all items as completed"
+              }
+            ]
+          }
+        }
+      },
+      "testHistories": [],
+      "allTags": [],
+      "set": {}
+    },
+    "meta": {},
+    "preferences": { "logo": "logo.png", "showProject": true },
+    "analytics": {}
+  }
+}

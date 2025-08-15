@@ -1,17 +1,41 @@
+"use client";
+
+import { memo, useMemo } from "react";
 import type { ReportData } from "@/lib/types/reportData";
-import { memo } from "react";
 import { TestList } from "./testList";
 
-export const TestsPage = memo(({ result }: ReportData) => {
-  const tests = result.results.grouped;
-  const showProject = result.preferences.showProject;
+export const TestsPage = memo((props: { result: ReportData["result"] }) => {
+  const { result } = props;
+
+  // Safe defaults in case backend sends undefined
+  const grouped = result?.results?.grouped ?? {};
+  const showProject = Boolean(result?.preferences?.showProject);
+
+  // Build the correctly-typed `tests` prop for TestList
+  const testsForList = useMemo(() => {
+    if (showProject) {
+      // { filePath: { suite: { project: TestResultData[] } } }
+      return grouped as Extract<
+        Parameters<typeof TestList>[0],
+        { showProject: true }
+      >["tests"];
+    }
+    // { filePath: { suite: TestResultData[] } }
+    return grouped as Extract<
+      Parameters<typeof TestList>[0],
+      { showProject: false }
+    >["tests"];
+  }, [grouped, showProject]);
 
   return (
     <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">
       <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
         <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
-          <h1>Test Page</h1>
-          <TestList tests={tests} showProject={showProject} />
+          <h1 className="text-xl font-semibold">Test Page</h1>
+          <TestList
+            tests={testsForList as any}
+            showProject={showProject as any}
+          />
         </div>
       </div>
     </div>

@@ -5,8 +5,6 @@ import { HashRouter } from "react-router-dom";
 import mockData from "./a.json";
 let reportData: any = {};
 
-// pass this from script tag in package.json
-
 const debug = import.meta.env.VITE_DEBUG === "true";
 
 if (debug) {

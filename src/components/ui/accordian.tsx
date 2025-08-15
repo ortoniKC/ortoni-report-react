@@ -1,23 +1,30 @@
-import { cn } from "@/lib/utils";
+"use client";
+
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
-
-interface FAQItemProps {
-  question: string;
-  answer: string;
+import { cn } from "@/lib/utils";
+import type { TestResultData } from "@/lib/types/reportData";
+interface TestAccordionItemProps {
+  title: string;
+  tests: TestResultData[];
   index: number;
 }
 
-export function FAQItem({ question, answer, index }: FAQItemProps) {
+export function TestAccordionItem({
+  title,
+  tests,
+  index,
+}: TestAccordionItemProps) {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.3,
-        delay: index * 0.15,
+        delay: index * 0.1,
         ease: "easeOut",
       }}
       className={cn(
@@ -38,7 +45,10 @@ export function FAQItem({ question, answer, index }: FAQItemProps) {
             isOpen && "text-foreground"
           )}
         >
-          {question}
+          {title}{" "}
+          <span className="text-xs text-muted-foreground ml-2">
+            ({tests.length} tests)
+          </span>
         </h3>
         <motion.div
           animate={{
@@ -58,6 +68,7 @@ export function FAQItem({ question, answer, index }: FAQItemProps) {
           <ChevronDown className="h-4 w-4" />
         </motion.div>
       </button>
+
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
@@ -90,19 +101,38 @@ export function FAQItem({ question, answer, index }: FAQItemProps) {
               },
             }}
           >
-            <div className="border-border/40 border-t px-6 pt-2 pb-4">
-              <motion.p
-                initial={{ y: -8, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -8, opacity: 0 }}
-                transition={{
-                  duration: 0.3,
-                  ease: "easeOut",
-                }}
-                className="text-muted-foreground text-sm leading-relaxed"
-              >
-                {answer}
-              </motion.p>
+            <div className="border-border/40 border-t px-6 pt-2 pb-4 space-y-2">
+              {tests.map((t) => (
+                <motion.div
+                  key={t.testId}
+                  initial={{ y: -8, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -8, opacity: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    ease: "easeOut",
+                  }}
+                  className="text-sm leading-relaxed"
+                >
+                  <div className="flex justify-between items-center">
+                    <span>{t.title}</span>
+                    <span
+                      className={cn(
+                        "px-2 py-0.5 rounded-full text-xs",
+                        t.status === "passed" &&
+                          "bg-green-500/20 text-green-700",
+                        t.status === "failed" && "bg-red-500/20 text-red-700",
+                        t.status === "skipped" && "bg-gray-500/20 text-gray-700"
+                      )}
+                    >
+                      {t.status}
+                    </span>
+                  </div>
+                  <div className="text-muted-foreground text-xs">
+                    Duration: {t.duration}ms
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         )}
