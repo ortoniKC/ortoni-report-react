@@ -7,7 +7,13 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { TestDetails } from "./TestDetails";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "../ui/sheet";
 
 export function TestList(props: TestListProps) {
   const { tests, showProject } = props;
@@ -23,17 +29,24 @@ export function TestList(props: TestListProps) {
     <>
       {/* Sheet Drawer for Test Details */}
       <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTitle>Test Details</SheetTitle>
         <SheetContent
           side="right"
-          className="w-[500px] sm:max-w-xl overflow-y-auto"
+          className="
+    inset-y-0 right-0 left-auto
+    sm:!max-w-none
+    w-[75vw] sm:w-[70vw] md:w-[65vw] lg:w-[60vw] xl:w-[55vw] 2xl:w-[50vw]
+    max-w-[min(100vw-16px,1200px)]
+    h-dvh sm:h-auto sm:max-h-[calc(100dvh-32px)]
+    overflow-y-auto overflow-x-hidden
+    p-6
+  "
         >
-          <SheetHeader>
-            <SheetTitle>Test Details</SheetTitle>
-          </SheetHeader>
-          <div className="mt-4">
+          <div className="min-h-0">
             <TestDetails test={selectedTest} />
           </div>
         </SheetContent>
+        <SheetDescription>Test Details</SheetDescription>
       </Sheet>
       <div className="space-y-3">
         {Object.entries(tests ?? {}).map(([filePath, suites]) => (
