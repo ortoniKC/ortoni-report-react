@@ -1,6 +1,6 @@
 "use client";
 
-import type { TestResultData } from "@/lib/types/reportData";
+import type { TestListProps, TestResultData } from "@/lib/types/reportData";
 import { TestAccordionItem } from "../ui/accordian";
 
 /**
@@ -8,23 +8,6 @@ import { TestAccordionItem } from "../ui/accordian";
  * - showProject: true  -> tests[filePath][suite] is { [project]: TestResultData[] }
  * - showProject: false -> tests[filePath][suite] is TestResultData[]
  */
-type TestListProps =
-  | {
-      showProject: true;
-      tests: {
-        [filePath: string]: {
-          [suite: string]: { [projectName: string]: TestResultData[] };
-        };
-      };
-    }
-  | {
-      showProject: false;
-      tests: {
-        [filePath: string]: {
-          [suite: string]: TestResultData[];
-        };
-      };
-    };
 
 export function TestList(props: TestListProps) {
   const { tests, showProject } = props;

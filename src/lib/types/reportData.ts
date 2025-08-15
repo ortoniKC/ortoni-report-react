@@ -169,3 +169,21 @@ export interface ChartTrendData {
   failed: number[];
   avgDuration: number[];
 }
+
+export type TestListProps =
+  | {
+      showProject: true;
+      tests: {
+        [filePath: string]: {
+          [suite: string]: { [projectName: string]: TestResultData[] };
+        };
+      };
+    }
+  | {
+      showProject: false;
+      tests: {
+        [filePath: string]: {
+          [suite: string]: TestResultData[];
+        };
+      };
+    };
