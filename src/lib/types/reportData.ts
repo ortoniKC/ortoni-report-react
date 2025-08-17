@@ -1,20 +1,9 @@
-export interface ReportData {
-  result: {
-    summary: Summary;
-    results: Result;
-    meta: Meta;
-    preferences: Preferences;
-    analytics: Analytics;
-  };
-}
-
 export interface Result {
-  grouped: TestListProps;
   testHistories: TestHistory[];
   allTags: string[];
   set: Record<string, unknown>;
 }
-export interface TestResultData {
+export interface TestResultItem {
   annotations: {
     type: string;
     location: { file: string; line: number; column: number };
@@ -51,25 +40,57 @@ export interface TestResultData {
   testId: string;
 }
 
-export interface GroupedResults {
-  [filePath: string]: {
-    [suite: string]:
-      | TestResultData[] // When showProject = false
-      | { [projectName: string]: TestResultData[] }; // When showProject = true
+interface Summary {
+  testResult: {
+    pass: number;
+    fail: number;
+    skip: number;
+    retry: number;
+    flaky: number;
+    total: number;
   };
+  successRate: number;
+  lastRunDate: string;
+  totalDuration: number;
+  stats: Stats;
 }
 
-export interface Summary {
-  successRate: string;
-  lastRunDate: string;
-  retry: number;
-  pass: number;
-  fail: number;
-  skip: number;
-  flaky: number;
-  total: number;
-  totalDuration: string;
-  stats: Stats;
+interface TestResult {
+  tests: TestResultItem[];
+  testHistories: TestHistory[];
+  allTags: string[];
+  set: string | string[];
+}
+
+interface UserConfig {
+  projectName: string;
+  authorName: string;
+  type: string;
+  title: string;
+}
+
+interface UserMeta {
+  meta: Record<string, any>;
+}
+
+interface Preferences {
+  theme: string;
+  logo?: string;
+  showProject: boolean;
+}
+
+interface Analytics {
+  reportData: AnalyticsReportData;
+  chartTrendData: ChartTrendData;
+}
+
+export interface OrtoniReportData {
+  summary: Summary;
+  testResult: TestResult;
+  userConfig: UserConfig;
+  userMeta: UserMeta;
+  preferences: Preferences;
+  analytics: Analytics;
 }
 
 export interface Stats {
@@ -107,34 +128,6 @@ export interface TestHistoryItem {
   run_date: string;
 }
 
-export interface Meta {
-  projectName: string;
-  authorName: string;
-  meta: ProjectMeta;
-  type: string;
-  title: string;
-}
-
-export interface ProjectMeta {
-  project: string;
-  version: string;
-  description: string;
-  environment: string;
-  testCycle: string;
-  release: string;
-  platform: string;
-}
-
-export interface Preferences {
-  logo: string;
-  showProject: boolean;
-}
-
-export interface Analytics {
-  reportData: AnalyticsReportData;
-  chartTrendData: ChartTrendData;
-}
-
 export interface AnalyticsReportData {
   summary: AnalyticsSummary;
   trends: Trend[];
@@ -169,21 +162,3 @@ export interface ChartTrendData {
   failed: number[];
   avgDuration: number[];
 }
-
-export type TestListProps =
-  | {
-      showProject?: true;
-      tests: {
-        [filePath: string]: {
-          [suite: string]: { [projectName: string]: TestResultData[] };
-        };
-      };
-    }
-  | {
-      showProject?: false;
-      tests: {
-        [filePath: string]: {
-          [suite: string]: TestResultData[];
-        };
-      };
-    };
