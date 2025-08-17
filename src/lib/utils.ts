@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { TestListProps, TestResultData } from "./types/reportData";
+import type { TestListProps, TestResultData } from "./types/OrtoniReportData";
 import { useMemo } from "react";
 
 export function cn(...inputs: ClassValue[]) {

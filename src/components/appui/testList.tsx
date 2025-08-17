@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { TestListProps, TestResultData } from "@/lib/types/reportData";
+import type {
+  TestListProps,
+  TestResultData,
+} from "@/lib/types/OrtoniReportData";
 import { StatusDot, TestAccordionItem } from "./TestAccordion";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ensureArray, formatDuration } from "@/lib/utils";

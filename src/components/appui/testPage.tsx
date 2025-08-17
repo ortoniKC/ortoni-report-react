@@ -1,27 +1,13 @@
 "use client";
 
-import { memo, useMemo } from "react";
-import type { ReportData, TestListProps } from "@/lib/types/reportData";
+import { memo } from "react";
 import { TestList } from "./testList";
+import type { OrtoniReportData } from "@/lib/types/OrtoniReportData";
 
-export const TestsPage = memo((props: { result: ReportData["result"] }) => {
-  const { result } = props;
-
-  const grouped = result?.results?.grouped;
-  const showProject = Boolean(result?.preferences?.showProject);
-
-  const testsForList: TestListProps = useMemo(() => {
-    if (showProject) {
-      return grouped as Extract<
-        Parameters<typeof TestList>[0],
-        { showProject: true }
-      >["tests"];
-    }
-    return grouped as Extract<
-      Parameters<typeof TestList>[0],
-      { showProject: false }
-    >["tests"];
-  }, [grouped, showProject]);
+export const TestsPage = memo((props: { testResult: OrtoniReportData }) => {
+  const { testResult } = props;
+  const testsForList = testResult.tests;
+  const showProject = Boolean(testResult?.preferences?.showProject);
 
   return (
     <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">

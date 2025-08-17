@@ -25,7 +25,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { ReportData } from "@/lib/types/reportData";
+import type {
+  Summary,
+  UserConfig,
+  UserMeta,
+} from "@/lib/types/OrtoniReportData";
+import { memo } from "react";
 
 export const description = "An interactive pie chart";
 
@@ -55,23 +60,32 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function OverallExecutionResult({ result }: ReportData) {
+export const OverallExecutionResult = memo((props: { summary: Summary }) => {
+  const { summary } = props;
   const summaryChartData = [
-    { status: "pass", tests: result.summary.pass, fill: "var(--color-pass)" },
+    {
+      status: "pass",
+      tests: summary.overAllResult.pass,
+      fill: "var(--color-pass)",
+    },
     {
       status: "failed",
-      tests: result.summary.fail,
+      tests: summary.overAllResult.fail,
       fill: "var(--color-failed)",
     },
-    { status: "skip", tests: result.summary.skip, fill: "var(--color-skip)" },
+    {
+      status: "skip",
+      tests: summary.overAllResult.skip,
+      fill: "var(--color-skip)",
+    },
     {
       status: "retry",
-      tests: result.summary.retry,
+      tests: summary.overAllResult.retry,
       fill: "var(--color-retry)",
     },
     {
       status: "flaky",
-      tests: result.summary.flaky,
+      tests: summary.overAllResult.flaky,
       fill: "var(--color-flaky)",
     },
   ];
@@ -198,4 +212,4 @@ export function OverallExecutionResult({ result }: ReportData) {
       </CardContent>
     </Card>
   );
-}
+});

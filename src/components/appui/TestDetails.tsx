@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import type { TestResultData } from "@/lib/types/reportData";
+import type { TestResultData } from "@/lib/types/OrtoniReportData";
 
 export function TestDetails({ test }: { test?: TestResultData | null }) {
   if (!test) {

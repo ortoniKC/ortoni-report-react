@@ -4,7 +4,7 @@ import * as React from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import { memo } from "react";
-import type { ReportData } from "@/lib/types/reportData";
+import type { ReportData } from "@/lib/types/OrtoniReportData";
 
 import {
   type ChartConfig,

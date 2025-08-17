@@ -14,19 +14,19 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { ReportData } from "@/lib/types/reportData";
+import { memo } from "react";
+import type { Summary } from "@/lib/types/OrtoniReportData";
 
 export const description = "A radial chart with a label";
 
-export function ProjectChart({ result }: ReportData) {
-  // Helper to generate a random hex color
+export const ProjectChart = memo((props: { summary: Summary }) => {
+  const { summary } = props;
   const getRandomColor = () =>
     `#${Math.floor(Math.random() * 16777215)
       .toString(16)
       .padStart(6, "0")}`;
 
-  // Build chart data dynamically from result.stats
-  const stats = result.summary.stats;
+  const stats = summary.stats;
   const chartData =
     stats?.projectNames?.map((name: string, idx: number) => ({
       browser: name,
@@ -74,4 +74,4 @@ export function ProjectChart({ result }: ReportData) {
       </CardContent>
     </Card>
   );
-}
+});

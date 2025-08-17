@@ -21,12 +21,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { ReportData } from "@/lib/types/reportData";
+import { memo } from "react";
+import type { Summary } from "@/lib/types/OrtoniReportData";
 
 export const description = "Each Project Summary";
 
-export function EachProjectChart({ result }: ReportData) {
-  const stats = result.summary.stats;
+export const EachProjectChart = memo((props: { summary: Summary }) => {
+  const { summary } = props;
+  const stats = summary.stats;
   const chartData =
     stats?.projectNames?.map((name: string, idx: number) => ({
       browser: name,
@@ -120,4 +122,4 @@ export function EachProjectChart({ result }: ReportData) {
       </CardContent>
     </Card>
   );
-}
+});

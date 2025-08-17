@@ -1,5 +1,5 @@
 export interface ReportResponse {
-  result: OrtoniReportData;
+  data: OrtoniReportData;
 }
 
 export interface OrtoniReportData {
@@ -53,8 +53,8 @@ export interface TestResultItem {
   testId: string;
 }
 
-interface Summary {
-  testResult: {
+export interface Summary {
+  overAllResult: {
     pass: number;
     fail: number;
     skip: number;
@@ -75,14 +75,14 @@ interface TestResult {
   set: string | string[];
 }
 
-interface UserConfig {
+export interface UserConfig {
   projectName: string;
   authorName: string;
   type: string;
   title: string;
 }
 
-interface UserMeta {
+export interface UserMeta {
   meta: Record<string, any>;
 }
 

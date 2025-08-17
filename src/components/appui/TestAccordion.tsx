@@ -1,4 +1,4 @@
-import type { TestResultData } from "@/lib/types/reportData";
+import type { TestResultData } from "@/lib/types/OrtoniReportData";
 import { cn, formatDuration } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
