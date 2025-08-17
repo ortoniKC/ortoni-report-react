@@ -1,3 +1,16 @@
+export interface ReportResponse {
+  result: OrtoniReportData;
+}
+
+export interface OrtoniReportData {
+  summary: Summary;
+  testResult: TestResult;
+  userConfig: UserConfig;
+  userMeta: UserMeta;
+  preferences: Preferences;
+  analytics: Analytics;
+}
+
 export interface Result {
   testHistories: TestHistory[];
   allTags: string[];
@@ -82,15 +95,6 @@ interface Preferences {
 interface Analytics {
   reportData: AnalyticsReportData;
   chartTrendData: ChartTrendData;
-}
-
-export interface OrtoniReportData {
-  summary: Summary;
-  testResult: TestResult;
-  userConfig: UserConfig;
-  userMeta: UserMeta;
-  preferences: Preferences;
-  analytics: Analytics;
 }
 
 export interface Stats {
