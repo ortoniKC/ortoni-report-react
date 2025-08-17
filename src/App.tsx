@@ -5,6 +5,7 @@ import DashboardLayout from "./components/appui/layout";
 import type { ReportData } from "./lib/types/reportData";
 import { TestsPage } from "./components/appui/testPage";
 import { Dashboard } from "./components/appui/dashboard";
+import { Glance } from "./components/appui/glance";
 
 export function App({ reportData }: { reportData: ReportData }) {
   return (
@@ -19,6 +20,7 @@ export function App({ reportData }: { reportData: ReportData }) {
           />
           <Route path="tests" element={<TestsPage {...reportData} />} />
           <Route path="analytics" element={<AnalyticsPage {...reportData} />} />
+          <Route path="glance" element={<Glance {...reportData} />} />
         </Route>
       </Routes>
     </ThemeProvider>

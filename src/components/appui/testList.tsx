@@ -2,18 +2,13 @@
 
 import { useState } from "react";
 import type { TestListProps, TestResultData } from "@/lib/types/reportData";
-import { StatusDot, TestAccordionItem } from "../ui/accordian";
+import { StatusDot, TestAccordionItem } from "./TestAccordion";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { formatDuration } from "@/lib/utils";
+import { ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { TestDetails } from "./TestDetails";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "../ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from "../ui/sheet";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export function TestList(props: TestListProps) {
   const { tests, showProject } = props;
@@ -29,7 +24,10 @@ export function TestList(props: TestListProps) {
     <>
       {/* Sheet Drawer for Test Details */}
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTitle>Test Details</SheetTitle>
+        <VisuallyHidden>
+          <SheetTitle>Test Details</SheetTitle>
+          <SheetDescription>Test Details</SheetDescription>
+        </VisuallyHidden>
         <SheetContent
           side="right"
           className="
@@ -46,7 +44,6 @@ export function TestList(props: TestListProps) {
             <TestDetails test={selectedTest} />
           </div>
         </SheetContent>
-        <SheetDescription>Test Details</SheetDescription>
       </Sheet>
       <div className="space-y-3">
         {Object.entries(tests ?? {}).map(([filePath, suites]) => (
@@ -154,15 +151,4 @@ export function TestList(props: TestListProps) {
       </div>
     </>
   );
-}
-
-function ensureArray(value: unknown): TestResultData[] {
-  if (Array.isArray(value)) return value;
-  if (value && typeof value === "object") {
-    const arrays = Object.values(value as Record<string, unknown>).filter(
-      Array.isArray
-    ) as TestResultData[][];
-    return arrays.flat();
-  }
-  return [];
 }

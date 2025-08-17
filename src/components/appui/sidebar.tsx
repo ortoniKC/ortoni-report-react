@@ -16,12 +16,18 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, BarChart3, TestTube2 } from "lucide-react";
+import {
+  LayoutDashboard,
+  BarChart3,
+  TestTube2,
+  TableOfContents,
+} from "lucide-react";
 import { ModeToggle } from "@/hooks/toggle-theme";
 
 const menuItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "dashboard" },
   { title: "Tests", icon: TestTube2, href: "tests" },
+  { title: "Glance", icon: TableOfContents, href: "glance" },
   { title: "Analytics", icon: BarChart3, href: "analytics" },
 ];
 
@@ -42,7 +48,7 @@ export const DashboardSidebar = memo(() => {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Ortoni Report</span>
-                  <span className="truncate text-xs">V 3.0.6</span>
+                  <span className="truncate text-xs">V 4.0.0</span>
                 </div>
               </div>
             </SidebarMenuButton>

@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { TestResultData } from "./types/reportData";
+import type { TestListProps, TestResultData } from "./types/reportData";
+import { useMemo } from "react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -36,4 +37,15 @@ export function formatDuration(d: unknown) {
   const m = Math.floor(s / 60);
   const rs = Math.round(s % 60);
   return `${m}m ${rs}s`;
+}
+
+export function ensureArray(value: unknown): TestResultData[] {
+  if (Array.isArray(value)) return value;
+  if (value && typeof value === "object") {
+    const arrays = Object.values(value as Record<string, unknown>).filter(
+      Array.isArray
+    ) as TestResultData[][];
+    return arrays.flat();
+  }
+  return [];
 }

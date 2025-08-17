@@ -12,13 +12,11 @@ export const TestsPage = memo((props: { result: ReportData["result"] }) => {
 
   const testsForList: TestListProps = useMemo(() => {
     if (showProject) {
-      // { filePath: { suite: { project: TestResultData[] } } }
       return grouped as Extract<
         Parameters<typeof TestList>[0],
         { showProject: true }
       >["tests"];
     }
-    // { filePath: { suite: TestResultData[] } }
     return grouped as Extract<
       Parameters<typeof TestList>[0],
       { showProject: false }
@@ -30,7 +28,8 @@ export const TestsPage = memo((props: { result: ReportData["result"] }) => {
       <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
         <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
           <h1 className="text-xl font-semibold">Test Page</h1>
-          <TestList tests={testsForList} showProject={showProject as boolean} />
+          <TestList tests={testsForList} showProject={showProject} />
+          {/* <PlaywrightTestViewer data={testsForList}></PlaywrightTestViewer> */}
         </div>
       </div>
     </div>
