@@ -1,39 +1,546 @@
 {
-  "result": {
-    "summary": {},
-    "results": {
-      "grouped": {
+  "data": {
+    "summary": {
+      "overAllResult": {
+        "pass": 6,
+        "fail": 2,
+        "skip": 0,
+        "retry": 0,
+        "flaky": 0,
+        "total": 8
+      },
+      "successRate": "75.00",
+      "lastRunDate": "Aug 18, 2025, 09:43 AM GMT+5:30",
+      "totalDuration": "36s:517ms",
+      "stats": {
+        "projectNames": ["chromium", "firefox"],
+        "totalTests": [4, 4],
+        "passedTests": [3, 3],
+        "failedTests": [1, 1],
+        "skippedTests": [0, 0],
+        "retryTests": [0, 0],
+        "flakyTests": [0, 0]
+      }
+    },
+    "testResult": {
+      "tests": {
         "demo-todo-app.spec.ts": {
           "Mark all as completed": [
             {
+              "annotations": [],
+              "testTags": [],
+              "location": "demo-todo-app.spec.ts:84:7",
+              "retry": "",
+              "isRetry": 0,
               "projectName": "chromium",
               "suite": "Mark all as completed",
               "title": "should allow me to mark all items as completed",
               "status": "passed",
               "flaky": "expected",
-              "duration": "02s:455ms",
+              "duration": "01s:199ms",
+              "errors": [],
+              "steps": [
+                { "snippet": "", "title": "Before Hooks", "location": "" }
+              ],
+              "logs": "",
               "filePath": "demo-todo-app.spec.ts",
-              "testId": "demo-todo-app.spec.ts:chromium:should allow me to mark all items as completed"
-            },
+              "filters": {},
+              "base64Image": false,
+              "testId": "demo-todo-app.spec.ts:chromium:should allow me to mark all items as completed",
+              "screenshots": [
+                "ortoni-data/attachments/849da1cee0c412ce5534-e38558bd3234b0b8d82c/test-finished-1.png"
+              ],
+              "videoPath": "ortoni-data/attachments/849da1cee0c412ce5534-e38558bd3234b0b8d82c/video.webm",
+              "tracePath": "ortoni-data/attachments/849da1cee0c412ce5534-e38558bd3234b0b8d82c/trace.zip",
+              "index": 0
+            }
+          ]
+        },
+        "login.spec.ts": {
+          "User can log in successfully": [
             {
+              "annotations": [],
+              "testTags": [],
+              "location": "login.spec.ts:5:6",
+              "retry": "",
+              "isRetry": 0,
               "projectName": "firefox",
-              "suite": "Mark all as completed",
-              "title": "should allow me to mark all items as completed",
-              "status": "passed",
-              "flaky": "expected",
-              "duration": "01s:773ms",
-              "filePath": "demo-todo-app.spec.ts",
-              "testId": "demo-todo-app.spec.ts:firefox:should allow me to mark all items as completed"
+              "suite": "User can log in successfully",
+              "title": "User can log in successfully",
+              "status": "timedOut",
+              "flaky": "unexpected",
+              "duration": "30s:278ms",
+              "errors": [],
+              "steps": [
+                { "snippet": "", "title": "Before Hooks", "location": "" }
+              ],
+              "logs": "",
+              "filePath": "login.spec.ts",
+              "filters": {},
+              "base64Image": false,
+              "testId": "login.spec.ts:firefox:User can log in successfully",
+              "screenshots": [
+                "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/test-failed-1.png"
+              ],
+              "videoPath": "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/video.webm",
+              "markdownPath": "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/error-context.html",
+              "tracePath": "ortoni-data/attachments/41d3fd2474a19feb00a1-6101ca2d79c273710404/trace.zip",
+              "index": 7
             }
           ]
         }
       },
-      "testHistories": [],
+      "testHistories": [
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should allow me to mark all items as completed",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "01s:199ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:511ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:227ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:504ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:38 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:595ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:29 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "02s:363ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:193ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:should allow me to clear the complete state of all items",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "01s:207ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:573ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:239ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:515ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:38 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:590ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:29 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "02s:371ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:212ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:chromium:complete all checkbox should update state when items are completed / cleared",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "01s:273ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:665ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:290ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:565ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:38 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:654ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:29 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "02s:403ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "534ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should allow me to mark all items as completed",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "02s:091ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "02s:108ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "02s:282ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:391ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "646ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:should allow me to clear the complete state of all items",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "01s:713ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:586ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "02s:699ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "02s:048ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:200ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "demo-todo-app.spec.ts:firefox:complete all checkbox should update state when items are completed / cleared",
+          "history": [
+            {
+              "status": "passed",
+              "duration": "01s:664ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:869ms",
+              "error_message": "",
+              "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "02s:043ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "01s:724ms",
+              "error_message": "",
+              "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30"
+            },
+            {
+              "status": "passed",
+              "duration": "818ms",
+              "error_message": "",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "login.spec.ts:chromium:User can log in successfully",
+          "history": [
+            {
+              "status": "timedOut",
+              "duration": "30s:305ms",
+              "error_message": "<span style=\"color:#A00\">Test timeout of 30000ms exceeded.<span style=\"color:var(--snippet-color)\"></span></span>\nError: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n  - navigating to &quot;https://letcode.in/login&quot;, waiting until &quot;load&quot;<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.goto (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:7:25)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:7:19</span>",
+              "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30"
+            },
+            {
+              "status": "failed",
+              "duration": "08s:964ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30"
+            },
+            {
+              "status": "failed",
+              "duration": "09s:684ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30"
+            },
+            {
+              "status": "timedOut",
+              "duration": "30s:263ms",
+              "error_message": "<span style=\"color:#A00\">Test timeout of 30000ms exceeded.<span style=\"color:var(--snippet-color)\"></span></span>\nError: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n  - navigating to &quot;https://letcode.in/login&quot;, waiting until &quot;load&quot;<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.goto (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:7:25)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:7:19</span>",
+              "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30"
+            },
+            {
+              "status": "failed",
+              "duration": "07s:178ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        },
+        {
+          "testId": "login.spec.ts:firefox:User can log in successfully",
+          "history": [
+            {
+              "status": "timedOut",
+              "duration": "30s:278ms",
+              "error_message": "<span style=\"color:#A00\">Test timeout of 30000ms exceeded.<span style=\"color:var(--snippet-color)\"></span></span>\nError: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n  - navigating to &quot;https://letcode.in/login&quot;, waiting until &quot;load&quot;<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.goto (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:7:25)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:7:19</span>",
+              "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30"
+            },
+            {
+              "status": "failed",
+              "duration": "07s:564ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30"
+            },
+            {
+              "status": "failed",
+              "duration": "08s:213ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30"
+            },
+            {
+              "status": "failed",
+              "duration": "09s:648ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30"
+            },
+            {
+              "status": "failed",
+              "duration": "07s:922ms",
+              "error_message": "Error: <span style=\"color:#A00\">Timed out 5000ms waiting for <span style=\"color:var(--snippet-color)\">expect(<span style=\"font-weight:normal;text-decoration:none;font-style:normal\"><span style=\"color:#A00\">locator<span style=\"color:var(--snippet-color)\">).<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">toBeVisible()<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\nLocator: locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)\nExpected: visible\nReceived: &lt;element(s) not found>\nCall log:\n  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n  - waiting for locator(&#039;//i[@class=\\&#039;fas fa-sign-out-alt\\&#039;]&#039;)<span style=\"font-weight:normal;text-decoration:none;font-style:normal\">\n\n    at LoginPage.login (/Users/letcode/Documents/GitHub/pw-test/pages/login.page.ts:14:78)\n    at /Users/letcode/Documents/GitHub/pw-test/tests/login.spec.ts:8:3</span></span></span></span></span></span></span></span></span>",
+              "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30"
+            }
+          ]
+        }
+      ],
       "allTags": [],
       "set": {}
     },
-    "meta": {},
+    "userConfig": {
+      "projectName": "Ortoni-Report",
+      "authorName": "letcode",
+      "type": "e2e",
+      "title": "Ortoni Test Report"
+    },
+    "userMeta": {
+      "meta": {
+        "project": "Playwright - React",
+        "version": "3.0.2",
+        "description": "Playwright test report - Ortoni Report",
+        "environment": "development",
+        "testCycle": "100",
+        "release": "5",
+        "platform": "Darwin"
+      }
+    },
     "preferences": { "logo": "logo.png", "showProject": false },
-    "analytics": {}
+    "analytics": {
+      "reportData": {
+        "summary": {
+          "totalRuns": 7,
+          "totalTests": 90,
+          "passed": 75,
+          "failed": 8,
+          "passRate": 83.33,
+          "avgDuration": 272
+        },
+        "trends": [
+          {
+            "run_date": "Aug 15, 2025, 11:53 PM GMT+5:30",
+            "passed": 45,
+            "failed": 3,
+            "avg_duration": 468
+          },
+          {
+            "run_date": "Aug 17, 2025, 11:04 AM GMT+5:30",
+            "passed": 6,
+            "failed": 1,
+            "avg_duration": 6
+          },
+          {
+            "run_date": "Aug 17, 2025, 11:29 AM GMT+5:30",
+            "passed": 3,
+            "failed": 0,
+            "avg_duration": 1
+          },
+          {
+            "run_date": "Aug 17, 2025, 11:38 AM GMT+5:30",
+            "passed": 3,
+            "failed": 0,
+            "avg_duration": 1
+          },
+          {
+            "run_date": "Aug 17, 2025, 11:39 AM GMT+5:30",
+            "passed": 6,
+            "failed": 2,
+            "avg_duration": 3
+          },
+          {
+            "run_date": "Aug 18, 2025, 09:36 AM GMT+5:30",
+            "passed": 6,
+            "failed": 2,
+            "avg_duration": 3
+          },
+          {
+            "run_date": "Aug 18, 2025, 09:43 AM GMT+5:30",
+            "passed": 6,
+            "failed": 0,
+            "avg_duration": 8
+          }
+        ],
+        "flakyTests": [],
+        "slowTests": [
+          {
+            "test_id": "demo-todo-app.spec.ts:chromium:should allow me to add todo items",
+            "avg_duration": 975
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should display the correct text",
+            "avg_duration": 870
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should persist its data",
+            "avg_duration": 833
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should trim entered text",
+            "avg_duration": 794
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should highlight the currently applied filter",
+            "avg_duration": 790
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:chromium:should respect the back button",
+            "avg_duration": 775
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should allow me to display all items",
+            "avg_duration": 772
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should respect the back button",
+            "avg_duration": 760
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should remove completed items when clicked",
+            "avg_duration": 748
+          },
+          {
+            "test_id": "demo-todo-app.spec.ts:firefox:should allow me to display completed items",
+            "avg_duration": 746
+          }
+        ]
+      },
+      "chartTrendData": {
+        "labels": [
+          "Aug 15, 2025, 11:53 PM",
+          "Aug 17, 2025, 11:04 AM",
+          "Aug 17, 2025, 11:29 AM",
+          "Aug 17, 2025, 11:38 AM",
+          "Aug 17, 2025, 11:39 AM",
+          "Aug 18, 2025, 9:36 AM",
+          "Aug 18, 2025, 9:43 AM"
+        ],
+        "passed": [45, 6, 3, 3, 6, 6, 6],
+        "failed": [3, 1, 0, 0, 2, 2, 0],
+        "avgDuration": [468, 6, 1, 1, 3, 3, 8]
+      }
+    }
   }
 }

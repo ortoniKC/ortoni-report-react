@@ -1,11 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "./hooks/theme-provider";
-import { AnalyticsPage } from "./components/appui/analytics";
 import DashboardLayout from "./components/appui/layout";
 import type { ReportResponse } from "./lib/types/OrtoniReportData";
 import { TestsPage } from "./components/appui/testPage";
 import { Dashboard } from "./components/appui/dashboard";
-import { Glance } from "./components/appui/glance";
 
 export function App({ reportData }: { reportData: ReportResponse }) {
   return (
@@ -24,9 +22,15 @@ export function App({ reportData }: { reportData: ReportResponse }) {
               />
             }
           />
-          {/* <Route path="tests" element={<TestsPage {...reportData} />} />
-          <Route path="analytics" element={<AnalyticsPage {...reportData} />} />
-          <Route path="glance" element={<Glance {...reportData} />} /> */}
+          <Route
+            path="tests"
+            element={
+              <TestsPage
+                tests={reportData.data.testResult}
+                preferences={reportData.data.preferences}
+              />
+            }
+          />
         </Route>
       </Routes>
     </ThemeProvider>

@@ -1,13 +1,12 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { TestListProps, TestResultData } from "./types/OrtoniReportData";
-import { useMemo } from "react";
+import type { TestResultItem, TestResultUnion } from "./types/OrtoniReportData";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function statusClass(status: TestResultData["status"]) {
+export function statusClass(status: TestResultItem["status"]) {
   switch (status) {
     case "passed":
       return "bg-green-500/20 text-green-700";
@@ -39,13 +38,57 @@ export function formatDuration(d: unknown) {
   return `${m}m ${rs}s`;
 }
 
-export function ensureArray(value: unknown): TestResultData[] {
+export function ensureArray(value: unknown): TestResultItem[] {
   if (Array.isArray(value)) return value;
   if (value && typeof value === "object") {
     const arrays = Object.values(value as Record<string, unknown>).filter(
       Array.isArray
-    ) as TestResultData[][];
+    ) as TestResultItem[][];
     return arrays.flat();
   }
   return [];
 }
+
+export function getTestRuns(
+  result: TestResultUnion,
+  file: string,
+  suite: string
+): { project?: string; runs: TestResultItem[] }[] {
+  if (result.showProject) {
+    const projectMap = result.testResult.tests[file]?.[suite] ?? {};
+    return Object.entries(projectMap).map(([project, runs]) => ({
+      project,
+      runs,
+    }));
+  } else {
+    const runs = result.testResult.tests[file]?.[suite] ?? [];
+    return [
+      {
+        runs,
+      },
+    ];
+  }
+}
+
+// export function* iterateAllTestRuns(result: TestResultUnion): Generator<{
+//   file: string;
+//   suite: string;
+//   project: string;
+//   run: TestResultItem;
+// }> {
+//   for (const [file, suites] of Object.entries(result.testResult.tests)) {
+//     for (const [suite, value] of Object.entries(suites)) {
+//       if (result.showProject) {
+//         for (const [project, runs] of Object.entries(value)) {
+//           for (const run of runs) {
+//             yield { file, suite, project, run };
+//           }
+//         }
+//       } else {
+//         for (const run of value as TestResultItem[]) {
+//           yield { file, suite, project: "default", run };
+//         }
+//       }
+//     }
+//   }
+// }

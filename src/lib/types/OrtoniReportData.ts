@@ -68,7 +68,7 @@ export interface Summary {
   stats: Stats;
 }
 
-interface TestResult {
+export interface TestResult {
   tests: TestResultItem[];
   testHistories: TestHistory[];
   allTags: string[];
@@ -86,7 +86,7 @@ export interface UserMeta {
   meta: Record<string, any>;
 }
 
-interface Preferences {
+export interface Preferences {
   theme: string;
   logo?: string;
   showProject: boolean;
@@ -135,7 +135,7 @@ export interface TestHistoryItem {
 export interface AnalyticsReportData {
   summary: AnalyticsSummary;
   trends: Trend[];
-  flakyTests: unknown[];
+  flakyTests: SlowTest[];
   slowTests: SlowTest[];
 }
 
