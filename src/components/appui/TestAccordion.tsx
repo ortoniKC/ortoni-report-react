@@ -2,7 +2,7 @@ import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 import { cn, formatDuration } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface TestAccordionItemProps {
   title: string;
@@ -10,6 +10,7 @@ interface TestAccordionItemProps {
   isParent?: boolean;
   children?: React.ReactNode;
   onTestClick?: (test: TestResultItem) => void;
+  defaultOpen?: boolean;
 }
 
 export function TestAccordionItem({
@@ -18,8 +19,19 @@ export function TestAccordionItem({
   isParent = false,
   children,
   onTestClick,
+  defaultOpen = false,
 }: TestAccordionItemProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  // Sync external defaultOpen changes with internal state
+  useEffect(() => {
+    if (defaultOpen) setIsOpen(true);
+  }, [defaultOpen]);
+
+  // Don't render if there are no tests and no children
+  if ((!tests || tests.length === 0) && !children) {
+    return null;
+  }
 
   return (
     <motion.div
@@ -91,13 +103,12 @@ export function TestAccordionItem({
                 : "pl-6 pr-4 space-y-2"
             )}
           >
-            {/* if explicit children passed → render them */}
             {children ? (
               children
             ) : tests && tests.length ? (
               tests.map((t) => (
                 <motion.div
-                  key={t.testId ?? `${t.title}-${t.location}`}
+                  key={t.testId || `${t.title}-${t.location}`}
                   initial={{ y: -8, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -8, opacity: 0 }}

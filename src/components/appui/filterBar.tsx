@@ -13,9 +13,9 @@ import {
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import { cn, statusVariant } from "@/lib/utils";
-import type { TestResultItem, TestStatus } from "@/lib/types/OrtoniReportData";
+import type { TestStatus } from "@/lib/types/OrtoniReportData";
 
-interface FilterBarProps extends TestResultItem {
+interface FilterBarProps {
   flattened: {
     testId: string;
     title: string;
