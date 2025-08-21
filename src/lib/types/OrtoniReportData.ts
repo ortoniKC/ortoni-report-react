@@ -28,15 +28,7 @@ export interface TestResultItem {
   projectName: string;
   suite: string;
   title: string;
-  status:
-    | "passed"
-    | "failed"
-    | "timedOut"
-    | "skipped"
-    | "interrupted"
-    | "expected"
-    | "unexpected"
-    | "flaky";
+  status: TestStatus;
   flaky: string;
   duration: string;
   errors: string[];
@@ -109,9 +101,12 @@ export interface Stats {
 export type TestStatus =
   | "passed"
   | "failed"
-  | "skipped"
   | "timedOut"
-  | "interrupted";
+  | "skipped"
+  | "interrupted"
+  | "expected"
+  | "unexpected"
+  | "flaky";
 
 export interface Steps {
   snippet: string | undefined;

@@ -24,6 +24,7 @@ import { useState } from "react";
 import { copyToClipboard } from "@/lib/utils";
 import { EllipsisBlock } from "../ui/ellipsis-block";
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
+import { motion } from "framer-motion";
 
 export function TestDetails({ test }: { test?: TestResultItem | null }) {
   if (!test) {
@@ -48,13 +49,25 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
   return (
     <Card className="h-full flex flex-col">
       {/* Top Section */}
-      <CardHeader className="space-y-3 sticky top-0 z-10 pb-3 border-b">
+      <CardHeader className="space-y-3 sticky top-0 z-10 pb-3 border-b bg-background">
         <CardTitle className="flex flex-wrap items-center gap-2 text-base sm:text-lg">
-          <span className="truncate max-w-full">{test.title}</span>
+          <motion.span
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="truncate max-w-full"
+          >
+            {test.title}
+          </motion.span>
         </CardTitle>
-        <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-muted-foreground"
+        >
           <StatusPill status={test.status} />
-          <Badge variant="secondary">{String(test.duration)}</Badge>
+          <Badge variant="secondary">{String(test.duration)} ms</Badge>
           {test.projectName && (
             <Badge variant="secondary">{String(test.projectName)}</Badge>
           )}
@@ -65,14 +78,14 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
                 <TooltipTrigger asChild>
                   <Badge
                     variant="outline"
-                    className="cursor-pointer"
+                    className="cursor-pointer flex items-center gap-1"
                     onClick={handleCopy}
                   >
                     {test.location}
                     {copied ? (
-                      <Check className="ml-1 h-3 w-3 text-green-500" />
+                      <Check className="h-3 w-3 text-green-500" />
                     ) : (
-                      <Copy className="ml-1 h-3 w-3" />
+                      <Copy className="h-3 w-3" />
                     )}
                   </Badge>
                 </TooltipTrigger>
@@ -82,7 +95,7 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
               </Tooltip>
             </TooltipProvider>
           )}
-        </div>
+        </motion.div>
       </CardHeader>
 
       <CardContent className="flex-1 overflow-y-auto space-y-6 p-4">
@@ -90,7 +103,12 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
         {(test.screenshotPath ||
           (Array.isArray(test.screenshots) && test.screenshots.length > 0) ||
           test.videoPath) && (
-          <section className="space-y-3">
+          <motion.section
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-3"
+          >
             <h4 className="font-medium text-sm sm:text-base">Attachments</h4>
             <div className="flex flex-wrap gap-3">
               {/* Screenshot(s) */}
@@ -101,17 +119,20 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
                       <ImageIcon className="mr-1 h-4 w-4" /> Screenshot
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-5xl">
+                  <DialogContent className="w-[95vw] h-[90vh]">
                     <DialogHeader>
                       <DialogTitle>Screenshot</DialogTitle>
-                      <DialogDescription>
+                      <DialogDescription className="sr-only">
                         Full-size screenshot from the test run.
                       </DialogDescription>
                     </DialogHeader>
-                    <img
+                    <motion.img
                       src={toFileUrl(test.screenshotPath)}
                       alt="screenshot"
-                      className="rounded-lg max-h-[70vh] mx-auto"
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2 }}
+                      className="rounded-lg max-h-[70vh] mx-auto shadow-md"
                     />
                   </DialogContent>
                 </Dialog>
@@ -125,17 +146,20 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
                         {i + 1}
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-5xl">
+                    <DialogContent className="max-w-3xl">
                       <DialogHeader>
                         <DialogTitle>Screenshot {i + 1}</DialogTitle>
                         <DialogDescription className="sr-only">
                           Full-size screenshot from the test run.
                         </DialogDescription>
                       </DialogHeader>
-                      <img
+                      <motion.img
                         src={toFileUrl(p)}
                         alt={`screenshot-${i + 1}`}
-                        className="rounded-lg max-h-[70vh] mx-auto"
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.2 }}
+                        className="rounded-lg max-h-[70vh] mx-auto shadow-md"
                       />
                     </DialogContent>
                   </Dialog>
@@ -156,43 +180,27 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
                         Full-size video from the test run.
                       </DialogDescription>
                     </DialogHeader>
-                    <video
+                    <motion.video
                       src={toFileUrl(test.videoPath)}
                       controls
-                      className="rounded-lg w-full max-h-[70vh]"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="rounded-lg w-full max-h-[70vh] shadow-md"
                     />
                   </DialogContent>
                 </Dialog>
               )}
-              {Array.isArray(test.videoPath) &&
-                test.videoPath.map((p, i) => (
-                  <Dialog key={i}>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" size="sm">
-                        <ImageIcon className="mr-1 h-4 w-4" /> Video {i + 1}
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-5xl">
-                      <DialogHeader>
-                        <DialogTitle>Video {i + 1}</DialogTitle>
-                        <DialogDescription className="sr-only">
-                          Full-size video from the test run.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <video
-                        src={toFileUrl(p)}
-                        controls
-                        className="rounded-lg w-full max-h-[70vh]"
-                      />
-                    </DialogContent>
-                  </Dialog>
-                ))}
             </div>
-          </section>
+          </motion.section>
         )}
 
         {/* Tabbed Section */}
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+        >
           <Tabs defaultValue="steps" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
               {test.steps?.length > 0 && (
@@ -211,13 +219,11 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
                   key="steps"
                   errors={[
                     test.steps
-                      .map((s) => {
-                        if (s.snippet) {
-                          // Title red + snippet below
-                          return `<span style="color:red;">${s.title}</span>\n${s.snippet}`;
-                        }
-                        return s.title;
-                      })
+                      .map((s) =>
+                        s.snippet
+                          ? `<span style="color:red;">${s.title}</span>\n${s.snippet}`
+                          : s.title
+                      )
                       .join("\n"),
                   ]}
                 />
@@ -236,13 +242,13 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
 
             {test.logs && (
               <TabsContent value="logs" className="pt-3">
-                <pre className="bg-muted p-2 rounded text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap">
+                <pre className="bg-muted p-2 rounded text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap shadow-inner">
                   {test.logs}
                 </pre>
               </TabsContent>
             )}
           </Tabs>
-        </section>
+        </motion.section>
       </CardContent>
     </Card>
   );
@@ -260,11 +266,14 @@ function StatusPill({ status }: { status: TestResultItem["status"] }) {
   const cls =
     map[status] || "bg-muted text-foreground/80 border-muted-foreground/20";
   return (
-    <span
-      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs ${cls}`}
+    <motion.span
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.2 }}
+      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${cls}`}
     >
       {status}
-    </span>
+    </motion.span>
   );
 }
 

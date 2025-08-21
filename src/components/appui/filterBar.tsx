@@ -1,0 +1,130 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { motion } from "framer-motion";
+import { X } from "lucide-react";
+import { cn, statusVariant } from "@/lib/utils";
+import type { TestStatus } from "@/lib/types/OrtoniReportData";
+
+interface FilterBarProps {
+  flattened: {
+    testId: string;
+    title: string;
+    suite: string;
+    filePath: string;
+    projectName: string;
+    status: TestStatus;
+    duration: string;
+  }[];
+  onFilter: (filtered: FilterBarProps["flattened"]) => void;
+}
+
+export function FilterBar({ flattened, onFilter }: FilterBarProps) {
+  const [status, setStatus] = useState<string | null>(null);
+  const [project, setProject] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+
+  // Collect unique values for dropdowns
+  const statuses = Array.from(new Set(flattened.map((t) => t.status)));
+  const projects = Array.from(new Set(flattened.map((t) => t.projectName)));
+
+  const filtered = useMemo(() => {
+    return flattened.filter((t) => {
+      const matchesStatus = status ? t.status === status : true;
+      const matchesProject = project ? t.projectName === project : true;
+      const matchesSearch =
+        search.length > 0
+          ? [t.title, t.filePath, t.suite]
+              .join(" ")
+              .toLowerCase()
+              .includes(search.toLowerCase())
+          : true;
+
+      return matchesStatus && matchesProject && matchesSearch;
+    });
+  }, [flattened, status, project, search]);
+
+  // Send filtered data back
+  useMemo(() => onFilter(filtered), [filtered, onFilter]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-wrap gap-3 rounded-xl border bg-muted/40 p-3 shadow-sm"
+    >
+      {/* Status Filter */}
+      <div className="flex items-center gap-2">
+        <Select onValueChange={(val) => setStatus(val)} value={status ?? ""}>
+          <SelectTrigger className="w-[140px]">
+            <SelectValue placeholder="Filter Status" />
+          </SelectTrigger>
+          <SelectContent>
+            {statuses.map((s) => (
+              <SelectItem key={s} value={s}>
+                <Badge
+                  className={cn(
+                    "rounded-full px-2 py-1 text-xs",
+                    statusVariant(s).className
+                  )}
+                >
+                  {statusVariant(s).label}
+                </Badge>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {status && (
+          <X
+            className="h-4 w-4 cursor-pointer text-muted-foreground hover:text-foreground"
+            onClick={() => setStatus(null)}
+          />
+        )}
+      </div>
+
+      {/* Project Filter */}
+      {projects.length > 1 && (
+        <div className="flex items-center gap-2">
+          <Select
+            onValueChange={(val) => setProject(val)}
+            value={project ?? ""}
+          >
+            <SelectTrigger className="w-[160px]">
+              <SelectValue placeholder="Filter Project" />
+            </SelectTrigger>
+            <SelectContent>
+              {projects.map((p) => (
+                <SelectItem key={p} value={p}>
+                  {p}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {project && (
+            <X
+              className="h-4 w-4 cursor-pointer text-muted-foreground hover:text-foreground"
+              onClick={() => setProject(null)}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Search Input */}
+      <Input
+        placeholder="Search test, suite, or file..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full sm:w-[280px]"
+      />
+    </motion.div>
+  );
+}

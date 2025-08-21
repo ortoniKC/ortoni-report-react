@@ -7,7 +7,7 @@ import {
   renderSuiteWithProjects,
   statusVariant,
 } from "@/lib/utils";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -20,6 +20,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
 import TextGenerateEffect from "../ui/typewriter";
+import { FilterBar } from "./filterBar";
 
 interface SuiteData {
   name: string;
@@ -51,6 +52,7 @@ export const GlancePage = memo(
         }))
       );
     }, [tests, showProject]);
+    const [filtered, setFiltered] = useState(flattened);
 
     return (
       <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">
@@ -62,15 +64,17 @@ export const GlancePage = memo(
                 className="text-3xl font-bold tracking-tight sm:text-3xl"
               />
             </div>
+            <FilterBar flattened={flattened} onFilter={setFiltered} />
+
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="overflow-hidden rounded-2xl border shadow-sm hover:shadow-md transition-shadow"
             >
-              <ScrollArea className="h-[60vh] w-full hide-scrollbar">
+              <ScrollArea className="h-[75vh] w-full hide-scrollbar">
                 <Table>
-                  <TableHeader>
+                  <TableHeader className="bg-muted">
                     <TableRow>
                       <TableHead className="text-left">File</TableHead>
                       <TableHead className="text-left">Suite</TableHead>
@@ -82,7 +86,7 @@ export const GlancePage = memo(
                   </TableHeader>
                   <TableBody>
                     <AnimatePresence>
-                      {flattened.map((r) => (
+                      {filtered.map((r) => (
                         <motion.tr
                           key={r.testId}
                           initial={{ opacity: 0, y: 10 }}
@@ -91,13 +95,13 @@ export const GlancePage = memo(
                           transition={{ duration: 0.25 }}
                           className="group cursor-pointer transition-colors"
                         >
-                          <TableCell className="max-w-[240px] truncate group-hover:bg-muted/20 transition-colors duration-200">
+                          <TableCell className="max-w-[240px] truncate group-hover:bg-muted/20 group-hover:shadow-inner transition-all duration-200">
                             {r.filePath}
                           </TableCell>
                           <TableCell className="max-w-[280px] truncate group-hover:bg-muted/20 transition-colors duration-200">
                             {r.suite}
                           </TableCell>
-                          <TableCell className="max-w-[320px] truncate font-medium group-hover:bg-muted/30 group-hover:shadow-inner transition-all duration-200">
+                          <TableCell className="max-w-[320px] truncate font-medium group-hover:bg-muted/30 transition-colors duration-200">
                             {r.title}
                           </TableCell>
                           <TableCell className="capitalize group-hover:bg-muted/20 transition-colors duration-200">
