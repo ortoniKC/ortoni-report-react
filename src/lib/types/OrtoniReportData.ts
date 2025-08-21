@@ -39,7 +39,7 @@ export interface TestResultItem {
     | "flaky";
   flaky: string;
   duration: string;
-  errors: any[];
+  errors: string[];
   steps: Steps[];
   logs: string;
   screenshotPath?: string | null | undefined;

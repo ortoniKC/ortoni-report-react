@@ -3,6 +3,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
+import { Check, Copy } from "lucide-react";
+import { useState } from "react";
+import { copyToClipboard } from "@/lib/utils";
+import { ErrorBlock } from "./utils";
+import { EllipsisBlock } from "../ui/ellipsis-block";
 
 export function TestDetails({ test }: { test?: TestResultItem | null }) {
   if (!test) {
@@ -14,13 +25,20 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
       </Card>
     );
   }
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    copyToClipboard(test.location);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <Card className="h-full flex flex-col">
       {/* Sticky Header on mobile */}
-      <CardHeader className="space-y-2 sm:space-y-3 bg-background sticky top-0 z-10 pb-3 sm:pb-4">
+      <CardHeader className="space-y-2 sm:space-y-3 sticky top-0 z-10 pb-3 sm:pb-4">
         <CardTitle className="flex flex-wrap items-center gap-2 text-base sm:text-lg">
-          <StatusPill status={test.status} />
           <span className="truncate max-w-full">{test.title}</span>
         </CardTitle>
         <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-muted-foreground">
@@ -29,7 +47,29 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
           )}
           {test.suite && <Badge variant="outline">{String(test.suite)}</Badge>}
           {test.filePath && (
-            <span className="truncate max-w-full">{test.filePath}</span>
+            <>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Badge
+                      variant="outline"
+                      className="cursor-pointer"
+                      onClick={handleCopy}
+                    >
+                      {test.location}{" "}
+                      {copied ? (
+                        <Check className="mr-1 h-3 w-3 text-green-500" />
+                      ) : (
+                        <Copy className="mr-1 h-3 w-3" />
+                      )}
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {copied ? "Copied!" : "Copy test location"}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </>
           )}
         </div>
       </CardHeader>
@@ -42,7 +82,6 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
           <Info label="Status" value={test.status} />
           <Info label="Duration" value={String(test.duration ?? "")} />
           <Info label="Retry" value={String(test.retry ?? "")} />
-          <Info label="Flaky" value={String(test.flaky ?? "")} />
         </div>
 
         {/* Errors */}
@@ -53,11 +92,7 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
             </h4>
             <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm max-h-40 overflow-y-auto">
               {test.errors.map((e, i) => (
-                <li key={i}>
-                  <code className="rounded bg-muted px-1.5 py-0.5 break-all">
-                    {String(e?.message || e)}
-                  </code>
-                </li>
+                <EllipsisBlock key={i} errors={[e]} />
               ))}
             </ul>
           </section>
@@ -113,18 +148,22 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
 }
 
 function Info({ label, value }: { label: string; value?: string }) {
-  return (
-    <div>
-      <div className="text-xs sm:text-sm text-muted-foreground">{label}</div>
-      <div className="font-medium break-words">{value || "-"}</div>
-    </div>
-  );
+  if (value) {
+    return (
+      <div>
+        <div className="text-xs sm:text-sm text-muted-foreground">{label}</div>
+        <div className="font-medium break-words">{value || "-"}</div>
+      </div>
+    );
+  }
 }
 
-function StatusPill({ status }: { status: string }) {
+function StatusPill({ status }: { status: TestResultItem["status"] }) {
   const map: Record<string, string> = {
     passed: "bg-emerald-500/15 text-emerald-700 border-emerald-500/20",
     failed: "bg-red-500/15 text-red-700 border-red-500/20",
+    interrupted: "bg-red-500/15 text-red-700 border-red-500/20",
+    timedOut: "bg-red-500/15 text-red-700 border-red-500/20",
     flaky: "bg-amber-500/15 text-amber-700 border-amber-500/20",
     skipped: "bg-slate-500/15 text-slate-700 border-slate-500/20",
   };

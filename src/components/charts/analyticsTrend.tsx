@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import type { Trend } from "@/lib/types/OrtoniReportData";
+import { motion } from "framer-motion";
 
 export const description = "An interactive line chart";
 
@@ -46,113 +47,121 @@ export const TrendChart = memo((props: { trends: Trend[] }) => {
   }));
 
   return (
-    <Card className="py-4 sm:py-0">
-      <CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 pb-3 sm:pb-0">
-          <CardTitle className="pt-6">Test Trend</CardTitle>
-          <CardDescription className="pb-6">
-            Showing Passed, Failed & Avg Duration over time
-          </CardDescription>
-        </div>
-      </CardHeader>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1 * 0.1 }}
+      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+      className="group relative"
+    >
+      <Card className="py-4 sm:py-0">
+        <CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
+          <div className="flex flex-1 flex-col justify-center gap-1 px-6 pb-3 sm:pb-0">
+            <CardTitle className="pt-6">Test Trend</CardTitle>
+            <CardDescription className="pb-6">
+              Showing Passed, Failed & Avg Duration over time
+            </CardDescription>
+          </div>
+        </CardHeader>
 
-      <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
-        >
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{ left: 12, right: 12 }}
+        <CardContent className="px-2 sm:p-6">
+          <ChartContainer
+            config={chartConfig}
+            className="aspect-auto h-[250px] w-full"
           >
-            <CartesianGrid vertical={false} />
+            <LineChart
+              accessibilityLayer
+              data={chartData}
+              margin={{ left: 12, right: 12 }}
+            >
+              <CartesianGrid vertical={false} />
 
-            {/* X Axis */}
-            <XAxis
-              dataKey="label"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value);
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                });
-              }}
-            />
+              {/* X Axis */}
+              <XAxis
+                dataKey="label"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                minTickGap={32}
+                tickFormatter={(value) => {
+                  const date = new Date(value);
+                  return date.toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  });
+                }}
+              />
 
-            {/* Left Y Axis for counts */}
-            <YAxis
-              yAxisId="left"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              label={{ value: "Tests", angle: -90, position: "insideLeft" }}
-            />
+              {/* Left Y Axis for counts */}
+              <YAxis
+                yAxisId="left"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                label={{ value: "Tests", angle: -90, position: "insideLeft" }}
+              />
 
-            {/* Right Y Axis for duration */}
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              label={{
-                value: "Avg Duration (ms)",
-                angle: 90,
-                position: "insideRight",
-              }}
-            />
+              {/* Right Y Axis for duration */}
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                label={{
+                  value: "Avg Duration (ms)",
+                  angle: 90,
+                  position: "insideRight",
+                }}
+              />
 
-            {/* Tooltip */}
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[200px]"
-                  labelFormatter={(value) =>
-                    new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })
-                  }
-                />
-              }
-            />
+              {/* Tooltip */}
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    className="w-[200px]"
+                    labelFormatter={(value) =>
+                      new Date(value).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                    }
+                  />
+                }
+              />
 
-            {/* Lines */}
-            <Line
-              yAxisId="left"
-              dataKey="passed"
-              type="monotone"
-              stroke={chartConfig.passed.color}
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              yAxisId="left"
-              dataKey="failed"
-              type="monotone"
-              stroke={chartConfig.failed.color}
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              yAxisId="right"
-              dataKey="avgDuration"
-              type="monotone"
-              stroke={chartConfig.avgDuration.color}
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
+              {/* Lines */}
+              <Line
+                yAxisId="left"
+                dataKey="passed"
+                type="monotone"
+                stroke={chartConfig.passed.color}
+                strokeWidth={2}
+                dot={false}
+              />
+              <Line
+                yAxisId="left"
+                dataKey="failed"
+                type="monotone"
+                stroke={chartConfig.failed.color}
+                strokeWidth={2}
+                dot={false}
+              />
+              <Line
+                yAxisId="right"
+                dataKey="avgDuration"
+                type="monotone"
+                stroke={chartConfig.avgDuration.color}
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </ChartContainer>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 });

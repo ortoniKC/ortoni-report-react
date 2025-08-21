@@ -6,25 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function statusClass(status: TestResultItem["status"]) {
-  switch (status) {
-    case "passed":
-      return "bg-green-500/20 text-green-700";
-    case "failed":
-      return "bg-red-500/20 text-red-700";
-    case "skipped":
-      return "bg-gray-500/20 text-gray-700";
-    case "flaky":
-      return "bg-yellow-500/20 text-yellow-700";
-    case "timedOut":
-      return "bg-orange-500/20 text-orange-800";
-    case "interrupted":
-      return "bg-purple-500/20 text-purple-800";
-    default:
-      return "bg-muted text-foreground/70";
-  }
-}
-
 export function formatDuration(d: unknown) {
   const n =
     typeof d === "number" ? d : Number(String(d).replace(/[^\d.]/g, ""));
@@ -97,4 +78,8 @@ export function statusVariant(status: string) {
     default:
       return { label: status, className: "bg-zinc-500/15 text-zinc-600" };
   }
+}
+
+export function copyToClipboard(text: string) {
+  navigator.clipboard?.writeText(text).catch(() => {});
 }
