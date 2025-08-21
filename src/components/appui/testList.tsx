@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useState } from "react";
+import { memo, useState, useMemo } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -12,6 +12,7 @@ import type {
   TestResultItem,
 } from "@/lib/types/OrtoniReportData";
 import { StatusDot, TestAccordionItem } from "./TestAccordion";
+import { FilterBar } from "./FilterBar"; // ✅ reuse the one we built
 
 export const TestList = memo(
   (props: { tests: TestResult; preferences: Preferences }) => {
@@ -22,13 +23,41 @@ export const TestList = memo(
     const [open, setOpen] = useState(false);
     const showProject = preferences?.showProject;
 
+    /** ─────────────────────────────
+     * Flatten all tests (for filters)
+     */
+    const flattened = useMemo(() => {
+      const results: TestResultItem[] = [];
+
+      Object.entries(tests.tests ?? {}).forEach(([filePath, suites]) => {
+        Object.entries(suites ?? {}).forEach(([suiteName, suiteData]) => {
+          if (showProject) {
+            const projects = suiteData as Record<string, TestResultItem[]>;
+            Object.entries(projects).forEach(([projectName, testArray]) => {
+              testArray.forEach((t) =>
+                results.push({ ...t, filePath, suite: suiteName, projectName })
+              );
+            });
+          } else {
+            const testArray = ensureArray(suiteData) as TestResultItem[];
+            testArray.forEach((t) =>
+              results.push({ ...t, filePath, suite: suiteName })
+            );
+          }
+        });
+      });
+      return results;
+    }, [tests, showProject]);
+
+    const [filtered, setFiltered] = useState(flattened);
+
     const handleTestClick = (test: TestResultItem) => {
       setSelectedTest(test);
       setOpen(true);
     };
 
-    /** ───────────────────────────────────────────────
-     * Render individual test (leaf node)
+    /** ─────────────────────────────
+     * Render leaf node test
      */
     const renderTest = (test: TestResultItem) => (
       <motion.div
@@ -59,46 +88,54 @@ export const TestList = memo(
       </motion.div>
     );
 
-    /** ───────────────────────────────────────────────
-     * Render suite → test array (non-project mode)
+    /** ─────────────────────────────
+     * Render suites (filtered-aware)
      */
     const renderSuiteWithoutProjects = (
       suiteName: string,
       suiteData: unknown
     ) => {
       const testArray = ensureArray(suiteData) as TestResultItem[];
-      const shouldSkipSuite = testArray.every(
+      const visibleTests = testArray.filter((t) =>
+        filtered.find((f) => f.testId === t.testId)
+      );
+
+      if (visibleTests.length === 0) return null;
+
+      const shouldSkipSuite = visibleTests.every(
         (test) => test.title === suiteName
       );
 
       return shouldSkipSuite ? (
-        testArray.map(renderTest)
+        visibleTests.map(renderTest)
       ) : (
         <TestAccordionItem
           key={suiteName}
-          title={`${suiteName} (${testArray.length} tests)`}
-          tests={testArray}
+          title={`${suiteName} (${visibleTests.length} tests)`}
+          tests={visibleTests}
           isParent={false}
           onTestClick={handleTestClick}
         />
       );
     };
 
-    /** ───────────────────────────────────────────────
-     * Render suite → project grouping (project mode)
-     */
     const renderSuiteWithProjects = (suiteName: string, suiteData: unknown) => {
       const projects = suiteData as Record<string, TestResultItem[]>;
 
       return (
         <TestAccordionItem key={suiteName} title={suiteName} isParent={true}>
           {Object.entries(projects).map(([projectName, testArray]) => {
-            const shouldSkipSuite = testArray.every(
+            const visibleTests = testArray.filter((t) =>
+              filtered.find((f) => f.testId === t.testId)
+            );
+            if (visibleTests.length === 0) return null;
+
+            const shouldSkipSuite = visibleTests.every(
               (test) => test.title === suiteName
             );
 
             return shouldSkipSuite ? (
-              testArray.map((test) => (
+              visibleTests.map((test) => (
                 <TestAccordionItem
                   key={test.testId}
                   title={projectName}
@@ -110,8 +147,8 @@ export const TestList = memo(
             ) : (
               <TestAccordionItem
                 key={`${suiteName}-${projectName}`}
-                title={`${projectName} (${testArray.length} tests)`}
-                tests={testArray}
+                title={`${projectName} (${visibleTests.length} tests)`}
+                tests={visibleTests}
                 isParent={false}
                 onTestClick={handleTestClick}
               />
@@ -121,34 +158,26 @@ export const TestList = memo(
       );
     };
 
-    /** ───────────────────────────────────────────────
+    /** ─────────────────────────────
      * Main Render
      */
     return (
       <>
-        {/* Sheet Drawer for Test Details */}
+        {/* Test Details Drawer */}
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetContent
-            side="right"
-            className="
-              inset-y-0 right-0 left-auto
-              sm:!max-w-none
-              w-[75vw] sm:w-[70vw] md:w-[65vw] lg:w-[60vw] xl:w-[75vw] 2xl:w-[50vw]
-              max-w-[min(100vw-16px,1200px)]
-              h-dvh sm:h-auto sm:max-h-[calc(100dvh-32px)]
-              overflow-y-auto overflow-x-hidden
-              p-6
-            "
-          >
+          <SheetContent side="right" className="w-[75vw] max-w-[1200px] p-6">
             <SheetTitle className="sr-only">Test Details</SheetTitle>
-            <div className="min-h-0">
-              <TestDetails test={selectedTest} />
-            </div>
+            <TestDetails test={selectedTest} />
             <SheetDescription className="sr-only">
               Test Details
             </SheetDescription>
           </SheetContent>
         </Sheet>
+
+        {/* 🔍 Filter Bar */}
+        <div className="mb-4">
+          <FilterBar flattened={flattened} onFilter={setFiltered} />
+        </div>
 
         {/* Test List */}
         <ScrollArea className="space-y-3">
