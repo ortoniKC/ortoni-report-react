@@ -12,7 +12,6 @@ import {
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { copyToClipboard } from "@/lib/utils";
-import { ErrorBlock } from "./utils";
 import { EllipsisBlock } from "../ui/ellipsis-block";
 
 export function TestDetails({ test }: { test?: TestResultItem | null }) {
@@ -42,6 +41,8 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
           <span className="truncate max-w-full">{test.title}</span>
         </CardTitle>
         <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+          <StatusPill status={test.status} />
+          <Badge variant="secondary">{String(test.duration)}</Badge>
           {test.projectName && (
             <Badge variant="secondary">{String(test.projectName)}</Badge>
           )}
@@ -77,20 +78,13 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
       <Separator />
 
       <CardContent className="py-4 space-y-5 text-sm flex-1 overflow-y-auto">
-        {/* Info Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
-          <Info label="Status" value={test.status} />
-          <Info label="Duration" value={String(test.duration ?? "")} />
-          <Info label="Retry" value={String(test.retry ?? "")} />
-        </div>
-
         {/* Errors */}
         {Array.isArray(test.errors) && test.errors.length > 0 && (
           <section>
             <h4 className="font-medium mb-2 text-sm sm:text-base">
               Errors ({test.errors.length})
             </h4>
-            <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm max-h-40 overflow-y-auto">
+            <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm overflow-y-auto">
               {test.errors.map((e, i) => (
                 <EllipsisBlock key={i} errors={[e]} />
               ))}
@@ -145,17 +139,6 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
       </CardContent>
     </Card>
   );
-}
-
-function Info({ label, value }: { label: string; value?: string }) {
-  if (value) {
-    return (
-      <div>
-        <div className="text-xs sm:text-sm text-muted-foreground">{label}</div>
-        <div className="font-medium break-words">{value || "-"}</div>
-      </div>
-    );
-  }
 }
 
 function StatusPill({ status }: { status: TestResultItem["status"] }) {

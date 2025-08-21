@@ -133,7 +133,7 @@ export const TestList = memo(
             className="
               inset-y-0 right-0 left-auto
               sm:!max-w-none
-              w-[75vw] sm:w-[70vw] md:w-[65vw] lg:w-[60vw] xl:w-[55vw] 2xl:w-[50vw]
+              w-[75vw] sm:w-[70vw] md:w-[65vw] lg:w-[60vw] xl:w-[75vw] 2xl:w-[50vw]
               max-w-[min(100vw-16px,1200px)]
               h-dvh sm:h-auto sm:max-h-[calc(100dvh-32px)]
               overflow-y-auto overflow-x-hidden

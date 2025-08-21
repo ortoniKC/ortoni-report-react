@@ -63,8 +63,6 @@ export const EllipsisBlock = memo(({ errors }: { errors: string[] }) => {
             </motion.div>
           </button>
         </div>
-
-        {/* ref here to extract visible text */}
         <pre
           ref={errorRef}
           className="overflow-x-auto rounded-b-xl bg-stone-800 p-4 text-sm text-blue-100"
