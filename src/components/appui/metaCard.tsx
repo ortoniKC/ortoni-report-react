@@ -42,7 +42,7 @@ export const MetaCard = memo(
                     <Rocket className="text-purple-500 h-6 w-6" />
                   </div>
                   <h2 className="from-purple-500/90 to-purple-500/70 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
-                    {userConfig.projectName}
+                    {userConfig?.projectName || ""}
                   </h2>
                 </div>
                 <div className="space-y-4">
@@ -92,7 +92,7 @@ export const MetaCard = memo(
                 </div>
                 <div className="text-muted-foreground text-sm leading-relaxed">
                   <ul className="list-disc divl-5 space-y-1">
-                    {Object.entries(UserMeta.meta).map(([key, value]) =>
+                    {Object.entries(UserMeta.meta ?? {}).map(([key, value]) =>
                       value !== undefined && value !== "" ? (
                         <li key={key}>
                           <strong>
@@ -100,7 +100,9 @@ export const MetaCard = memo(
                           </strong>{" "}
                           {String(value)}
                         </li>
-                      ) : null
+                      ) : (
+                        "Add meta information in Ortoni Report Config"
+                      )
                     )}
                   </ul>
                 </div>

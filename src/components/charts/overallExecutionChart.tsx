@@ -25,11 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type {
-  Summary,
-  UserConfig,
-  UserMeta,
-} from "@/lib/types/OrtoniReportData";
+import type { Summary } from "@/lib/types/OrtoniReportData";
 import { memo } from "react";
 
 export const description = "An interactive pie chart";

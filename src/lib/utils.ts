@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { TestResultItem, TestResultUnion } from "./types/OrtoniReportData";
+import type { TestResultItem } from "./types/OrtoniReportData";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -49,26 +49,26 @@ export function ensureArray(value: unknown): TestResultItem[] {
   return [];
 }
 
-export function getTestRuns(
-  result: TestResultUnion,
-  file: string,
-  suite: string
-): { project?: string; runs: TestResultItem[] }[] {
-  if (result.showProject) {
-    const projectMap = result.testResult.tests[file]?.[suite] ?? {};
-    return Object.entries(projectMap).map(([project, runs]) => ({
-      project,
-      runs,
-    }));
-  } else {
-    const runs = result.testResult.tests[file]?.[suite] ?? [];
-    return [
-      {
-        runs,
-      },
-    ];
-  }
-}
+// export function getTestRuns(
+//   result: TestResultUnion,
+//   file: string,
+//   suite: string
+// ): { project?: string; runs: TestResultItem[] }[] {
+//   if (result.showProject) {
+//     const projectMap = result.testResult.tests[file]?.[suite] ?? {};
+//     return Object.entries(projectMap).map(([project, runs]) => ({
+//       project,
+//       runs,
+//     }));
+//   } else {
+//     const runs = result.testResult.tests[file]?.[suite] ?? [];
+//     return [
+//       {
+//         runs,
+//       },
+//     ];
+//   }
+// }
 
 // export function* iterateAllTestRuns(result: TestResultUnion): Generator<{
 //   file: string;

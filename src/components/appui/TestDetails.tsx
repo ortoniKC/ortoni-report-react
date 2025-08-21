@@ -2,9 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import type { TestResultData } from "@/lib/types/OrtoniReportData";
+import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 
-export function TestDetails({ test }: { test?: TestResultData | null }) {
+export function TestDetails({ test }: { test?: TestResultItem | null }) {
   if (!test) {
     return (
       <Card className="h-full flex items-center justify-center">

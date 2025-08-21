@@ -4,7 +4,6 @@ import * as React from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import { memo } from "react";
-import type { ReportData } from "@/lib/types/OrtoniReportData";
 
 import {
   type ChartConfig,
@@ -19,6 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import type { ChartTrendData } from "@/lib/types/OrtoniReportData";
 
 export const description = "An interactive line chart";
 
@@ -33,11 +33,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export const TrendChart = memo((props: ReportData) => {
+export const TrendChart = memo((props: { analytics: ChartTrendData }) => {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>("pass");
 
-  const chartTrend = props.result.analytics.chartTrendData;
+  const chartTrend = props.analytics;
 
   const chartData =
     chartTrend?.labels.map((label, index) => ({
@@ -47,8 +47,8 @@ export const TrendChart = memo((props: ReportData) => {
     })) ?? [];
 
   const totals = {
-    pass: props.result.analytics.reportData.summary.passed,
-    fail: props.result.analytics.reportData.summary.failed,
+    pass: props.analytics.passed,
+    fail: props.analytics.failed,
   };
 
   return (

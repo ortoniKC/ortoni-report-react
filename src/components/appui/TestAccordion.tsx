@@ -1,4 +1,4 @@
-import type { TestResultData } from "@/lib/types/OrtoniReportData";
+import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 import { cn, formatDuration } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
@@ -6,10 +6,10 @@ import { useState } from "react";
 
 interface TestAccordionItemProps {
   title: string;
-  tests: TestResultData[];
+  tests: TestResultItem[];
   isParent: boolean;
   children?: React.ReactNode;
-  onTestClick?: (test: TestResultData) => void; // NEW
+  onTestClick?: (test: TestResultItem) => void; // NEW
 }
 
 export function TestAccordionItem({
