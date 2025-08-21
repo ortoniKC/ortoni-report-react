@@ -229,7 +229,18 @@ export const TestList = memo(
       <>
         {/* Test Details Sheet */}
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetContent side="right" className="w-[75vw] max-w-[1200px] p-6">
+          <SheetContent
+            side="right"
+            className="
+              inset-y-0 right-0 left-auto
+              sm:!max-w-none
+              w-[75vw] sm:w-[70vw] md:w-[65vw] lg:w-[60vw] xl:w-[75vw] 2xl:w-[50vw]
+              max-w-[min(100vw-16px,1200px)]
+              h-dvh sm:h-auto sm:max-h-[calc(100dvh-32px)]
+              overflow-y-auto overflow-x-hidden
+              p-6
+            "
+          >
             <SheetTitle className="sr-only">Test Details</SheetTitle>
             <TestDetails test={selectedTest} />
             <SheetDescription className="sr-only">
