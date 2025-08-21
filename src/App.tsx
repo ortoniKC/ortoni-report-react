@@ -32,16 +32,16 @@ export function App({ reportData }: { reportData: ReportResponse }) {
               />
             }
           />
+          <Route
+            path="glance"
+            element={
+              <GlancePage
+                tests={reportData.data.testResult.tests}
+                showProject={reportData.data.preferences}
+              />
+            }
+          />
         </Route>
-        <Route
-          path="glance"
-          element={
-            <GlancePage
-              tests={reportData.data.testResult}
-              preferences={reportData.data.preferences}
-            />
-          }
-        />
       </Routes>
     </ThemeProvider>
   );

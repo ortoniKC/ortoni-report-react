@@ -26,7 +26,6 @@ export function statusClass(status: TestResultItem["status"]) {
 }
 
 export function formatDuration(d: unknown) {
-  // Your `duration` is typed as string; handle both string/number
   const n =
     typeof d === "number" ? d : Number(String(d).replace(/[^\d.]/g, ""));
   if (!isFinite(n)) return String(d ?? "");
@@ -35,7 +34,7 @@ export function formatDuration(d: unknown) {
   if (s < 60) return `${s.toFixed(2)} s`;
   const m = Math.floor(s / 60);
   const rs = Math.round(s % 60);
-  return `${m}m ${rs}s`;
+  return `${m}m ${rs.toFixed(2)}s`;
 }
 
 export function ensureArray(value: unknown): TestResultItem[] {
@@ -49,46 +48,53 @@ export function ensureArray(value: unknown): TestResultItem[] {
   return [];
 }
 
-// export function getTestRuns(
-//   result: TestResultUnion,
-//   file: string,
-//   suite: string
-// ): { project?: string; runs: TestResultItem[] }[] {
-//   if (result.showProject) {
-//     const projectMap = result.testResult.tests[file]?.[suite] ?? {};
-//     return Object.entries(projectMap).map(([project, runs]) => ({
-//       project,
-//       runs,
-//     }));
-//   } else {
-//     const runs = result.testResult.tests[file]?.[suite] ?? [];
-//     return [
-//       {
-//         runs,
-//       },
-//     ];
-//   }
-// }
+interface SuiteData {
+  name: string;
+  tests: TestResultItem[];
+}
 
-// export function* iterateAllTestRuns(result: TestResultUnion): Generator<{
-//   file: string;
-//   suite: string;
-//   project: string;
-//   run: TestResultItem;
-// }> {
-//   for (const [file, suites] of Object.entries(result.testResult.tests)) {
-//     for (const [suite, value] of Object.entries(suites)) {
-//       if (result.showProject) {
-//         for (const [project, runs] of Object.entries(value)) {
-//           for (const run of runs) {
-//             yield { file, suite, project, run };
-//           }
-//         }
-//       } else {
-//         for (const run of value as TestResultItem[]) {
-//           yield { file, suite, project: "default", run };
-//         }
-//       }
-//     }
-//   }
-// }
+export const renderSuiteWithoutProjects = (
+  suiteName: string,
+  suiteData: unknown
+): SuiteData[] => {
+  const testArray = ensureArray(suiteData) as TestResultItem[];
+  return [
+    {
+      name: suiteName,
+      tests: testArray ?? [],
+    },
+  ];
+};
+
+export const renderSuiteWithProjects = (
+  suiteName: string,
+  suiteData: unknown
+): SuiteData[] => {
+  const projects = suiteData as Record<string, unknown>;
+
+  return Object.entries(projects).map(([projectName, testArray]) => ({
+    name: `${projectName}`,
+    tests: ensureArray(testArray) as TestResultItem[],
+  }));
+};
+
+export function statusVariant(status: string) {
+  switch (status) {
+    case "passed":
+      return {
+        label: "Passed",
+        className: "bg-emerald-500/15 text-emerald-600",
+      };
+    case "failed":
+      return { label: "Failed", className: "bg-red-500/15 text-red-600" };
+    case "timedOut":
+      return {
+        label: "Timed out",
+        className: "bg-orange-500/15 text-orange-600",
+      };
+    case "skipped":
+      return { label: "Skipped", className: "bg-slate-500/15 text-slate-600" };
+    default:
+      return { label: status, className: "bg-zinc-500/15 text-zinc-600" };
+  }
+}
