@@ -92,9 +92,8 @@ export interface Preferences {
   showProject: boolean;
 }
 
-interface Analytics {
+export interface Analytics {
   reportData: AnalyticsReportData;
-  chartTrendData: ChartTrendData;
 }
 
 export interface Stats {
@@ -160,9 +159,9 @@ export interface SlowTest {
   avg_duration: number;
 }
 
-export interface ChartTrendData {
-  labels: string[];
-  passed: number[];
-  failed: number[];
-  avgDuration: number[];
-}
+// export interface ChartTrendData {
+//   labels: string[];
+//   passed: number[];
+//   failed: number[];
+//   avgDuration: number[];
+// }

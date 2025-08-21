@@ -1,8 +1,6 @@
 "use client";
 
-import * as React from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-
 import { memo } from "react";
 
 import {
@@ -18,67 +16,46 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import type { ChartTrendData } from "@/lib/types/OrtoniReportData";
+import type { Trend } from "@/lib/types/OrtoniReportData";
 
 export const description = "An interactive line chart";
 
 const chartConfig = {
-  pass: {
-    label: "Pass",
+  passed: {
+    label: "Passed",
     color: "var(--chart-2)",
   },
-  fail: {
-    label: "Fail",
+  failed: {
+    label: "Failed",
     color: "var(--chart-5)",
+  },
+  avgDuration: {
+    label: "Avg Duration",
+    color: "var(--chart-8)",
   },
 } satisfies ChartConfig;
 
-export const TrendChart = memo((props: { analytics: ChartTrendData }) => {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("pass");
+export const TrendChart = memo((props: { trends: Trend[] }) => {
+  const { trends } = props;
 
-  const chartTrend = props.analytics;
-
-  const chartData =
-    chartTrend?.labels.map((label, index) => ({
-      label, // keep as label
-      pass: chartTrend.passed[index],
-      fail: chartTrend.failed[index],
-    })) ?? [];
-
-  const totals = {
-    pass: props.analytics.passed,
-    fail: props.analytics.failed,
-  };
+  const chartData = trends.map((t) => ({
+    label: t.run_date,
+    passed: t.passed,
+    failed: t.failed,
+    avgDuration: t.avg_duration,
+  }));
 
   return (
     <Card className="py-4 sm:py-0">
       <CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 pb-3 sm:pb-0">
-          <CardTitle>Test Trend</CardTitle>
-          <CardDescription>Showing trends for the last 30 days</CardDescription>
-        </div>
-        <div className="flex">
-          {Object.keys(chartConfig).map((key) => {
-            const chart = key as keyof typeof chartConfig;
-            return (
-              <button
-                key={chart}
-                data-active={activeChart === chart}
-                className="data-[active=true]:bg-muted/50 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
-                onClick={() => setActiveChart(chart)}
-              >
-                <span className="text-muted-foreground text-xs">
-                  {chartConfig[chart].label}
-                </span>
-                <span className="text-lg leading-none font-bold sm:text-3xl">
-                  {totals[chart].toLocaleString()}
-                </span>
-              </button>
-            );
-          })}
+          <CardTitle className="pt-6">Test Trend</CardTitle>
+          <CardDescription className="pb-6">
+            Showing Passed, Failed & Avg Duration over time
+          </CardDescription>
         </div>
       </CardHeader>
+
       <CardContent className="px-2 sm:p-6">
         <ChartContainer
           config={chartConfig}
@@ -87,12 +64,11 @@ export const TrendChart = memo((props: { analytics: ChartTrendData }) => {
           <LineChart
             accessibilityLayer
             data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+            margin={{ left: 12, right: 12 }}
           >
             <CartesianGrid vertical={false} />
+
+            {/* X Axis */}
             <XAxis
               dataKey="label"
               tickLine={false}
@@ -107,25 +83,70 @@ export const TrendChart = memo((props: { analytics: ChartTrendData }) => {
                 });
               }}
             />
-            <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+
+            {/* Left Y Axis for counts */}
+            <YAxis
+              yAxisId="left"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              label={{ value: "Tests", angle: -90, position: "insideLeft" }}
+            />
+
+            {/* Right Y Axis for duration */}
+            <YAxis
+              yAxisId="right"
+              orientation="right"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              label={{
+                value: "Avg Duration (ms)",
+                angle: 90,
+                position: "insideRight",
+              }}
+            />
+
+            {/* Tooltip */}
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  className="w-[150px]"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
+                  className="w-[200px]"
+                  labelFormatter={(value) =>
+                    new Date(value).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
-                    });
-                  }}
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                  }
                 />
               }
             />
+
+            {/* Lines */}
             <Line
-              dataKey={activeChart}
+              yAxisId="left"
+              dataKey="passed"
               type="monotone"
-              stroke={chartConfig[activeChart].color}
+              stroke={chartConfig.passed.color}
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              yAxisId="left"
+              dataKey="failed"
+              type="monotone"
+              stroke={chartConfig.failed.color}
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              yAxisId="right"
+              dataKey="avgDuration"
+              type="monotone"
+              stroke={chartConfig.avgDuration.color}
               strokeWidth={2}
               dot={false}
             />

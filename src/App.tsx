@@ -5,6 +5,7 @@ import type { ReportResponse } from "./lib/types/OrtoniReportData";
 import { TestsPage } from "./components/appui/testPage";
 import { Dashboard } from "./components/appui/dashboard";
 import { GlancePage } from "./components/appui/glance";
+import { AnalyticsPage } from "./components/appui/analytics";
 
 export function App({ reportData }: { reportData: ReportResponse }) {
   return (
@@ -40,6 +41,10 @@ export function App({ reportData }: { reportData: ReportResponse }) {
                 showProject={reportData.data.preferences}
               />
             }
+          />
+          <Route
+            path="analytics"
+            element={<AnalyticsPage analytics={reportData.data.analytics} />}
           />
         </Route>
       </Routes>
