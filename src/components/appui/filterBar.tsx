@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -13,9 +13,9 @@ import {
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import { cn, statusVariant } from "@/lib/utils";
-import type { TestStatus } from "@/lib/types/OrtoniReportData";
+import type { TestResultItem, TestStatus } from "@/lib/types/OrtoniReportData";
 
-interface FilterBarProps {
+interface FilterBarProps extends TestResultItem {
   flattened: {
     testId: string;
     title: string;
@@ -33,9 +33,16 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
   const [project, setProject] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
-  // Collect unique values for dropdowns
-  const statuses = Array.from(new Set(flattened.map((t) => t.status)));
-  const projects = Array.from(new Set(flattened.map((t) => t.projectName)));
+  // Memoize unique values for dropdowns
+  const statuses = useMemo(
+    () => Array.from(new Set(flattened.map((t) => t.status))),
+    [flattened]
+  );
+
+  const projects = useMemo(
+    () => Array.from(new Set(flattened.map((t) => t.projectName))),
+    [flattened]
+  );
 
   const filtered = useMemo(() => {
     return flattened.filter((t) => {
@@ -53,8 +60,10 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
     });
   }, [flattened, status, project, search]);
 
-  // Send filtered data back
-  useMemo(() => onFilter(filtered), [filtered, onFilter]);
+  // Send filtered data back using useEffect
+  useEffect(() => {
+    onFilter(filtered);
+  }, [filtered, onFilter]);
 
   return (
     <motion.div
