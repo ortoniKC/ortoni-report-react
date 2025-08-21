@@ -4,6 +4,7 @@ import DashboardLayout from "./components/appui/layout";
 import type { ReportResponse } from "./lib/types/OrtoniReportData";
 import { TestsPage } from "./components/appui/testPage";
 import { Dashboard } from "./components/appui/dashboard";
+import { GlancePage } from "./components/appui/glance";
 
 export function App({ reportData }: { reportData: ReportResponse }) {
   return (
@@ -32,6 +33,15 @@ export function App({ reportData }: { reportData: ReportResponse }) {
             }
           />
         </Route>
+        <Route
+          path="glance"
+          element={
+            <GlancePage
+              tests={reportData.data.testResult}
+              preferences={reportData.data.preferences}
+            />
+          }
+        />
       </Routes>
     </ThemeProvider>
   );

@@ -25,8 +25,8 @@ export interface TestResultItem {
   location: string;
   retry: string;
   isRetry: number;
-  projectName: any;
-  suite: any;
+  projectName: string;
+  suite: string;
   title: string;
   status:
     | "passed"
