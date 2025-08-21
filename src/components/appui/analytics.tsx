@@ -1,4 +1,4 @@
-import type { Analytics, Trend } from "@/lib/types/OrtoniReportData";
+import type { Analytics } from "@/lib/types/OrtoniReportData";
 import { memo } from "react";
 import { TrendChart } from "../charts/analyticsTrend";
 

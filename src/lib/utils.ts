@@ -67,7 +67,7 @@ export const renderSuiteWithoutProjects = (
 };
 
 export const renderSuiteWithProjects = (
-  suiteName: string,
+  _suiteName: string,
   suiteData: unknown
 ): SuiteData[] => {
   const projects = suiteData as Record<string, unknown>;
