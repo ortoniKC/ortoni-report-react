@@ -6,16 +6,16 @@ import { useState } from "react";
 
 interface TestAccordionItemProps {
   title: string;
-  tests: TestResultItem[];
-  isParent: boolean;
+  tests?: TestResultItem[];
+  isParent?: boolean;
   children?: React.ReactNode;
-  onTestClick?: (test: TestResultItem) => void; // NEW
+  onTestClick?: (test: TestResultItem) => void;
 }
 
 export function TestAccordionItem({
   title,
   tests,
-  isParent,
+  isParent = false,
   children,
   onTestClick,
 }: TestAccordionItemProps) {
@@ -91,46 +91,46 @@ export function TestAccordionItem({
                 : "pl-6 pr-4 space-y-2"
             )}
           >
-            {children || (
-              <>
-                {tests.map((t) => (
-                  <motion.div
-                    key={t.testId ?? `${t.title}-${t.location}`}
-                    initial={{ y: -8, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -8, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded"
-                    onClick={() => onTestClick?.(t)} // NEW
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-2">
-                        <StatusDot status={t.status} />
-                        <span className="truncate">{t.title}</span>
-                      </span>
-                    </div>
-                    <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
-                      <span>Duration: {formatDuration(t.duration)}</span>
-                      {t.retry && Number(t.retry) > 0 && (
-                        <span>Retry: {t.retry}</span>
-                      )}
-                      {t.projectName && !isParent && (
-                        <span>Project: {String(t.projectName)}</span>
-                      )}
-                      {t.testTags?.length ? (
-                        <span className="truncate">
-                          Tags: {t.testTags.join(", ")}
-                        </span>
-                      ) : null}
-                    </div>
-                  </motion.div>
-                ))}
-                {!tests.length && !children && (
-                  <div className="text-xs text-muted-foreground">
-                    No tests to display.
+            {/* if explicit children passed → render them */}
+            {children ? (
+              children
+            ) : tests && tests.length ? (
+              tests.map((t) => (
+                <motion.div
+                  key={t.testId ?? `${t.title}-${t.location}`}
+                  initial={{ y: -8, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -8, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded"
+                  onClick={() => onTestClick?.(t)}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="inline-flex items-center gap-2">
+                      <StatusDot status={t.status} />
+                      <span className="truncate">{t.title}</span>
+                    </span>
                   </div>
-                )}
-              </>
+                  <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
+                    <span>Duration: {formatDuration(t.duration)}</span>
+                    {t.retry && Number(t.retry) > 0 && (
+                      <span>Retry: {t.retry}</span>
+                    )}
+                    {t.projectName && (
+                      <span>Project: {String(t.projectName)}</span>
+                    )}
+                    {t.testTags?.length ? (
+                      <span className="truncate">
+                        Tags: {t.testTags.join(", ")}
+                      </span>
+                    ) : null}
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="text-xs text-muted-foreground">
+                No tests to display.
+              </div>
             )}
           </motion.div>
         )}
@@ -138,6 +138,7 @@ export function TestAccordionItem({
     </motion.div>
   );
 }
+
 export function StatusDot({ status }: { status: string }) {
   const color =
     status === "passed"
