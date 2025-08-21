@@ -1,18 +1,29 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
-import { Check, Copy } from "lucide-react";
+} from "@/components/ui/tooltip";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { Check, Copy, ImageIcon, PlayCircle } from "lucide-react";
 import { useState } from "react";
 import { copyToClipboard } from "@/lib/utils";
 import { EllipsisBlock } from "../ui/ellipsis-block";
+import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 
 export function TestDetails({ test }: { test?: TestResultItem | null }) {
   if (!test) {
@@ -24,6 +35,7 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
       </Card>
     );
   }
+
   const [copied, setCopied] = useState(false);
 
   const handleCopy = (e: React.MouseEvent) => {
@@ -35,8 +47,8 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
 
   return (
     <Card className="h-full flex flex-col">
-      {/* Sticky Header on mobile */}
-      <CardHeader className="space-y-2 sm:space-y-3 sticky top-0 z-10 pb-3 sm:pb-4">
+      {/* Top Section */}
+      <CardHeader className="space-y-3 sticky top-0 z-10 pb-3 border-b">
         <CardTitle className="flex flex-wrap items-center gap-2 text-base sm:text-lg">
           <span className="truncate max-w-full">{test.title}</span>
         </CardTitle>
@@ -48,93 +60,188 @@ export function TestDetails({ test }: { test?: TestResultItem | null }) {
           )}
           {test.suite && <Badge variant="outline">{String(test.suite)}</Badge>}
           {test.filePath && (
-            <>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Badge
-                      variant="outline"
-                      className="cursor-pointer"
-                      onClick={handleCopy}
-                    >
-                      {test.location}{" "}
-                      {copied ? (
-                        <Check className="mr-1 h-3 w-3 text-green-500" />
-                      ) : (
-                        <Copy className="mr-1 h-3 w-3" />
-                      )}
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {copied ? "Copied!" : "Copy test location"}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge
+                    variant="outline"
+                    className="cursor-pointer"
+                    onClick={handleCopy}
+                  >
+                    {test.location}
+                    {copied ? (
+                      <Check className="ml-1 h-3 w-3 text-green-500" />
+                    ) : (
+                      <Copy className="ml-1 h-3 w-3" />
+                    )}
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {copied ? "Copied!" : "Copy test location"}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
       </CardHeader>
 
-      <Separator />
+      <CardContent className="flex-1 overflow-y-auto space-y-6 p-4">
+        {/* Media Section */}
+        {(test.screenshotPath ||
+          (Array.isArray(test.screenshots) && test.screenshots.length > 0) ||
+          test.videoPath) && (
+          <section className="space-y-3">
+            <h4 className="font-medium text-sm sm:text-base">Attachments</h4>
+            <div className="flex flex-wrap gap-3">
+              {/* Screenshot(s) */}
+              {test.screenshotPath && (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <ImageIcon className="mr-1 h-4 w-4" /> Screenshot
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-5xl">
+                    <DialogHeader>
+                      <DialogTitle>Screenshot</DialogTitle>
+                      <DialogDescription>
+                        Full-size screenshot from the test run.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <img
+                      src={toFileUrl(test.screenshotPath)}
+                      alt="screenshot"
+                      className="rounded-lg max-h-[70vh] mx-auto"
+                    />
+                  </DialogContent>
+                </Dialog>
+              )}
+              {Array.isArray(test.screenshots) &&
+                test.screenshots.map((p, i) => (
+                  <Dialog key={i}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        <ImageIcon className="mr-1 h-4 w-4" /> Screenshot{" "}
+                        {i + 1}
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-5xl">
+                      <DialogHeader>
+                        <DialogTitle>Screenshot {i + 1}</DialogTitle>
+                        <DialogDescription className="sr-only">
+                          Full-size screenshot from the test run.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <img
+                        src={toFileUrl(p)}
+                        alt={`screenshot-${i + 1}`}
+                        className="rounded-lg max-h-[70vh] mx-auto"
+                      />
+                    </DialogContent>
+                  </Dialog>
+                ))}
 
-      <CardContent className="py-4 space-y-5 text-sm flex-1 overflow-y-auto">
-        {/* Errors */}
-        {Array.isArray(test.errors) && test.errors.length > 0 && (
-          <section>
-            <h4 className="font-medium mb-2 text-sm sm:text-base">
-              Errors ({test.errors.length})
-            </h4>
-            <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm overflow-y-auto">
-              {test.errors.map((e, i) => (
-                <EllipsisBlock key={i} errors={[e]} />
-              ))}
-            </ul>
+              {/* Video */}
+              {test.videoPath && (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <PlayCircle className="mr-1 h-4 w-4" /> Play Video
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-5xl">
+                    <DialogHeader>
+                      <DialogTitle>Video</DialogTitle>
+                      <DialogDescription className="sr-only">
+                        Full-size video from the test run.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <video
+                      src={toFileUrl(test.videoPath)}
+                      controls
+                      className="rounded-lg w-full max-h-[70vh]"
+                    />
+                  </DialogContent>
+                </Dialog>
+              )}
+              {Array.isArray(test.videoPath) &&
+                test.videoPath.map((p, i) => (
+                  <Dialog key={i}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        <ImageIcon className="mr-1 h-4 w-4" /> Video {i + 1}
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-5xl">
+                      <DialogHeader>
+                        <DialogTitle>Video {i + 1}</DialogTitle>
+                        <DialogDescription className="sr-only">
+                          Full-size video from the test run.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <video
+                        src={toFileUrl(p)}
+                        controls
+                        className="rounded-lg w-full max-h-[70vh]"
+                      />
+                    </DialogContent>
+                  </Dialog>
+                ))}
+            </div>
           </section>
         )}
 
-        {/* Actions */}
-        <section className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {test.tracePath && (
-            <Button variant="secondary" size="sm" asChild>
-              <a
-                href={toFileUrl(test.tracePath)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open Trace
-              </a>
-            </Button>
-          )}
-          {test.videoPath && (
-            <Button variant="secondary" size="sm" asChild>
-              <a
-                href={toFileUrl(test.videoPath)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open Video
-              </a>
-            </Button>
-          )}
-          {test.screenshotPath && (
-            <Button variant="secondary" size="sm" asChild>
-              <a
-                href={toFileUrl(test.screenshotPath)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open Screenshot
-              </a>
-            </Button>
-          )}
-          {Array.isArray(test.screenshots) &&
-            test.screenshots.map((p, i) => (
-              <Button key={i} variant="outline" size="sm" asChild>
-                <a href={toFileUrl(p)} target="_blank" rel="noreferrer">
-                  Screenshot {i + 1}
-                </a>
-              </Button>
-            ))}
+        {/* Tabbed Section */}
+        <section>
+          <Tabs defaultValue="steps" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              {test.steps?.length > 0 && (
+                <TabsTrigger value="steps">Steps</TabsTrigger>
+              )}
+              {test.errors?.length > 0 && (
+                <TabsTrigger value="errors">Errors</TabsTrigger>
+              )}
+              {test.logs && <TabsTrigger value="logs">Logs</TabsTrigger>}
+            </TabsList>
+
+            {test.steps?.length > 0 && (
+              <TabsContent value="steps" className="pt-3">
+                <EllipsisBlock
+                  title="Test Steps"
+                  key="steps"
+                  errors={[
+                    test.steps
+                      .map((s) => {
+                        if (s.snippet) {
+                          // Title red + snippet below
+                          return `<span style="color:red;">${s.title}</span>\n${s.snippet}`;
+                        }
+                        return s.title;
+                      })
+                      .join("\n"),
+                  ]}
+                />
+              </TabsContent>
+            )}
+
+            {test.errors?.length > 0 && (
+              <TabsContent value="errors" className="pt-3">
+                <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm">
+                  {test.errors.map((e, i) => (
+                    <EllipsisBlock key={i} errors={[e]} title="Error Logs" />
+                  ))}
+                </ul>
+              </TabsContent>
+            )}
+
+            {test.logs && (
+              <TabsContent value="logs" className="pt-3">
+                <pre className="bg-muted p-2 rounded text-xs sm:text-sm overflow-x-auto whitespace-pre-wrap">
+                  {test.logs}
+                </pre>
+              </TabsContent>
+            )}
+          </Tabs>
         </section>
       </CardContent>
     </Card>

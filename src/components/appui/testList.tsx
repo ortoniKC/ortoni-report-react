@@ -140,11 +140,13 @@ export const TestList = memo(
               p-6
             "
           >
-            <SheetTitle>Test Details</SheetTitle>
+            <SheetTitle className="sr-only">Test Details</SheetTitle>
             <div className="min-h-0">
               <TestDetails test={selectedTest} />
             </div>
-            <SheetDescription>Test Details</SheetDescription>
+            <SheetDescription className="sr-only">
+              Test Details
+            </SheetDescription>
           </SheetContent>
         </Sheet>
 
