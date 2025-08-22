@@ -2,6 +2,7 @@ import type { Analytics } from "@/lib/types/OrtoniReportData";
 import { memo } from "react";
 import { TrendChart } from "../charts/analyticsTrend";
 import TextGenerateEffect from "../ui/typewriter";
+import { SlowTests } from "./slowTest";
 
 export const AnalyticsPage = memo((props: { analytics: Analytics }) => {
   const { analytics } = props;
@@ -16,6 +17,14 @@ export const AnalyticsPage = memo((props: { analytics: Analytics }) => {
             />
           </div>
           <TrendChart trends={analytics.reportData.trends} />
+          <SlowTests
+            slowTest={analytics.reportData.slowTests}
+            title="Slow Tests"
+          />
+          <SlowTests
+            slowTest={analytics.reportData.flakyTests}
+            title="Flaky Tests"
+          />
         </div>
       </div>
     </div>
