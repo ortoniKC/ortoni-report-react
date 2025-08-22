@@ -66,7 +66,7 @@ export const EllipsisBlock = memo(
           </div>
           <pre
             ref={errorRef}
-            className="overflow-x-auto rounded-b-xl bg-stone-800 p-4 text-xs text-blue-100"
+            className="overflow-x-auto rounded-b-xl bg-stone-900 p-4 text-xs text-blue-100"
           >
             {Array.isArray(errors) ? (
               errors.map((e, i) => (
