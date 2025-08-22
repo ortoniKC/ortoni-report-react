@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { App } from "./App";
 import { HashRouter } from "react-router-dom";
-import mockData from "../mockdata/project.json";
+import mockData from "../mockdata/noproject.json";
 import type { ReportResponse } from "./lib/types/OrtoniReportData";
 let reportData: any = {};
 
