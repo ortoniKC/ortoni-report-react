@@ -49,7 +49,9 @@ export const HtmlViewerDrawer: React.FC<HtmlViewerDrawerProps> = ({
           <DrawerDescription>mark up</DrawerDescription>
         </DrawerHeader>
         <ScrollArea className="h-full w-full border rounded-md p-2">
-          <EllipsisBlock errors={content} title={"Markdown"} />
+          <div className="p-4 max-h-[70vh] overflow-y-auto flex justify-center">
+            <EllipsisBlock errors={content} title="Markdown" />
+          </div>
         </ScrollArea>
       </DrawerContent>
     </Drawer>
