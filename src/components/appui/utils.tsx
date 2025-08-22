@@ -194,3 +194,40 @@ export function StatusPill({ status }: { status: TestResultItem["status"] }) {
 export function toFileUrl(p: string) {
   return p.startsWith("http") ? p : p;
 }
+
+import React from "react";
+
+("use client");
+
+function getAdjustedBaseUrl(): string {
+  const origin = window.location.origin;
+  const pathname = window.location.pathname;
+
+  if (pathname.endsWith(".html")) {
+    const directoryPath = pathname.substring(0, pathname.lastIndexOf("/") + 1);
+    return `${origin}${directoryPath}`;
+  }
+  return origin;
+}
+
+interface TraceButtonProps {
+  tracePath: string;
+}
+
+export const TraceButton: React.FC<TraceButtonProps> = ({ tracePath }) => {
+  const handleOpenTrace = () => {
+    if (!tracePath) return;
+
+    const normalizedTracePath = tracePath.replace(/\\/g, "/");
+    const baseUrl = getAdjustedBaseUrl();
+    const url = `${baseUrl}/trace/index.html?trace=${baseUrl}/${normalizedTracePath}`;
+
+    window.open(url, "_blank");
+  };
+
+  return (
+    <Button onClick={handleOpenTrace} variant="outline" size="sm">
+      Open Trace
+    </Button>
+  );
+};

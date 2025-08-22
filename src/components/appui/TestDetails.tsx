@@ -35,7 +35,7 @@ import { copyToClipboard } from "@/lib/utils";
 import { EllipsisBlock } from "../ui/ellipsis-block";
 import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
 import { motion } from "framer-motion";
-import { ShowHistory, StatusPill, toFileUrl } from "./utils";
+import { ShowHistory, StatusPill, toFileUrl, TraceButton } from "./utils";
 
 export function TestDetails({
   test,
@@ -267,6 +267,7 @@ export function TestDetails({
                   </DialogContent>
                 </Dialog>
               )}
+              {test.tracePath && <TraceButton tracePath={test.tracePath} />}
             </div>
           </motion.section>
         )}
