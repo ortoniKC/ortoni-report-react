@@ -245,7 +245,10 @@ export const TestList = memo(
             "
           >
             <SheetTitle className="sr-only">Test Details</SheetTitle>
-            <TestDetails test={selectedTest} />
+            <TestDetails
+              test={selectedTest}
+              testHistories={tests.testHistories}
+            />
             <SheetDescription className="sr-only">
               Test Details
             </SheetDescription>
@@ -257,43 +260,54 @@ export const TestList = memo(
           <FilterBar flattened={flattened} onFilter={setFiltered} />
         </div>
 
-        {/* Test List */}
-        <ScrollArea className="space-y-3">
-          {Object.entries(tests.tests ?? {}).map(([filePath, suites]) => {
-            // Check if this file has any visible tests after filtering
-            const hasTestsInFile = Object.values(suites ?? {}).some(
-              (suiteData) => {
-                if (showProject) {
-                  const projects = suiteData as Record<
-                    string,
-                    TestResultItem[]
-                  >;
-                  return Object.values(projects).some(hasVisibleTests);
-                } else {
-                  const testArray = ensureArray(suiteData) as TestResultItem[];
-                  return hasVisibleTests(testArray);
+        {filtered.length === 0 ? (
+          <p className="text-center py-4 text-muted-foreground">
+            No tests match the current filters
+          </p>
+        ) : (
+          <ScrollArea className="space-y-3">
+            {Object.entries(tests.tests ?? {}).map(([filePath, suites]) => {
+              // Check if this file has any visible tests after filtering
+              const hasTestsInFile = Object.values(suites ?? {}).some(
+                (suiteData) => {
+                  if (showProject) {
+                    const projects = suiteData as Record<
+                      string,
+                      TestResultItem[]
+                    >;
+                    return Object.values(projects).some(hasVisibleTests);
+                  } else {
+                    const testArray = ensureArray(
+                      suiteData
+                    ) as TestResultItem[];
+                    return hasVisibleTests(testArray);
+                  }
                 }
-              }
-            );
+              );
 
-            if (!hasTestsInFile) return null;
+              if (!hasTestsInFile) return null;
 
-            return (
-              <TestAccordionItem
-                key={filePath}
-                title={filePath}
-                isParent
-                defaultOpen={filtered.length !== flattened.length}
-              >
-                {Object.entries(suites ?? {}).map(([suiteName, suiteData]) =>
-                  showProject
-                    ? renderSuiteWithProjects(suiteName, suiteData, filePath)
-                    : renderSuiteWithoutProjects(suiteName, suiteData, filePath)
-                )}
-              </TestAccordionItem>
-            );
-          })}
-        </ScrollArea>
+              return (
+                <TestAccordionItem
+                  key={filePath}
+                  title={filePath}
+                  isParent
+                  defaultOpen={filtered.length !== flattened.length}
+                >
+                  {Object.entries(suites ?? {}).map(([suiteName, suiteData]) =>
+                    showProject
+                      ? renderSuiteWithProjects(suiteName, suiteData, filePath)
+                      : renderSuiteWithoutProjects(
+                          suiteName,
+                          suiteData,
+                          filePath
+                        )
+                  )}
+                </TestAccordionItem>
+              );
+            })}
+          </ScrollArea>
+        )}
       </>
     );
   }

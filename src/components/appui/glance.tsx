@@ -73,60 +73,66 @@ export const GlancePage = memo(
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="overflow-hidden rounded-2xl border shadow-sm hover:shadow-md transition-shadow"
             >
-              <ScrollArea className="h-[75vh] w-full hide-scrollbar">
-                <Table>
-                  <TableHeader className="bg-muted">
-                    <TableRow>
-                      <TableHead className="text-left">File</TableHead>
-                      <TableHead className="text-left">Suite</TableHead>
-                      <TableHead className="text-left">Test</TableHead>
-                      <TableHead className="text-left">Project</TableHead>
-                      <TableHead className="text-left">Status</TableHead>
-                      <TableHead className="text-left">Duration</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <AnimatePresence>
-                      {filtered.map((r) => (
-                        <motion.tr
-                          key={r.testId}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.25 }}
-                          className="group cursor-pointer transition-colors"
-                        >
-                          <TableCell className="max-w-[240px] truncate group-hover:bg-muted/20 group-hover:shadow-inner transition-all duration-200">
-                            {r.filePath}
-                          </TableCell>
-                          <TableCell className="max-w-[280px] truncate group-hover:bg-muted/20 transition-colors duration-200">
-                            {r.suite}
-                          </TableCell>
-                          <TableCell className="max-w-[320px] truncate font-medium group-hover:bg-muted/30 transition-colors duration-200">
-                            {r.title}
-                          </TableCell>
-                          <TableCell className="capitalize group-hover:bg-muted/20 transition-colors duration-200">
-                            {r.projectName}
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              className={cn(
-                                "rounded-full transition-colors duration-200 group-hover:scale-105",
-                                statusVariant(r.status).className
-                              )}
-                            >
-                              {statusVariant(r.status).label}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="group-hover:bg-muted/20 transition-colors duration-200">
-                            {r.duration}
-                          </TableCell>
-                        </motion.tr>
-                      ))}
-                    </AnimatePresence>
-                  </TableBody>
-                </Table>
-              </ScrollArea>
+              {filtered.length === 0 ? (
+                <p className="text-center py-4 text-muted-foreground">
+                  No tests match the current filters
+                </p>
+              ) : (
+                <ScrollArea className="h-[75vh] w-full hide-scrollbar">
+                  <Table>
+                    <TableHeader className="bg-muted">
+                      <TableRow>
+                        <TableHead className="text-left">File</TableHead>
+                        <TableHead className="text-left">Suite</TableHead>
+                        <TableHead className="text-left">Test</TableHead>
+                        <TableHead className="text-left">Project</TableHead>
+                        <TableHead className="text-left">Status</TableHead>
+                        <TableHead className="text-left">Duration</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <AnimatePresence>
+                        {filtered.map((r) => (
+                          <motion.tr
+                            key={r.testId}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.25 }}
+                            className="group cursor-pointer transition-colors"
+                          >
+                            <TableCell className="max-w-[240px] truncate group-hover:bg-muted/20 group-hover:shadow-inner transition-all duration-200">
+                              {r.filePath}
+                            </TableCell>
+                            <TableCell className="max-w-[280px] truncate group-hover:bg-muted/20 transition-colors duration-200">
+                              {r.suite}
+                            </TableCell>
+                            <TableCell className="max-w-[320px] truncate font-medium group-hover:bg-muted/30 transition-colors duration-200">
+                              {r.title}
+                            </TableCell>
+                            <TableCell className="capitalize group-hover:bg-muted/20 transition-colors duration-200">
+                              {r.projectName}
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                className={cn(
+                                  "rounded-full transition-colors duration-200 group-hover:scale-105",
+                                  statusVariant(r.status).className
+                                )}
+                              >
+                                {statusVariant(r.status).label}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="group-hover:bg-muted/20 transition-colors duration-200">
+                              {r.duration}
+                            </TableCell>
+                          </motion.tr>
+                        ))}
+                      </AnimatePresence>
+                    </TableBody>
+                  </Table>
+                </ScrollArea>
+              )}
             </motion.div>
           </div>
         </div>
