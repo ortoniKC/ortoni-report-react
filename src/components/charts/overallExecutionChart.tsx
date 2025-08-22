@@ -94,10 +94,10 @@ export const OverallExecutionResult = memo((props: { summary: Summary }) => {
     () => summaryChartData.findIndex((item) => item.status === activestatus),
     [activestatus]
   );
-  const status = React.useMemo(
-    () => summaryChartData.map((item) => item.status),
-    []
-  );
+  // const status = React.useMemo(
+  //   () => summaryChartData.map((item) => item.status),
+  //   []
+  // );
   const availableStatuses = summaryChartData
     .filter((item) => item.tests > 0)
     .map((item) => item.status);
