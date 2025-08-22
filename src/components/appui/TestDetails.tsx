@@ -238,36 +238,37 @@ export function TestDetails({
                 ))}
 
               {/* Video */}
-              {test.videoPath && (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="gap-2 rounded-md"
-                    >
-                      <PlayCircle className="h-4 w-4" />
-                      Play Video
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-4xl">
-                    <DialogHeader>
-                      <DialogTitle>Test Recording</DialogTitle>
-                      <DialogDescription className="sr-only">
-                        Video recording from the test run.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <motion.video
-                      src={toFileUrl(test.videoPath)}
-                      controls
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="rounded-md w-full max-h-[70vh]"
-                    />
-                  </DialogContent>
-                </Dialog>
-              )}
+              {Array.isArray(test.videoPath) &&
+                test.videoPath.map((video, index) => (
+                  <Dialog key={index}>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2 rounded-md"
+                      >
+                        <PlayCircle className="h-4 w-4" />
+                        Play Video {index + 1}
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl">
+                      <DialogHeader>
+                        <DialogTitle>Test Recording {index + 1}</DialogTitle>
+                        <DialogDescription className="sr-only">
+                          Video recording from the test run.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <motion.video
+                        src={toFileUrl(video)}
+                        controls
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        className="rounded-md w-full max-h-[70vh]"
+                      />
+                    </DialogContent>
+                  </Dialog>
+                ))}
               {test.tracePath && <TraceButton tracePath={test.tracePath} />}
               {test.markdownPath && (
                 <HtmlViewerDrawer fileUrl={test.markdownPath} />
