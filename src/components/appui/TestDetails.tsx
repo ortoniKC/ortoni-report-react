@@ -310,14 +310,6 @@ export function TestDetails({
                 >
                   <AlertCircle className="h-4 w-4" />
                   Errors
-                  {test.errors.length > 0 && (
-                    <Badge
-                      variant="destructive"
-                      className="h-4 w-4 p-0 flex items-center justify-center ml-1"
-                    >
-                      {test.errors.length}
-                    </Badge>
-                  )}
                 </TabsTrigger>
               )}
               {test.logs && (

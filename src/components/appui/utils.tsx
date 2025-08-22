@@ -88,7 +88,7 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
             <TableCell>{item.duration}</TableCell>
             <TableCell>
               {item.error_message.length > 0 ? (
-                <ErrorMessageViewer message={item.error_message.split("\n")} />
+                <ShowHistoryError message={item.error_message.split("\n")} />
               ) : (
                 <span className="text-muted-foreground">No error</span>
               )}
@@ -101,7 +101,7 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
   );
 }
 
-export function ErrorMessageViewer({ message }: { message: string[] }) {
+export function ShowHistoryError({ message }: { message: string[] }) {
   return (
     <Drawer>
       <DrawerTrigger>
@@ -114,7 +114,12 @@ export function ErrorMessageViewer({ message }: { message: string[] }) {
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
-        <ScrollArea className="h-[80vh] w-full overflow-x-auto rounded-md border bg-muted p-4">
+        <ScrollArea className="h-full w-full border rounded-md p-2">
+          <div className="p-4 max-h-[70vh] overflow-y-auto flex justify-center">
+            <EllipsisBlock errors={message} title="Test history" />
+          </div>
+        </ScrollArea>
+        {/* <ScrollArea className="h-[80vh] w-full overflow-x-auto rounded-md border bg-muted p-4">
           <div className="min-w-max">
             {" "}
             {message.map((e, i) => (
@@ -125,7 +130,7 @@ export function ErrorMessageViewer({ message }: { message: string[] }) {
               />
             ))}
           </div>
-        </ScrollArea>
+        </ScrollArea> */}
       </DrawerContent>
     </Drawer>
   );
@@ -196,6 +201,7 @@ export function toFileUrl(p: string) {
 }
 
 import React from "react";
+import { EllipsisBlock } from "../ui/ellipsis-block";
 
 ("use client");
 
