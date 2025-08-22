@@ -231,3 +231,31 @@ export const TraceButton: React.FC<TraceButtonProps> = ({ tracePath }) => {
     </Button>
   );
 };
+interface MarkdownButtonProps {
+  markdownPath: string;
+  label?: string;
+}
+
+export const MarkdownButton: React.FC<MarkdownButtonProps> = ({
+  markdownPath,
+  label = "Open Markdown",
+}) => {
+  const handleOpenMarkdown = () => {
+    if (!markdownPath) return;
+
+    const normalizedPath = markdownPath.replace(/\\/g, "/");
+    const baseUrl = getAdjustedBaseUrl();
+    const fullUrl = `${baseUrl.replace(/\/$/, "")}/${normalizedPath.replace(
+      /^\//,
+      ""
+    )}`;
+
+    window.open(fullUrl, "_blank");
+  };
+
+  return (
+    <Button onClick={handleOpenMarkdown} variant="secondary" size="sm">
+      {label}
+    </Button>
+  );
+};
