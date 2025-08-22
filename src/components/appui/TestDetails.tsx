@@ -387,6 +387,16 @@ function StatusPill({ status }: { status: TestResultItem["status"] }) {
         "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
       icon: <ChevronRight className="h-4 w-4" />,
     },
+    expected: {
+      class:
+        "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
+      icon: <ChevronRight className="h-4 w-4" />,
+    },
+    unexpected: {
+      class:
+        "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
+      icon: <ChevronRight className="h-4 w-4" />,
+    },
   };
 
   const config = statusConfig[status] || {
