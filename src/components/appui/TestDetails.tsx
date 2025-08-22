@@ -35,13 +35,8 @@ import { copyToClipboard } from "@/lib/utils";
 import { EllipsisBlock } from "../ui/ellipsis-block";
 import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
 import { motion } from "framer-motion";
-import {
-  MarkdownButton,
-  ShowHistory,
-  StatusPill,
-  toFileUrl,
-  TraceButton,
-} from "./utils";
+import { ShowHistory, StatusPill, toFileUrl, TraceButton } from "./utils";
+import { HtmlViewerDrawer } from "./openMarkdown";
 
 export function TestDetails({
   test,
@@ -275,7 +270,8 @@ export function TestDetails({
               )}
               {test.tracePath && <TraceButton tracePath={test.tracePath} />}
               {test.markdownPath && (
-                <MarkdownButton markdownPath={test.markdownPath} />
+                <HtmlViewerDrawer fileUrl={test.markdownPath} />
+                // <MarkdownButton markdownPath={test.markdownPath} />
               )}
             </div>
           </motion.section>
