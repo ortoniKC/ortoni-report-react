@@ -73,13 +73,13 @@ export const Dashboard = memo(
           <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
             <div className="px-2 sm:px-0">
               <TextGenerateEffect
-                words={`Welcome ${userConfig.authorName || ""}!`}
+                words={`Hello ${userConfig.authorName || "Tester"}!`}
                 className="text-3xl font-bold tracking-tight sm:text-3xl"
               />
               <p className="text-muted-foreground text-sm sm:text-base">
                 Here&apos;s what&apos;s happening with your{" "}
                 <strong className="text-primary">
-                  {userConfig.type || ""}
+                  {userConfig.type || "test"}
                 </strong>{" "}
                 today.
               </p>
