@@ -36,6 +36,7 @@ export const TestList = memo(
         projectName: string;
         status: TestStatus;
         duration: string;
+        testTags: string[];
       }[] = [];
 
       Object.entries(tests.tests ?? {}).forEach(([filePath, suites]) => {
@@ -52,6 +53,7 @@ export const TestList = memo(
                   testId: t.testId || `${t.title}-${t.location}`,
                   status: t.status,
                   duration: t.duration,
+                  testTags: t.testTags || [],
                 })
               );
             });
@@ -66,6 +68,7 @@ export const TestList = memo(
                 testId: t.testId || `${t.title}-${t.location}`,
                 status: t.status,
                 duration: t.duration,
+                testTags: t.testTags || [],
               })
             );
           }
