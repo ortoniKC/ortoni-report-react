@@ -72,7 +72,7 @@ export function TestDetails({
   };
 
   return (
-    <div className="h-full flex flex-col rounded-lg border bg-background overflow-hidden">
+    <div className="h-full flex flex-col border bg-background overflow-hidden">
       {/* Header Section */}
       <div className="p-5 border-b bg-muted/30">
         <div className="flex items-start justify-between gap-4 mb-3">

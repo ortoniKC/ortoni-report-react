@@ -239,9 +239,8 @@ export const TestList = memo(
               sm:!max-w-none
               w-[75vw] sm:w-[70vw] md:w-[65vw] lg:w-[60vw] xl:w-[75vw] 2xl:w-[50vw]
               max-w-[min(100vw-16px,1200px)]
-              h-dvh sm:h-auto sm:max-h-[calc(100dvh-32px)]
+              h-dvh sm:h-auto sm:max-h-[calc(100dvh)]
               overflow-y-auto overflow-x-hidden
-              p-6
             "
           >
             <SheetTitle className="sr-only">Test Details</SheetTitle>

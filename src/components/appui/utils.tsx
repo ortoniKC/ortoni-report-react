@@ -30,6 +30,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import React from "react";
+import { EllipsisBlock } from "../ui/ellipsis-block";
 
 export function ErrorBlock({ errors }: { errors: string[] }) {
   if (!errors?.length) return null;
@@ -119,18 +121,6 @@ export function ShowHistoryError({ message }: { message: string[] }) {
             <EllipsisBlock errors={message} title="Test history" />
           </div>
         </ScrollArea>
-        {/* <ScrollArea className="h-[80vh] w-full overflow-x-auto rounded-md border bg-muted p-4">
-          <div className="min-w-max">
-            {" "}
-            {message.map((e, i) => (
-              <pre
-                key={i}
-                className="text-xs whitespace-pre"
-                dangerouslySetInnerHTML={{ __html: e }}
-              />
-            ))}
-          </div>
-        </ScrollArea> */}
       </DrawerContent>
     </Drawer>
   );
@@ -199,11 +189,6 @@ export function StatusPill({ status }: { status: TestResultItem["status"] }) {
 export function toFileUrl(p: string) {
   return p.startsWith("http") ? p : p;
 }
-
-import React from "react";
-import { EllipsisBlock } from "../ui/ellipsis-block";
-
-("use client");
 
 function getAdjustedBaseUrl(): string {
   const origin = window.location.origin;
