@@ -43,7 +43,7 @@ export const ProjectChart = memo((props: { summary: Summary }) => {
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle>Projects</CardTitle>
-        <CardDescription>Each project results</CardDescription>
+        <CardDescription>Project tests count</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
