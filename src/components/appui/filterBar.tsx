@@ -24,6 +24,7 @@ interface FilterBarProps {
     projectName: string;
     status: TestStatus;
     duration: string;
+    testTags: string[];
   }[];
   onFilter: (filtered: FilterBarProps["flattened"]) => void;
 }
@@ -31,11 +32,17 @@ interface FilterBarProps {
 export function FilterBar({ flattened, onFilter }: FilterBarProps) {
   const [status, setStatus] = useState<string | null>(null);
   const [project, setProject] = useState<string | null>(null);
+  const [tag, setTag] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
   // Memoize unique values for dropdowns
   const statuses = useMemo(
     () => Array.from(new Set(flattened.map((t) => t.status))),
+    [flattened]
+  );
+
+  const tags = useMemo(
+    () => Array.from(new Set(flattened.map((t) => t.testTags).flat())),
     [flattened]
   );
 
@@ -55,10 +62,11 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
               .toLowerCase()
               .includes(search.toLowerCase())
           : true;
+      const matchesTag = tag ? t.testTags.includes(tag) : true;
 
-      return matchesStatus && matchesProject && matchesSearch;
+      return matchesStatus && matchesProject && matchesSearch && matchesTag;
     });
-  }, [flattened, status, project, search]);
+  }, [flattened, status, project, search, tag]);
 
   // Send filtered data back using useEffect
   useEffect(() => {
@@ -122,6 +130,30 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
             <X
               className="h-4 w-4 cursor-pointer text-muted-foreground hover:text-foreground"
               onClick={() => setProject(null)}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Tags */}
+      {tags.length > 1 && (
+        <div className="flex items-center gap-2">
+          <Select onValueChange={(val) => setTag(val)} value={tag ?? ""}>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue placeholder="Filter Tags" />
+            </SelectTrigger>
+            <SelectContent>
+              {tags.map((p) => (
+                <SelectItem key={p} value={p}>
+                  {p}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {tag && (
+            <X
+              className="h-4 w-4 cursor-pointer text-muted-foreground hover:text-foreground"
+              onClick={() => setTag(null)}
             />
           )}
         </div>

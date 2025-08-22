@@ -49,6 +49,7 @@ export const GlancePage = memo(
           projectName: t.projectName ?? "",
           status: t.status,
           duration: t.duration ?? "",
+          testTags: t.testTags ?? [],
         }))
       );
     }, [tests, showProject]);
