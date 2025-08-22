@@ -219,9 +219,9 @@ export function TestDetails({
                               z-[100]
                             "
                     >
-                      <DialogHeader>
+                      <DialogHeader className="sr-only">
                         <DialogTitle>Screenshot {i + 1}</DialogTitle>
-                        <DialogDescription className="sr-only">
+                        <DialogDescription>
                           Full-size screenshot from the test run.
                         </DialogDescription>
                       </DialogHeader>
@@ -231,7 +231,7 @@ export function TestDetails({
                         initial={{ opacity: 0, scale: 0.98 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.2 }}
-                        className="rounded-md max-h-[70vh] mx-auto object-contain"
+                        className="rounded-md max-h-[80vh] mx-auto object-contain p-8"
                       />
                     </DialogContent>
                   </Dialog>
