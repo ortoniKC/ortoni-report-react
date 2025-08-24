@@ -28,17 +28,23 @@ import {
   AlertCircle,
   ListChecks,
   ScrollText,
-  XCircle,
-  ChevronRight,
   History,
 } from "lucide-react";
 import { useState } from "react";
 import { copyToClipboard } from "@/lib/utils";
 import { EllipsisBlock } from "../ui/ellipsis-block";
-import type { TestResultItem } from "@/lib/types/OrtoniReportData";
+import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
 import { motion } from "framer-motion";
+import { ShowHistory, StatusPill, toFileUrl, TraceButton } from "./utils";
+import { HtmlViewerDrawer } from "./openMarkdown";
 
-export function TestDetails({ test }: { test: TestResultItem | null }) {
+export function TestDetails({
+  test,
+  testHistories,
+}: {
+  test: TestResultItem | null;
+  testHistories: TestHistory[];
+}) {
   if (!test) {
     return (
       <div className="h-full flex items-center justify-center rounded-lg bg-muted/20 border">
@@ -56,6 +62,7 @@ export function TestDetails({ test }: { test: TestResultItem | null }) {
   }
 
   const [copied, setCopied] = useState(false);
+  const history = testHistories.find((h) => h.testId === test.testId);
 
   const handleCopy = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -65,7 +72,7 @@ export function TestDetails({ test }: { test: TestResultItem | null }) {
   };
 
   return (
-    <div className="h-full flex flex-col rounded-lg border bg-background overflow-hidden">
+    <div className="h-full flex flex-col border bg-background overflow-hidden">
       {/* Header Section */}
       <div className="p-5 border-b bg-muted/30">
         <div className="flex items-start justify-between gap-4 mb-3">
@@ -156,7 +163,19 @@ export function TestDetails({ test }: { test: TestResultItem | null }) {
                       Screenshot
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-4xl">
+                  <DialogContent
+                    className="
+                              w-[95vw]
+                              max-w-[95vw]
+                              sm:max-w-[95vw]
+                              md:max-w-[90vw]
+                              lg:max-w-[80vw]
+                              xl:max-w-[1280px]
+                              h-[80vh]
+                              p-0
+                              z-[100]
+                            "
+                  >
                     <DialogHeader>
                       <DialogTitle>Screenshot</DialogTitle>
                       <DialogDescription className="sr-only">
@@ -187,10 +206,22 @@ export function TestDetails({ test }: { test: TestResultItem | null }) {
                         Screenshot {i + 1}
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-4xl">
-                      <DialogHeader>
+                    <DialogContent
+                      className="
+                              w-[95vw]
+                              max-w-[95vw]
+                              sm:max-w-[95vw]
+                              md:max-w-[90vw]
+                              lg:max-w-[80vw]
+                              xl:max-w-[1280px]
+                              h-[80vh]
+                              p-0
+                              z-[100]
+                            "
+                    >
+                      <DialogHeader className="sr-only">
                         <DialogTitle>Screenshot {i + 1}</DialogTitle>
-                        <DialogDescription className="sr-only">
+                        <DialogDescription>
                           Full-size screenshot from the test run.
                         </DialogDescription>
                       </DialogHeader>
@@ -200,42 +231,48 @@ export function TestDetails({ test }: { test: TestResultItem | null }) {
                         initial={{ opacity: 0, scale: 0.98 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.2 }}
-                        className="rounded-md max-h-[70vh] mx-auto object-contain"
+                        className="rounded-md max-h-[80vh] mx-auto object-contain p-8"
                       />
                     </DialogContent>
                   </Dialog>
                 ))}
 
               {/* Video */}
-              {test.videoPath && (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="gap-2 rounded-md"
-                    >
-                      <PlayCircle className="h-4 w-4" />
-                      Play Video
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-4xl">
-                    <DialogHeader>
-                      <DialogTitle>Test Recording</DialogTitle>
-                      <DialogDescription className="sr-only">
-                        Video recording from the test run.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <motion.video
-                      src={toFileUrl(test.videoPath)}
-                      controls
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="rounded-md w-full max-h-[70vh]"
-                    />
-                  </DialogContent>
-                </Dialog>
+              {Array.isArray(test.videoPath) &&
+                test.videoPath.map((video, index) => (
+                  <Dialog key={index}>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2 rounded-md"
+                      >
+                        <PlayCircle className="h-4 w-4" />
+                        Play Video {index + 1}
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl">
+                      <DialogHeader>
+                        <DialogTitle>Test Recording {index + 1}</DialogTitle>
+                        <DialogDescription className="sr-only">
+                          Video recording from the test run.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <motion.video
+                        src={toFileUrl(video)}
+                        controls
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        className="rounded-md w-full max-h-[70vh]"
+                      />
+                    </DialogContent>
+                  </Dialog>
+                ))}
+              {test.tracePath && <TraceButton tracePath={test.tracePath} />}
+              {test.markdownPath && (
+                <HtmlViewerDrawer fileUrl={test.markdownPath} />
+                // <MarkdownButton markdownPath={test.markdownPath} />
               )}
             </div>
           </motion.section>
@@ -274,14 +311,6 @@ export function TestDetails({ test }: { test: TestResultItem | null }) {
                 >
                   <AlertCircle className="h-4 w-4" />
                   Errors
-                  {test.errors.length > 0 && (
-                    <Badge
-                      variant="destructive"
-                      className="h-4 w-4 p-0 flex items-center justify-center ml-1"
-                    >
-                      {test.errors.length}
-                    </Badge>
-                  )}
                 </TabsTrigger>
               )}
               {test.logs && (
@@ -348,75 +377,11 @@ export function TestDetails({ test }: { test: TestResultItem | null }) {
               </TabsContent>
             )}
             <TabsContent value="history">
-              <span>Place holder for history table</span>
+              {history ? <ShowHistory history={history.history} /> : null}
             </TabsContent>
           </Tabs>
         </motion.section>
       </div>
     </div>
   );
-}
-
-function StatusPill({ status }: { status: TestResultItem["status"] }) {
-  const statusConfig = {
-    passed: {
-      class:
-        "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/20",
-      icon: <Check className="h-4 w-4" />,
-    },
-    failed: {
-      class: "bg-red-500/15 text-red-700 dark:text-red-300 border-red-500/20",
-      icon: <XCircle className="h-4 w-4" />,
-    },
-    interrupted: {
-      class: "bg-red-500/15 text-red-700 dark:text-red-300 border-red-500/20",
-      icon: <XCircle className="h-4 w-4" />,
-    },
-    timedOut: {
-      class:
-        "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/20",
-      icon: <Clock className="h-4 w-4" />,
-    },
-    flaky: {
-      class:
-        "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/20",
-      icon: <AlertCircle className="h-4 w-4" />,
-    },
-    skipped: {
-      class:
-        "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className="h-4 w-4" />,
-    },
-    expected: {
-      class:
-        "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className="h-4 w-4" />,
-    },
-    unexpected: {
-      class:
-        "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className="h-4 w-4" />,
-    },
-  };
-
-  const config = statusConfig[status] || {
-    class: "bg-muted text-foreground/80 border-muted-foreground/20",
-    icon: <AlertCircle className="h-4 w-4" />,
-  };
-
-  return (
-    <motion.span
-      initial={{ scale: 0.95, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium ${config.class}`}
-    >
-      {config.icon}
-      {status.charAt(0).toUpperCase() + status.slice(1)}
-    </motion.span>
-  );
-}
-
-function toFileUrl(p: string) {
-  return p.startsWith("http") ? p : p;
 }

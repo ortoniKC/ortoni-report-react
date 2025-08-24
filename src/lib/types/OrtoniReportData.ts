@@ -39,7 +39,7 @@ export interface TestResultItem {
   filePath: string;
   filters: Set<string>;
   tracePath?: string;
-  videoPath?: string;
+  videoPath?: string[];
   markdownPath?: string;
   base64Image: boolean | undefined;
   testId: string;

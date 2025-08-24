@@ -6,7 +6,7 @@ import { Clipboard, ClipboardCheck } from "lucide-react";
 import { memo, useEffect, useRef, useState } from "react";
 
 export const EllipsisBlock = memo(
-  ({ errors, title }: { errors: string[]; title: string }) => {
+  ({ errors, title }: { errors: string[] | string; title: string }) => {
     const [status, setStatus] = useState<"idle" | "copied">("idle");
     const errorRef = useRef<HTMLPreElement>(null);
 
@@ -66,11 +66,15 @@ export const EllipsisBlock = memo(
           </div>
           <pre
             ref={errorRef}
-            className="overflow-x-auto rounded-b-xl bg-stone-800 p-4 text-xs text-blue-100"
+            className="overflow-x-auto rounded-b-xl bg-stone-900 p-4 text-xs text-blue-100"
           >
-            {errors.map((e, i) => (
-              <pre key={i} dangerouslySetInnerHTML={{ __html: e }} />
-            ))}
+            {Array.isArray(errors) ? (
+              errors.map((e, i) => (
+                <pre key={i} dangerouslySetInnerHTML={{ __html: e }} />
+              ))
+            ) : (
+              <pre key={0} dangerouslySetInnerHTML={{ __html: errors }} />
+            )}
           </pre>
         </div>
       </div>
