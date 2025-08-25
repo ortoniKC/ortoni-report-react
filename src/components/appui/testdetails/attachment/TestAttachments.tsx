@@ -4,9 +4,17 @@ import { motion } from "framer-motion";
 import { ImageIcon } from "lucide-react";
 import { ScreenshotDialog } from "./ScreenshotDialog";
 import { VideoDialog } from "./VideoDialog";
-import { TraceButton } from "../../common/utils";
 import { HtmlViewerDrawer } from "../openMarkdown";
 
+import React from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../../ui/tooltip";
+import { getAdjustedBaseUrl, isLocalFile } from "../../common/utils";
+import { Button } from "@/components/ui/button";
 export function TestAttachments({
   test,
   toFileUrl,
@@ -79,3 +87,45 @@ export function TestAttachments({
     </motion.section>
   );
 }
+
+interface TraceButtonProps {
+  tracePath: string;
+}
+
+export const TraceButton: React.FC<TraceButtonProps> = ({ tracePath }) => {
+  const disabled = isLocalFile();
+
+  const handleOpenTrace = () => {
+    if (!tracePath || disabled) return;
+
+    const normalizedTracePath = tracePath.replace(/\\/g, "/");
+    const baseUrl = getAdjustedBaseUrl();
+    const url = `${baseUrl}/trace/index.html?trace=${baseUrl}/${normalizedTracePath}`;
+    window.open(url, "_blank");
+  };
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span>
+            <Button
+              onClick={handleOpenTrace}
+              variant="outline"
+              size="sm"
+              className={disabled ? "pointer-events-none opacity-50" : ""}
+            >
+              Open Trace
+            </Button>
+          </span>
+        </TooltipTrigger>
+        {disabled && (
+          <TooltipContent>
+            Can’t be used in local file. Run{" "}
+            <code>npx ortoni-report show-report</code>
+          </TooltipContent>
+        )}
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
