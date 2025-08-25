@@ -86,18 +86,15 @@ export const OverallExecutionResult = memo((props: { summary: Summary }) => {
     },
   ];
   const id = "overallExecutionChart";
-  const [activestatus, setActivestatus] = React.useState(
-    summaryChartData[0].status
-  );
+  const [activestatus, setActivestatus] = React.useState(() => {
+    const firstAvailable = summaryChartData.find((item) => item.tests > 0);
+    return firstAvailable?.status || "";
+  });
 
-  const activeIndex = React.useMemo(
-    () => summaryChartData.findIndex((item) => item.status === activestatus),
-    [activestatus]
-  );
-  // const status = React.useMemo(
-  //   () => summaryChartData.map((item) => item.status),
-  //   []
-  // );
+  const activeIndex = React.useMemo(() => {
+    return summaryChartData.findIndex((item) => item.status === activestatus);
+  }, [activestatus, summaryChartData]);
+
   const availableStatuses = summaryChartData
     .filter((item) => item.tests > 0)
     .map((item) => item.status);

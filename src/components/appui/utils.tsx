@@ -32,6 +32,12 @@ import {
 } from "@/components/ui/drawer";
 import React from "react";
 import { EllipsisBlock } from "../ui/ellipsis-block";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 export function ErrorBlock({ errors }: { errors: string[] }) {
   if (!errors?.length) return null;
@@ -190,7 +196,11 @@ export function toFileUrl(p: string) {
   return p.startsWith("http") ? p : p;
 }
 
-function getAdjustedBaseUrl(): string {
+export function isLocalFile() {
+  return window.location.protocol === "file:";
+}
+
+export function getAdjustedBaseUrl(): string {
   const origin = window.location.origin;
   const pathname = window.location.pathname;
 
@@ -206,47 +216,39 @@ interface TraceButtonProps {
 }
 
 export const TraceButton: React.FC<TraceButtonProps> = ({ tracePath }) => {
+  const disabled = isLocalFile();
+
   const handleOpenTrace = () => {
-    if (!tracePath) return;
+    if (!tracePath || disabled) return;
 
     const normalizedTracePath = tracePath.replace(/\\/g, "/");
     const baseUrl = getAdjustedBaseUrl();
     const url = `${baseUrl}/trace/index.html?trace=${baseUrl}/${normalizedTracePath}`;
-
     window.open(url, "_blank");
   };
 
   return (
-    <Button onClick={handleOpenTrace} variant="outline" size="sm">
-      Open Trace
-    </Button>
-  );
-};
-interface MarkdownButtonProps {
-  markdownPath: string;
-  label?: string;
-}
-
-export const MarkdownButton: React.FC<MarkdownButtonProps> = ({
-  markdownPath,
-  label = "Open Markdown",
-}) => {
-  const handleOpenMarkdown = () => {
-    if (!markdownPath) return;
-
-    const normalizedPath = markdownPath.replace(/\\/g, "/");
-    const baseUrl = getAdjustedBaseUrl();
-    const fullUrl = `${baseUrl.replace(/\/$/, "")}/${normalizedPath.replace(
-      /^\//,
-      ""
-    )}`;
-
-    window.open(fullUrl, "_blank");
-  };
-
-  return (
-    <Button onClick={handleOpenMarkdown} variant="secondary" size="sm">
-      {label}
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span>
+            <Button
+              onClick={handleOpenTrace}
+              variant="outline"
+              size="sm"
+              className={disabled ? "pointer-events-none opacity-50" : ""}
+            >
+              Open Trace
+            </Button>
+          </span>
+        </TooltipTrigger>
+        {disabled && (
+          <TooltipContent>
+            Can’t be used in local file. Run{" "}
+            <code>npx ortoni-report show-report</code>
+          </TooltipContent>
+        )}
+      </Tooltip>
+    </TooltipProvider>
   );
 };
