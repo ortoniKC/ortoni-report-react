@@ -199,7 +199,8 @@ export function toFileUrl(p: string) {
 export function isLocalFile() {
   return window.location.protocol === "file:";
 }
-function getAdjustedBaseUrl(): string {
+
+export function getAdjustedBaseUrl(): string {
   const origin = window.location.origin;
   const pathname = window.location.pathname;
 
