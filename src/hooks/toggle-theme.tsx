@@ -5,35 +5,23 @@ import { Moon, Sun } from "lucide-react";
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
 
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
-    <div className="inline-flex flex-col items-center justify-center rounded-full">
-      <Button
-        variant={theme === "light" ? "secondary" : "ghost"}
-        size="icon"
-        onClick={() => setTheme("light")}
-        className="rounded-full"
-      >
-        <Sun className="h-3 w-3" />
-        <span className="sr-only">Toggle light theme</span>
-      </Button>
-      <Button
-        variant={theme === "dark" ? "secondary" : "ghost"}
-        size="icon"
-        onClick={() => setTheme("dark")}
-        className="rounded-full"
-      >
-        <Moon className="h-3 w-3" />
-        <span className="sr-only">Toggle dark theme</span>
-      </Button>
-      {/* <Button
-        variant={theme === "system" ? "secondary" : "ghost"}
-        size="icon"
-        onClick={() => setTheme("system")}
-        className="rounded-full"
-      >
-        <Monitor className="h-3 w-3" />
-        <span className="sr-only">Toggle system theme</span>
-      </Button> */}
-    </div>
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={toggleTheme}
+      className="rounded-full"
+    >
+      {theme === "light" ? (
+        <Sun className="h-4 w-4" />
+      ) : (
+        <Moon className="h-4 w-4" />
+      )}
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 }
