@@ -78,32 +78,28 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {history.map((item, i) => (
-          <TableRow key={i}>
-            <TableCell>
-              <Badge
-                variant={
-                  item.status === "passed"
-                    ? "default"
-                    : item.status === "failed"
-                    ? "destructive"
-                    : "secondary"
-                }
-              >
-                {item.status}
-              </Badge>
-            </TableCell>
-            <TableCell>{item.duration}</TableCell>
-            <TableCell>
-              {item.error_message.length > 0 ? (
-                <ShowHistoryError message={item.error_message.split("\n")} />
-              ) : (
-                <span className="text-muted-foreground">No error</span>
-              )}
-            </TableCell>
-            <TableCell>{new Date(item.run_date).toLocaleString()}</TableCell>
-          </TableRow>
-        ))}
+        {history.length > 0 ? (
+          history.map((item, i) => (
+            <TableRow key={i}>
+              <TableCell>
+                <StatusPill status={item.status} />
+              </TableCell>
+              <TableCell>{item.duration}</TableCell>
+              <TableCell>
+                {item.error_message.length > 0 ? (
+                  <ShowHistoryError message={item.error_message.split("\n")} />
+                ) : (
+                  <span className="text-muted-foreground">No error</span>
+                )}
+              </TableCell>
+              <TableCell>{new Date(item.run_date).toLocaleString()}</TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <div className="text-center text-muted-foreground py-6">
+            No history available for this test.
+          </div>
+        )}
       </TableBody>
     </Table>
   );

@@ -106,9 +106,9 @@ export function TestAccordionItem({
             {children ? (
               children
             ) : tests && tests.length ? (
-              tests.map((t) => (
+              tests.map((t, idx) => (
                 <motion.div
-                  key={t.testId || `${t.title}-${t.location}`}
+                  key={t.testId + idx || `${t.title}-${t.location}`}
                   initial={{ y: -8, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -8, opacity: 0 }}
