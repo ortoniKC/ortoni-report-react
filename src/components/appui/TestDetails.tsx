@@ -29,6 +29,7 @@ import {
   ListChecks,
   ScrollText,
   History,
+  LucideInfo,
 } from "lucide-react";
 import { useState } from "react";
 import { copyToClipboard } from "@/lib/utils";
@@ -272,8 +273,41 @@ export function TestDetails({
               {test.tracePath && <TraceButton tracePath={test.tracePath} />}
               {test.markdownPath && (
                 <HtmlViewerDrawer fileUrl={test.markdownPath} />
-                // <MarkdownButton markdownPath={test.markdownPath} />
               )}
+            </div>
+          </motion.section>
+        )}
+        {Array.isArray(test.annotations) && test.annotations.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mb-6"
+          >
+            <h4 className="font-medium mb-3 flex items-center gap-2">
+              <LucideInfo className="h-4 w-4" />
+              Annotations
+            </h4>
+            <div className="flex-1 space-y-3">
+              {test.annotations.map((annotation, index) => (
+                <div key={index} className="flex flex-col text-sm">
+                  <span>
+                    Type:{" "}
+                    <span className="text-muted-foreground">
+                      {annotation.type}
+                    </span>
+                  </span>
+
+                  {annotation.description && (
+                    <span>
+                      Description:{" "}
+                      <span className="text-muted-foreground">
+                        {annotation.description}
+                      </span>
+                    </span>
+                  )}
+                </div>
+              ))}
             </div>
           </motion.section>
         )}

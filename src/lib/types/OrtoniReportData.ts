@@ -17,10 +17,13 @@ export interface Result {
   set: Record<string, unknown>;
 }
 export interface TestResultItem {
-  annotations: {
-    type: string;
-    location: { file: string; line: number; column: number };
-  };
+  annotations: [
+    {
+      type: string;
+      location?: { file: string; line: number; column: number };
+      description?: string;
+    }
+  ];
   testTags: string[];
   location: string;
   retry: string;
