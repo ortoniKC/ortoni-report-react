@@ -1,7 +1,7 @@
+import { TrendChart } from "@/components/charts/analyticsTrend";
+import TextGenerateEffect from "@/components/ui/typewriter";
 import type { Analytics } from "@/lib/types/OrtoniReportData";
 import { memo } from "react";
-import { TrendChart } from "../charts/analyticsTrend";
-import TextGenerateEffect from "../ui/typewriter";
 import { SlowTests } from "./slowTest";
 
 export const AnalyticsPage = memo((props: { analytics: Analytics }) => {

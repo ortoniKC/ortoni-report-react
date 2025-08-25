@@ -16,14 +16,14 @@ export interface Result {
   allTags: string[];
   set: Record<string, unknown>;
 }
+export interface Annotations {
+  type: string;
+  location?: { file: string; line: number; column: number };
+  description?: string;
+}
 export interface TestResultItem {
-  annotations: [
-    {
-      type: string;
-      location?: { file: string; line: number; column: number };
-      description?: string;
-    }
-  ];
+  annotations: Annotations[];
+  description?: string;
   testTags: string[];
   location: string;
   retry: string;

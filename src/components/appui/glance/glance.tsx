@@ -2,10 +2,8 @@
 
 import type { Preferences, TestResultItem } from "@/lib/types/OrtoniReportData";
 import {
-  cn,
   renderSuiteWithoutProjects,
   renderSuiteWithProjects,
-  statusVariant,
 } from "@/lib/utils";
 import { memo, useMemo, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -17,10 +15,10 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import TextGenerateEffect from "../ui/typewriter";
-import { FilterBar } from "./filterBar";
+import TextGenerateEffect from "@/components/ui/typewriter";
+import { StatusPill } from "../common/utils";
+import { FilterBar } from "../common/filterBar";
 
 interface SuiteData {
   name: string;
@@ -114,14 +112,7 @@ export const GlancePage = memo(
                               {r.projectName}
                             </TableCell>
                             <TableCell>
-                              <Badge
-                                className={cn(
-                                  "rounded-full transition-colors duration-200 group-hover:scale-105",
-                                  statusVariant(r.status).className
-                                )}
-                              >
-                                {statusVariant(r.status).label}
-                              </Badge>
+                              <StatusPill status={r.status} />
                             </TableCell>
                             <TableCell className="group-hover:bg-muted/20 transition-colors duration-200">
                               {r.duration}

@@ -4,8 +4,12 @@ import { memo, useState, useMemo, useEffect } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { TestDetails } from "./TestDetails";
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from "../ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+} from "../../ui/sheet";
 import type {
   Preferences,
   TestResult,
@@ -13,7 +17,8 @@ import type {
   TestStatus,
 } from "@/lib/types/OrtoniReportData";
 import { StatusDot, TestAccordionItem } from "./TestAccordion";
-import { FilterBar } from "./filterBar";
+import { FilterBar } from "../common/filterBar";
+import { TestDetails } from "./TestDetails";
 
 export const TestList = memo(
   (props: { tests: TestResult; preferences: Preferences }) => {

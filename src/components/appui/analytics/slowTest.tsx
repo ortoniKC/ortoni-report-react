@@ -7,8 +7,8 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "../ui/card";
-import { ScrollArea } from "../ui/scroll-area";
+} from "../../ui/card";
+import { ScrollArea } from "../../ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -16,7 +16,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
+} from "../../ui/table";
 
 export const SlowTests = memo(
   (props: { slowTest: SlowTest[]; title: string }) => {

@@ -13,10 +13,10 @@ import type {
   UserConfig,
   UserMeta,
 } from "@/lib/types/OrtoniReportData";
-import { OverallExecutionResult } from "../charts/overallExecutionChart";
-import { EachProjectChart } from "../charts/projectBarChart";
-import { ProjectChart } from "../charts/projectChart";
-import TextGenerateEffect from "../ui/typewriter";
+import { OverallExecutionResult } from "../../charts/overallExecutionChart";
+import { EachProjectChart } from "../../charts/projectBarChart";
+import { ProjectChart } from "../../charts/projectChart";
+import TextGenerateEffect from "../../ui/typewriter";
 import { MetaCard } from "./metaCard";
 import { memo } from "react";
 

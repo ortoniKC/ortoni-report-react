@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "./hooks/theme-provider";
-import DashboardLayout from "./components/appui/layout";
+import DashboardLayout from "./components/appui/common/layout";
 import type { ReportResponse } from "./lib/types/OrtoniReportData";
-import { TestsPage } from "./components/appui/testPage";
-import { Dashboard } from "./components/appui/dashboard";
-import { GlancePage } from "./components/appui/glance";
-import { AnalyticsPage } from "./components/appui/analytics";
+import { TestsPage } from "./components/appui/testdetails/testPage";
+import { Dashboard } from "./components/appui/home/dashboard";
+import { AnalyticsPage } from "./components/appui/analytics/analytics";
+import { GlancePage } from "./components/appui/glance/glance";
 
 export function App({ reportData }: { reportData: ReportResponse }) {
   return (

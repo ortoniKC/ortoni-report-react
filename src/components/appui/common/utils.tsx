@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "../ui/card";
+} from "../../ui/card";
 import {
   Table,
   TableBody,
@@ -16,9 +16,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
+} from "../../ui/table";
+import { Button } from "../../ui/button";
+import { Badge } from "../../ui/badge";
 import { AlertCircle, Check, ChevronRight, Clock, XCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
@@ -31,13 +31,13 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import React from "react";
-import { EllipsisBlock } from "../ui/ellipsis-block";
+import { EllipsisBlock } from "../../ui/ellipsis-block";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
+} from "../../ui/tooltip";
 
 export function ErrorBlock({ errors }: { errors: string[] }) {
   if (!errors?.length) return null;
@@ -77,7 +77,7 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
           <TableHead>Run Date</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className="p-4">
         {history.map((item, i) => (
           <TableRow key={i}>
             <TableCell>

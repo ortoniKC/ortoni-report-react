@@ -11,8 +11,8 @@ import {
   DrawerDescription,
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { EllipsisBlock } from "../ui/ellipsis-block";
-import { isLocalFile, getAdjustedBaseUrl } from "./utils";
+import { EllipsisBlock } from "../../ui/ellipsis-block";
+import { isLocalFile, getAdjustedBaseUrl } from "../common/utils";
 import {
   Tooltip,
   TooltipContent,
