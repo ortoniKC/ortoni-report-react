@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { ImageIcon } from "lucide-react";
 import { ScreenshotDialog } from "./ScreenshotDialog";
 import { VideoDialog } from "./VideoDialog";
-import { TraceButton } from "../common/utils";
-import { HtmlViewerDrawer } from "./openMarkdown";
+import { TraceButton } from "../../common/utils";
+import { HtmlViewerDrawer } from "../openMarkdown";
 
 export function TestAttachments({
   test,

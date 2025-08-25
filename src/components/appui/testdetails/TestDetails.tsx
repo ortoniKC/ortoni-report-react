@@ -1,21 +1,12 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Check, Copy, Clock, Folder, FileText } from "lucide-react";
-import { useState } from "react";
-import { copyToClipboard } from "@/lib/utils";
+import { FileText } from "lucide-react";
 import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
-import { motion } from "framer-motion";
-import { StatusPill, toFileUrl } from "../common/utils";
-import { TestAttachments } from "./TestAttachments";
+import { toFileUrl } from "../common/utils";
+import { TestAttachments } from "./attachment/TestAttachments";
 import { TestAnnotations } from "./TestAnnotations";
 import { TestTabs } from "./TestTabs";
+import { TestHeader } from "./header/TestHeader";
 
 export function TestDetails({
   test,
@@ -40,15 +31,7 @@ export function TestDetails({
     );
   }
 
-  const [copied, setCopied] = useState(false);
   const history = testHistories.find((h) => h.testId === test.testId);
-
-  const handleCopy = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    copyToClipboard(test.location);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <div className="h-full flex flex-col border bg-background overflow-hidden">
@@ -56,59 +39,7 @@ export function TestDetails({
       <div className="p-5 border-b bg-muted/30">
         <div className="flex items-start justify-between gap-4 mb-3">
           <div className="flex-1 min-w-0">
-            <motion.h2
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="text-xl font-semibold truncate mb-2"
-            >
-              {test.title}
-            </motion.h2>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-              className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
-            >
-              <StatusPill status={test.status} />
-              <div className="flex items-center gap-1">
-                <Clock className="h-4 w-4" />
-                <span>{test.duration}</span>
-              </div>
-
-              <div className="flex items-center gap-1">
-                <Folder className="h-4 w-4" />
-                <span className="truncate max-w-[120px]">
-                  {test.projectName}
-                </span>
-              </div>
-
-              <Badge variant="outline" className="text-xs">
-                {test.suite}
-              </Badge>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Badge
-                      variant="outline"
-                      className="cursor-pointer flex items-center gap-1"
-                      onClick={handleCopy}
-                    >
-                      {test.location}
-                      {copied ? (
-                        <Check className="h-3 w-3 text-green-500" />
-                      ) : (
-                        <Copy className="h-3 w-3" />
-                      )}
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {copied ? "Copied!" : "Copy test location"}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </motion.div>
+            <TestHeader test={test} />
           </div>
         </div>
       </div>

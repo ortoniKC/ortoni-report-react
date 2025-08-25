@@ -68,7 +68,7 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
   }
 
   return (
-    <Table>
+    <Table className="p-6">
       <TableHeader>
         <TableRow>
           <TableHead>Status</TableHead>
@@ -77,7 +77,7 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
           <TableHead>Run Date</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody className="p-4">
+      <TableBody>
         {history.map((item, i) => (
           <TableRow key={i}>
             <TableCell>

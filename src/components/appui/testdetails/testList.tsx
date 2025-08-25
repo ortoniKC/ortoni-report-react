@@ -4,12 +4,7 @@ import { memo, useState, useMemo, useEffect } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetTitle,
-} from "../../ui/sheet";
+
 import type {
   Preferences,
   TestResult,
@@ -17,6 +12,12 @@ import type {
   TestStatus,
 } from "@/lib/types/OrtoniReportData";
 import { StatusDot, TestAccordionItem } from "./TestAccordion";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { FilterBar } from "../common/filterBar";
 import { TestDetails } from "./TestDetails";
 
@@ -111,7 +112,7 @@ export const TestList = memo(
      */
     const renderTest = (test: TestResultItem) => (
       <motion.div
-        key={test.testId || `${test.title}-${test.location}`}
+        key={test.testId}
         initial={{ y: -8, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: -8, opacity: 0 }}
@@ -164,7 +165,7 @@ export const TestList = memo(
         visibleTests.map(renderTest)
       ) : (
         <TestAccordionItem
-          key={`${filePath}-${suiteName}`}
+          key={`${filePath}-${suiteData}-${suiteName}`}
           title={`${suiteName} (${visibleTests.length} tests)`}
           tests={visibleTests}
           isParent={false}
@@ -187,7 +188,7 @@ export const TestList = memo(
 
       return (
         <TestAccordionItem
-          key={`${filePath}-${suiteName}`}
+          key={`${filePath}-${suiteData}-${suiteName}`}
           title={suiteName}
           isParent={true}
           defaultOpen={filtered.length !== flattened.length}
@@ -207,7 +208,7 @@ export const TestList = memo(
             return shouldSkipSuite ? (
               visibleTests.map((test) => (
                 <TestAccordionItem
-                  key={`${filePath}-${suiteName}-${projectName}-${test.testId}`}
+                  key={test.testId}
                   title={projectName}
                   tests={[test]}
                   isParent={false}
