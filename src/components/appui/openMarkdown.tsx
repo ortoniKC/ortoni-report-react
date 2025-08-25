@@ -19,14 +19,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import type { Steps } from "@/lib/types/OrtoniReportData";
 
 interface HtmlViewerDrawerProps {
   fileUrl: string;
+  steps: Steps[];
+  errors: string[];
   label?: string;
 }
 
 export const HtmlViewerDrawer: React.FC<HtmlViewerDrawerProps> = ({
   fileUrl,
+  steps,
+  errors,
   label = "Open Markup",
 }) => {
   const [content, setContent] = useState<string>("");
@@ -45,7 +50,34 @@ export const HtmlViewerDrawer: React.FC<HtmlViewerDrawerProps> = ({
 
       const res = await fetch(fullUrl);
       const text = await res.text();
-      setContent(text);
+      const pageSnapshot = `<pre class="whitespace-pre-wrap">${text}</pre>`;
+
+      const instructions =
+        `<h4>Instructions</h4><ul class="list-disc list-inside"><li>Following Playwright test failed.</li><li>Explain why, be concise, respect Playwright best practices.</li><li>Provide a snippet of code with the fix, if possible.</li></ul>`.trim();
+
+      // build errors HTML
+      const errorsHtml =
+        errors.length > 0
+          ? `<h4>Error Details</h4>${errors
+              .map((e) => `<pre class="whitespace-pre-wrap">${e}</pre>`)
+              .join("")}`
+          : "";
+
+      const stepsHtml = steps
+        .filter((step) => step.snippet?.trim())
+        .map(
+          (step: Steps) => `
+        <div class="text-xs">
+          <pre class="whitespace-pre-wrap">${step.snippet ?? ""}</pre>
+          ${step.location ? `<em>Location: ${step.location}</em>` : ""}
+        </div>`
+        )
+        .join("\n");
+
+      // merge everything
+      const merged = `${instructions}\n${stepsHtml.trim()}\n${errorsHtml.trim()}\n${pageSnapshot}`;
+
+      setContent(merged);
     } catch (err) {
       setContent(
         `<p class="text-red-500 font-semibold">Failed to load content</p>`
@@ -84,11 +116,11 @@ export const HtmlViewerDrawer: React.FC<HtmlViewerDrawerProps> = ({
             <DrawerContent>
               <DrawerHeader className="sr-only">
                 <DrawerTitle>{label}</DrawerTitle>
-                <DrawerDescription>mark up</DrawerDescription>
+                <DrawerDescription>markup, steps, errors</DrawerDescription>
               </DrawerHeader>
               <ScrollArea className="h-full w-full border rounded-md p-2">
                 <div className="p-4 max-h-[70vh] overflow-y-auto flex justify-center">
-                  <EllipsisBlock errors={content} title="Markdown" />
+                  <EllipsisBlock errors={content} title="Markup" />
                 </div>
               </ScrollArea>
             </DrawerContent>

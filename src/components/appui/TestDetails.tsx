@@ -272,7 +272,11 @@ export function TestDetails({
                 ))}
               {test.tracePath && <TraceButton tracePath={test.tracePath} />}
               {test.markdownPath && (
-                <HtmlViewerDrawer fileUrl={test.markdownPath} />
+                <HtmlViewerDrawer
+                  fileUrl={test.markdownPath}
+                  steps={test.steps}
+                  errors={test.errors}
+                />
               )}
             </div>
           </motion.section>
