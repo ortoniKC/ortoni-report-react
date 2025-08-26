@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ImageIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 export function ScreenshotDialog({
   src,
@@ -34,8 +35,11 @@ export function ScreenshotDialog({
           h-[80vh] p-0 z-[100]
         "
       >
-        <DialogHeader>
+        <DialogHeader className="sr-only">
           <DialogTitle>{label}</DialogTitle>
+          <DialogDescription>
+            This is a screenshot of the test result
+          </DialogDescription>
         </DialogHeader>
         <motion.img
           src={src}

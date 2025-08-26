@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PlayCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 export function VideoDialog({ src, label }: { src: string; label: string }) {
   return (
@@ -21,8 +22,11 @@ export function VideoDialog({ src, label }: { src: string; label: string }) {
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl">
-        <DialogHeader>
+        <DialogHeader className="sr-only">
           <DialogTitle>{label}</DialogTitle>
+          <DialogDescription>
+            This is a video of the test result.
+          </DialogDescription>
         </DialogHeader>
         <motion.video
           src={src}
