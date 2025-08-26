@@ -2,8 +2,9 @@
 
 import { TestTitle } from "./TestTitle";
 import { TestMeta } from "./TestMeta";
+import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 
-export function TestHeader({ test }: { test: any }) {
+export function TestHeader({ test }: { test: TestResultItem }) {
   return (
     <>
       <TestTitle title={test.title} />
@@ -11,7 +12,7 @@ export function TestHeader({ test }: { test: any }) {
         status={test.status}
         duration={test.duration}
         projectName={test.projectName}
-        suite={test.suite}
+        suite={test.suiteHierarchy}
         location={test.location}
       />
     </>

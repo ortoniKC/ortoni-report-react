@@ -30,13 +30,14 @@ export interface TestResultItem {
   retryAttemptCount: number;
   projectName: string;
   suite: string;
+  suiteHierarchy: string;
   title: string;
   status: TestStatus;
   flaky: string;
   duration: string;
   errors: string[];
   steps: Steps[];
-  logs: string[];
+  logs: string;
   screenshotPath?: string | null | undefined;
   screenshots?: string[];
   filePath: string;
