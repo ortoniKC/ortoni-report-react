@@ -41,7 +41,7 @@ export const TestList = memo(
         filePath: string;
         projectName: string;
         status: TestStatus;
-        duration: string;
+        duration: number;
         testTags: string[];
         key: string;
       }[] = [];

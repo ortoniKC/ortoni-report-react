@@ -22,6 +22,7 @@ import {
 } from "../../ui/table";
 import { StatusPill } from "../common/utils";
 import { Button } from "@/components/ui/button";
+import { formatDuration } from "@/lib/utils";
 
 export function HistoryTab({ history }: { history?: any }) {
   if (!history) return null;
@@ -57,7 +58,7 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
               <TableCell>
                 <StatusPill status={item.status} />
               </TableCell>
-              <TableCell>{item.duration}</TableCell>
+              <TableCell>{formatDuration(item.duration)}</TableCell>
               <TableCell>
                 {item.error_message.length > 0 ? (
                   <ShowHistoryError message={item.error_message.split("\n")} />

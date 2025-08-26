@@ -34,7 +34,7 @@ export interface TestResultItem {
   title: string;
   status: TestStatus;
   flaky: string;
-  duration: string;
+  duration: number;
   errors: string[];
   steps: Steps[];
   logs: string;
@@ -125,7 +125,7 @@ export interface TestHistory {
 
 export interface TestHistoryItem {
   status: TestStatus;
-  duration: string;
+  duration: number;
   error_message: string;
   run_date: string;
 }

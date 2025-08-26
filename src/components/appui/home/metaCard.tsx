@@ -7,6 +7,7 @@ import type {
   UserConfig,
   UserMeta,
 } from "@/lib/types/OrtoniReportData";
+import { formatDuration } from "@/lib/utils";
 
 export const MetaCard = memo(
   (props: { UserMeta: UserMeta; summary: Summary; userConfig: UserConfig }) => {
@@ -65,7 +66,7 @@ export const MetaCard = memo(
                       <Timer className="h-5 w-5 text-primary" />
                       <span className="text-sm">Duration:</span>
                       <span className="font-semibold">
-                        {summary.totalDuration}
+                        {formatDuration(summary.totalDuration)}
                       </span>
                     </div>
                   </div>

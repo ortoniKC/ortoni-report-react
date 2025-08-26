@@ -22,7 +22,7 @@ interface FilterBarProps {
     filePath: string;
     projectName: string;
     status: TestStatus;
-    duration: string;
+    duration: number;
     testTags: string[];
     key: string;
   }[];

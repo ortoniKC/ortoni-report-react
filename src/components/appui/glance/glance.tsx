@@ -2,6 +2,7 @@
 
 import type { Preferences, TestResultItem } from "@/lib/types/OrtoniReportData";
 import {
+  formatDuration,
   renderSuiteWithoutProjects,
   renderSuiteWithProjects,
 } from "@/lib/utils";
@@ -46,7 +47,7 @@ export const GlancePage = memo(
           filePath: t.filePath ?? "",
           projectName: t.projectName ?? "",
           status: t.status,
-          duration: t.duration ?? "",
+          duration: t.duration,
           testTags: t.testTags ?? [],
           key: t.testId,
         }))
@@ -116,7 +117,7 @@ export const GlancePage = memo(
                               <StatusPill status={r.status} />
                             </TableCell>
                             <TableCell className="group-hover:bg-muted/20 transition-colors duration-200">
-                              {r.duration}
+                              {formatDuration(r.duration)}
                             </TableCell>
                           </motion.tr>
                         ))}

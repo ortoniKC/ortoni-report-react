@@ -46,21 +46,19 @@ export function TestMeta({
       className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
     >
       <StatusPill status={status} />
-
       <div className="flex items-center gap-1">
         <Clock className="h-4 w-4" />
         <span>{duration}</span>
       </div>
-
       <div className="flex items-center gap-1">
         <Folder className="h-4 w-4" />
         <span className="truncate max-w-[120px]">{projectName}</span>
       </div>
-
-      <Badge variant="outline" className="text-xs">
-        {suite}
-      </Badge>
-
+      {suite.length > 0 && (
+        <Badge variant="outline" className="text-xs">
+          {suite}
+        </Badge>
+      )}
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
