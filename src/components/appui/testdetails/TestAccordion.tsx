@@ -124,8 +124,8 @@ export function TestAccordionItem({
                   </div>
                   <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
                     <span>Duration: {formatDuration(t.duration)}</span>
-                    {t.retry && Number(t.retry) > 0 && (
-                      <span>Retry: {t.retry}</span>
+                    {t.retryAttemptCount > 0 && (
+                      <span>Retry: {t.retryAttemptCount}</span>
                     )}
                     {t.projectName && (
                       <span>Project: {String(t.projectName)}</span>
