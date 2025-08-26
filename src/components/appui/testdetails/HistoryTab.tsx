@@ -23,7 +23,7 @@ import {
 import { StatusPill } from "../common/utils";
 import { Button } from "@/components/ui/button";
 import { formatDuration } from "@/lib/utils";
-
+import { Portal } from "@radix-ui/react-portal";
 export function HistoryTab({ history }: { history?: any }) {
   if (!history) return null;
 
@@ -48,7 +48,7 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
           <TableHead>Status</TableHead>
           <TableHead>Duration</TableHead>
           <TableHead>Error Message</TableHead>
-          <TableHead>Run Date</TableHead>
+          <TableHead>Executed on</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -82,22 +82,24 @@ export function ShowHistory({ history }: { history: TestHistoryItem[] }) {
 export function ShowHistoryError({ message }: { message: string[] }) {
   return (
     <Drawer>
-      <DrawerTrigger>
+      <DrawerTrigger asChild>
         <Button variant="default" size="sm" className="flex items-center gap-1">
           <span className="truncate max-w-[150px]">Show Error</span>{" "}
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="sr-only">
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
-        </DrawerHeader>
-        <ScrollArea className="h-full w-full border rounded-md p-2">
-          <div className="p-4 max-h-[70vh] overflow-y-auto flex justify-center">
-            <EllipsisBlock errors={message} title="Test history" />
-          </div>
-        </ScrollArea>
-      </DrawerContent>
+      <Portal>
+        <DrawerContent>
+          <DrawerHeader className="sr-only">
+            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+            <DrawerDescription>This action cannot be undone.</DrawerDescription>
+          </DrawerHeader>
+          <ScrollArea className="h-full w-full border rounded-md p-2">
+            <div className="p-4 max-h-[70vh] overflow-y-auto flex justify-center">
+              <EllipsisBlock errors={message} title="Test history" />
+            </div>
+          </ScrollArea>
+        </DrawerContent>
+      </Portal>
     </Drawer>
   );
 }
