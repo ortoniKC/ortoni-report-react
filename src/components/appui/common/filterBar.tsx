@@ -25,6 +25,7 @@ interface FilterBarProps {
     duration: number;
     testTags: string[];
     key: string;
+    location: string;
   }[];
   onFilter: (filtered: FilterBarProps["flattened"]) => void;
 }

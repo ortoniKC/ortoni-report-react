@@ -49,7 +49,8 @@ export const GlancePage = memo(
           status: t.status,
           duration: t.duration,
           testTags: t.testTags ?? [],
-          key: t.testId,
+          key: t.key,
+          location: t.location,
         }))
       );
     }, [tests, showProject]);
@@ -94,15 +95,15 @@ export const GlancePage = memo(
                       <AnimatePresence>
                         {filtered.map((r) => (
                           <motion.tr
-                            key={r.testId}
+                            key={r.key}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.25 }}
-                            className="group cursor-pointer transition-colors"
+                            className="group transition-colors"
                           >
                             <TableCell className="max-w-[240px] truncate group-hover:bg-muted/20 group-hover:shadow-inner transition-all duration-200">
-                              {r.filePath}
+                              {r.filePath + r.location}
                             </TableCell>
                             <TableCell className="max-w-[280px] truncate group-hover:bg-muted/20 transition-colors duration-200">
                               {r.suite}
@@ -117,7 +118,7 @@ export const GlancePage = memo(
                               <StatusPill status={r.status} />
                             </TableCell>
                             <TableCell className="group-hover:bg-muted/20 transition-colors duration-200">
-                              {formatDuration(r.duration)}
+                              {formatDuration(r.duration) || "-"}
                             </TableCell>
                           </motion.tr>
                         ))}
