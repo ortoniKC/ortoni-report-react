@@ -25,7 +25,7 @@ export const Dashboard = memo(
     const { summary, userConfig, userMeta } = props;
     const stats = [
       {
-        title: "All tests",
+        title: "All tests - (Pass + fail)",
         value: String(summary.overAllResult.total),
         icon: TestTubes,
         color: "text-purple-500",

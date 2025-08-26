@@ -83,7 +83,7 @@ export interface UserMeta {
 }
 
 export interface Preferences {
-  theme: string;
+  theme?: "light" | "dark";
   logo?: string;
   showProject: boolean;
 }

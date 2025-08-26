@@ -20,7 +20,13 @@ if (debug) {
   );
 } else {
   const dataTag = document.getElementById("__ORTONI_REPORT_DATA__");
-  const reportData = dataTag ? JSON.parse(dataTag.textContent || "{}") : {};
+  const reportData: ReportResponse = dataTag
+    ? JSON.parse(dataTag.textContent || "{}")
+    : {};
+  if (reportData.data.userConfig.title) {
+    document.title = `Ortoni Report | ${reportData.data.userConfig.title}`;
+  }
+
   createRoot(document.getElementById("root")!).render(
     <HashRouter>
       <App reportData={reportData} />
