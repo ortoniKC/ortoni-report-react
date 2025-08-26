@@ -22,12 +22,12 @@ export interface Annotations {
   description?: string;
 }
 export interface TestResultItem {
+  key: string;
   annotations: Annotations[];
   description?: string;
   testTags: string[];
   location: string;
-  retry: string;
-  isRetry: number;
+  retryAttemptCount: number;
   projectName: string;
   suite: string;
   title: string;
@@ -36,7 +36,7 @@ export interface TestResultItem {
   duration: string;
   errors: string[];
   steps: Steps[];
-  logs: string;
+  logs: string[];
   screenshotPath?: string | null | undefined;
   screenshots?: string[];
   filePath: string;
