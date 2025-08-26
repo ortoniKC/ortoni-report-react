@@ -51,7 +51,7 @@ export const TestList = memo(
           if (showProject) {
             const projects = suiteData as Record<string, TestResultItem[]>;
             Object.entries(projects).forEach(([projectName, testArray]) => {
-              testArray.forEach((t) =>
+              testArray.forEach((t: TestResultItem) =>
                 results.push({
                   ...t,
                   filePath,
@@ -67,7 +67,7 @@ export const TestList = memo(
             });
           } else {
             const testArray = ensureArray(suiteData) as TestResultItem[];
-            testArray.forEach((t) =>
+            testArray.forEach((t: TestResultItem) =>
               results.push({
                 ...t,
                 filePath,
