@@ -47,8 +47,12 @@ export function TestMeta({
     >
       <StatusPill status={status} />
       <div className="flex items-center gap-1">
-        <Clock className="h-4 w-4" />
-        <span>{duration}</span>
+        {duration ? (
+          <>
+            <Clock className="h-4 w-4" />
+            <span>{duration}</span>
+          </>
+        ) : null}
       </div>
       <div className="flex items-center gap-1">
         <Folder className="h-4 w-4" />

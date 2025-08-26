@@ -18,6 +18,7 @@ import {
 } from "../ui/card";
 import type { Trend } from "@/lib/types/OrtoniReportData";
 import { motion } from "framer-motion";
+import { formatDuration } from "@/lib/utils";
 
 export const description = "An interactive line chart";
 
@@ -38,6 +39,7 @@ const chartConfig = {
 
 export const TrendChart = memo((props: { trends: Trend[] }) => {
   const { trends } = props;
+  console.log("Rendering TrendChart with trends:", trends);
 
   const chartData = trends.map((t) => ({
     label: t.run_date,
@@ -108,11 +110,12 @@ export const TrendChart = memo((props: { trends: Trend[] }) => {
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                label={{
-                  value: "Avg Duration (ms)",
-                  angle: 90,
-                  position: "insideRight",
-                }}
+                // label={{
+                //   value: "Avg Duration",
+                //   angle: 90,
+                //   position: "insideRight",
+                // }}
+                tickFormatter={(value) => formatDuration(value)}
               />
 
               {/* Tooltip */}
@@ -129,6 +132,15 @@ export const TrendChart = memo((props: { trends: Trend[] }) => {
                         minute: "2-digit",
                       })
                     }
+                    formatter={(value, name) => {
+                      if (name === "avgDuration") {
+                        return [
+                          formatDuration(value as number),
+                          "Avg Duration",
+                        ];
+                      }
+                      return [value, name];
+                    }}
                   />
                 }
               />

@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/table";
+import { formatDuration } from "@/lib/utils";
 
 export const SlowTests = memo(
   (props: { slowTest: SlowTest[]; title: string }) => {
@@ -76,7 +77,7 @@ export const SlowTests = memo(
                             {r.test_id}
                           </TableCell>
                           <TableCell className="max-w-[280px] truncate group-hover:bg-muted/20 group-hover:shadow-inner transition-all duration-200">
-                            {r.avg_duration}
+                            {formatDuration(r.avg_duration)}
                           </TableCell>
                         </motion.tr>
                       ))}

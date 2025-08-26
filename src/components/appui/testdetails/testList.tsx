@@ -44,6 +44,7 @@ export const TestList = memo(
         duration: number;
         testTags: string[];
         key: string;
+        location: string;
       }[] = [];
 
       Object.entries(tests.tests ?? {}).forEach(([filePath, suites]) => {
@@ -61,6 +62,7 @@ export const TestList = memo(
                   status: t.status,
                   duration: t.duration,
                   testTags: t.testTags || [],
+                  location: t.location,
                   key: t.key, // always unique
                 })
               );
@@ -77,6 +79,7 @@ export const TestList = memo(
                 status: t.status,
                 duration: t.duration,
                 testTags: t.testTags || [],
+                location: t.location,
                 key: t.key,
               })
             );

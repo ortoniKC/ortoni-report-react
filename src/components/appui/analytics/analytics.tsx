@@ -3,6 +3,7 @@ import TextGenerateEffect from "@/components/ui/typewriter";
 import type { Analytics } from "@/lib/types/OrtoniReportData";
 import { memo } from "react";
 import { SlowTests } from "./slowTest";
+import { AnalyticsSummaryPage } from "./anlyticsSummary";
 
 export const AnalyticsPage = memo((props: { analytics: Analytics }) => {
   const { analytics } = props;
@@ -16,6 +17,9 @@ export const AnalyticsPage = memo((props: { analytics: Analytics }) => {
               className="text-3xl font-bold tracking-tight sm:text-3xl"
             />
           </div>
+          <AnalyticsSummaryPage
+            analyticsSummary={analytics.reportData.summary}
+          />
           <TrendChart trends={analytics.reportData.trends} />
           <SlowTests
             slowTest={analytics.reportData.slowTests}
