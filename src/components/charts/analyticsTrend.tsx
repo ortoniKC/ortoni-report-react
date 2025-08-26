@@ -110,11 +110,6 @@ export const TrendChart = memo((props: { trends: Trend[] }) => {
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                // label={{
-                //   value: "Avg Duration",
-                //   angle: 90,
-                //   position: "insideRight",
-                // }}
                 tickFormatter={(value) => formatDuration(value)}
               />
 
@@ -136,10 +131,10 @@ export const TrendChart = memo((props: { trends: Trend[] }) => {
                       if (name === "avgDuration") {
                         return [
                           formatDuration(value as number),
-                          "Avg Duration",
+                          " - Avg Duration",
                         ];
                       }
-                      return [value, name];
+                      return [value, " - ", name];
                     }}
                   />
                 }
