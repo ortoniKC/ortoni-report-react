@@ -4,8 +4,7 @@ import { memo, useState, useMemo, useEffect } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { TestDetails } from "./TestDetails";
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from "../ui/sheet";
+
 import type {
   Preferences,
   TestResult,
@@ -13,7 +12,14 @@ import type {
   TestStatus,
 } from "@/lib/types/OrtoniReportData";
 import { StatusDot, TestAccordionItem } from "./TestAccordion";
-import { FilterBar } from "./filterBar";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { FilterBar } from "../common/filterBar";
+import { TestDetails } from "./TestDetails";
 
 export const TestList = memo(
   (props: { tests: TestResult; preferences: Preferences }) => {
@@ -35,8 +41,10 @@ export const TestList = memo(
         filePath: string;
         projectName: string;
         status: TestStatus;
-        duration: string;
+        duration: number;
         testTags: string[];
+        key: string;
+        location: string;
       }[] = [];
 
       Object.entries(tests.tests ?? {}).forEach(([filePath, suites]) => {
@@ -44,31 +52,35 @@ export const TestList = memo(
           if (showProject) {
             const projects = suiteData as Record<string, TestResultItem[]>;
             Object.entries(projects).forEach(([projectName, testArray]) => {
-              testArray.forEach((t) =>
+              testArray.forEach((t: TestResultItem) =>
                 results.push({
                   ...t,
                   filePath,
                   suite: suiteName,
                   projectName,
-                  testId: t.testId || `${t.title}-${t.location}`,
+                  testId: t.testId,
                   status: t.status,
                   duration: t.duration,
                   testTags: t.testTags || [],
+                  location: t.location,
+                  key: t.key, // always unique
                 })
               );
             });
           } else {
             const testArray = ensureArray(suiteData) as TestResultItem[];
-            testArray.forEach((t) =>
+            testArray.forEach((t: TestResultItem) =>
               results.push({
                 ...t,
                 filePath,
                 suite: suiteName,
-                projectName: t.projectName || "", // Keep original projectName if exists
-                testId: t.testId || `${t.title}-${t.location}`,
+                projectName: t.projectName || "",
+                testId: t.testId,
                 status: t.status,
                 duration: t.duration,
                 testTags: t.testTags || [],
+                location: t.location,
+                key: t.key,
               })
             );
           }
@@ -78,13 +90,11 @@ export const TestList = memo(
     }, [tests, showProject]);
 
     const [filtered, setFiltered] = useState(flattened);
-    const [filteredTestIds, setFilteredTestIds] = useState<Set<string>>(
-      new Set()
-    );
+    const [filteredKeys, setFilteredKeys] = useState<Set<string>>(new Set());
 
-    // Update filtered test IDs whenever filtered changes
+    // Update filtered keys whenever filtered changes
     useEffect(() => {
-      setFilteredTestIds(new Set(filtered.map((test) => test.testId)));
+      setFilteredKeys(new Set(filtered.map((t) => t.key)));
     }, [filtered]);
 
     const handleTestClick = (test: TestResultItem) => {
@@ -96,9 +106,7 @@ export const TestList = memo(
      * Check if a test suite has visible tests after filtering
      */
     const hasVisibleTests = (testArray: TestResultItem[]) => {
-      return testArray.some((test) =>
-        filteredTestIds.has(test.testId || `${test.title}-${test.location}`)
-      );
+      return testArray.some((test) => filteredKeys.has(test.key));
     };
 
     /** ─────────────────────────────
@@ -106,7 +114,7 @@ export const TestList = memo(
      */
     const renderTest = (test: TestResultItem) => (
       <motion.div
-        key={test.testId || `${test.title}-${test.location}`}
+        key={test.key}
         initial={{ y: -8, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: -8, opacity: 0 }}
@@ -122,8 +130,8 @@ export const TestList = memo(
         </div>
         <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
           <span>Duration: {formatDuration(test.duration)}</span>
-          {test.retry && Number(test.retry) > 0 && (
-            <span>Retry: {test.retry}</span>
+          {test.retryAttemptCount > 0 && (
+            <span>Retry: {test.retryAttemptCount}</span>
           )}
           {test.projectName && <span>Project: {String(test.projectName)}</span>}
           {test.testTags?.length ? (
@@ -134,7 +142,7 @@ export const TestList = memo(
     );
 
     /** ─────────────────────────────
-     * Render suites (filtered-aware) - KEEPING ORIGINAL shouldSkipSuite LOGIC
+     * Render suites (no projects)
      */
     const renderSuiteWithoutProjects = (
       suiteName: string,
@@ -142,15 +150,10 @@ export const TestList = memo(
       filePath: string
     ) => {
       const testArray = ensureArray(suiteData) as TestResultItem[];
-
-      // Don't render if no tests are visible after filtering
       if (!hasVisibleTests(testArray)) return null;
 
-      const visibleTests = testArray.filter((t) =>
-        filteredTestIds.has(t.testId || `${t.title}-${t.location}`)
-      );
+      const visibleTests = testArray.filter((t) => filteredKeys.has(t.key));
 
-      // KEEPING ORIGINAL shouldSkipSuite LOGIC
       const shouldSkipSuite = visibleTests.every(
         (test) => test.title === suiteName
       );
@@ -159,7 +162,7 @@ export const TestList = memo(
         visibleTests.map(renderTest)
       ) : (
         <TestAccordionItem
-          key={`${filePath}-${suiteName}`}
+          key={`suite:${filePath}::${suiteName}`}
           title={`${suiteName} (${visibleTests.length} tests)`}
           tests={visibleTests}
           isParent={false}
@@ -169,20 +172,21 @@ export const TestList = memo(
       );
     };
 
+    /** ─────────────────────────────
+     * Render suites (with projects)
+     */
     const renderSuiteWithProjects = (
       suiteName: string,
       suiteData: unknown,
       filePath: string
     ) => {
       const projects = suiteData as Record<string, TestResultItem[]>;
-
-      // Check if any project in this suite has visible tests
       const hasVisibleProjects = Object.values(projects).some(hasVisibleTests);
       if (!hasVisibleProjects) return null;
 
       return (
         <TestAccordionItem
-          key={`${filePath}-${suiteName}`}
+          key={`suite:${filePath}::${suiteName}`}
           title={suiteName}
           isParent={true}
           defaultOpen={filtered.length !== flattened.length}
@@ -191,10 +195,9 @@ export const TestList = memo(
             if (!hasVisibleTests(testArray)) return null;
 
             const visibleTests = testArray.filter((t) =>
-              filteredTestIds.has(t.testId || `${t.title}-${t.location}`)
+              filteredKeys.has(t.key)
             );
 
-            // KEEPING ORIGINAL shouldSkipSuite LOGIC
             const shouldSkipSuite = visibleTests.every(
               (test) => test.title === suiteName
             );
@@ -202,7 +205,7 @@ export const TestList = memo(
             return shouldSkipSuite ? (
               visibleTests.map((test) => (
                 <TestAccordionItem
-                  key={`${filePath}-${suiteName}-${projectName}-${test.testId}`}
+                  key={`leaf:${test.key}`}
                   title={projectName}
                   tests={[test]}
                   isParent={false}
@@ -212,7 +215,7 @@ export const TestList = memo(
               ))
             ) : (
               <TestAccordionItem
-                key={`${filePath}-${suiteName}-${projectName}`}
+                key={`proj:${filePath}::${suiteName}::${projectName}`}
                 title={`${projectName} (${visibleTests.length} tests)`}
                 tests={visibleTests}
                 isParent={false}
@@ -266,7 +269,6 @@ export const TestList = memo(
         ) : (
           <ScrollArea className="space-y-3">
             {Object.entries(tests.tests ?? {}).map(([filePath, suites]) => {
-              // Check if this file has any visible tests after filtering
               const hasTestsInFile = Object.values(suites ?? {}).some(
                 (suiteData) => {
                   if (showProject) {
@@ -288,7 +290,7 @@ export const TestList = memo(
 
               return (
                 <TestAccordionItem
-                  key={filePath}
+                  key={`file:${filePath}`}
                   title={filePath}
                   isParent
                   defaultOpen={filtered.length !== flattened.length}

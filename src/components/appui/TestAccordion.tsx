@@ -1,165 +1,314 @@
-import type { TestResultItem } from "@/lib/types/OrtoniReportData";
-import { cn, formatDuration } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { useState, useEffect } from "react";
+"use client";
 
-interface TestAccordionItemProps {
-  title: string;
-  tests?: TestResultItem[];
-  isParent?: boolean;
-  children?: React.ReactNode;
-  onTestClick?: (test: TestResultItem) => void;
-  defaultOpen?: boolean;
-}
+import { memo, useState, useMemo, useEffect } from "react";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { ensureArray, formatDuration } from "@/lib/utils";
+import { motion } from "framer-motion";
 
-export function TestAccordionItem({
-  title,
-  tests,
-  isParent = false,
-  children,
-  onTestClick,
-  defaultOpen = false,
-}: TestAccordionItemProps) {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+import type {
+  Preferences,
+  TestResult,
+  TestResultItem,
+  TestStatus,
+} from "@/lib/types/OrtoniReportData";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { StatusDot, TestAccordionItem } from "./testdetails/TestAccordion";
+import { TestDetails } from "./testdetails/TestDetails";
+import { FilterBar } from "./common/filterBar";
 
-  // Sync external defaultOpen changes with internal state
-  useEffect(() => {
-    if (defaultOpen) setIsOpen(true);
-  }, [defaultOpen]);
+export const TestList = memo(
+  (props: { tests: TestResult; preferences: Preferences }) => {
+    const { tests, preferences } = props;
+    const [selectedTest, setSelectedTest] = useState<TestResultItem | null>(
+      null
+    );
+    const [open, setOpen] = useState(false);
+    const showProject = preferences?.showProject;
 
-  // Don't render if there are no tests and no children
-  if ((!tests || tests.length === 0) && !children) {
-    return null;
-  }
+    /** ─────────────────────────────
+     * Flatten all tests (for filters)
+     */
+    const flattened = useMemo(() => {
+      const results: {
+        testId: string;
+        title: string;
+        suite: string;
+        filePath: string;
+        projectName: string;
+        status: TestStatus;
+        duration: number;
+        testTags: string[];
+        key: string;
+        location: string;
+      }[] = [];
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={cn(
-        "border-border/60 rounded-lg border",
-        "transition-all duration-200 ease-in-out",
-        isParent ? "bg-card/10" : "bg-card/5",
-        isOpen ? "shadow-sm" : "hover:bg-card/20"
-      )}
-    >
-      <button
-        type="button"
-        onClick={() => setIsOpen((o) => !o)}
-        className={cn(
-          "flex w-full items-center justify-between gap-4 p-4",
-          isParent ? "px-6" : "px-4"
-        )}
+      Object.entries(tests.tests ?? {}).forEach(([filePath, suites]) => {
+        Object.entries(suites ?? {}).forEach(([suiteName, suiteData]) => {
+          if (showProject) {
+            const projects = suiteData as Record<string, TestResultItem[]>;
+            Object.entries(projects).forEach(([projectName, testArray]) => {
+              testArray.forEach((t) =>
+                results.push({
+                  ...t,
+                  filePath,
+                  suite: suiteName,
+                  projectName,
+                  testId: t.testId,
+                  status: t.status,
+                  duration: t.duration,
+                  testTags: t.testTags || [],
+                  location: t.location,
+                  key: t.key, // always unique
+                })
+              );
+            });
+          } else {
+            const testArray = ensureArray(suiteData) as TestResultItem[];
+            testArray.forEach((t) =>
+              results.push({
+                ...t,
+                filePath,
+                suite: suiteName,
+                projectName: t.projectName || "",
+                testId: t.testId,
+                status: t.status,
+                duration: t.duration,
+                testTags: t.testTags || [],
+                key: t.key,
+              })
+            );
+          }
+        });
+      });
+      return results;
+    }, [tests, showProject]);
+
+    const [filtered, setFiltered] = useState(flattened);
+    const [filteredKeys, setFilteredKeys] = useState<Set<string>>(new Set());
+
+    // Update filtered keys whenever filtered changes
+    useEffect(() => {
+      setFilteredKeys(new Set(filtered.map((t) => t.key)));
+    }, [filtered]);
+
+    const handleTestClick = (test: TestResultItem) => {
+      setSelectedTest(test);
+      setOpen(true);
+    };
+
+    /** ─────────────────────────────
+     * Check if a test suite has visible tests after filtering
+     */
+    const hasVisibleTests = (testArray: TestResultItem[]) => {
+      return testArray.some((test) => filteredKeys.has(test.key));
+    };
+
+    /** ─────────────────────────────
+     * Render leaf node test
+     */
+    const renderTest = (test: TestResultItem) => (
+      <motion.div
+        key={test.key}
+        initial={{ y: -8, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -8, opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded"
+        onClick={() => handleTestClick(test)}
       >
-        <h3
-          className={cn(
-            "text-left font-medium transition-colors duration-200",
-            isParent
-              ? "text-base text-foreground"
-              : "text-sm text-foreground/90",
-            isOpen && "text-foreground"
+        <div className="flex items-center justify-between gap-3">
+          <span className="inline-flex items-center gap-2">
+            <StatusDot status={test.status} />
+            <span className="truncate">{test.title}</span>
+          </span>
+        </div>
+        <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
+          <span>Duration: {formatDuration(test.duration)}</span>
+          {test.retryAttemptCount > 0 && (
+            <span>Retry: {test.retryAttemptCount}</span>
           )}
-        >
-          {title}
-        </h3>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={cn(
-            "shrink-0 rounded-full p-0.5",
-            "transition-colors duration-200",
-            isOpen ? "text-primary" : "text-muted-foreground"
-          )}
-        >
-          <ChevronDown className="h-4 w-4" />
-        </motion.div>
-      </button>
+          {test.projectName && <span>Project: {String(test.projectName)}</span>}
+          {test.testTags?.length ? (
+            <span className="truncate">Tags: {test.testTags.join(", ")}</span>
+          ) : null}
+        </div>
+      </motion.div>
+    );
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{
-              height: "auto",
-              opacity: 1,
-              transition: {
-                height: { duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] },
-                opacity: { duration: 0.25, delay: 0.1 },
-              },
-            }}
-            exit={{
-              height: 0,
-              opacity: 0,
-              transition: {
-                height: { duration: 0.3, ease: "easeInOut" },
-                opacity: { duration: 0.25 },
-              },
-            }}
-            className={cn(
-              "border-border/40 overflow-hidden",
-              isParent
-                ? "border-t px-6 pt-2 pb-4 space-y-3"
-                : "pl-6 pr-4 space-y-2"
-            )}
-          >
-            {children ? (
-              children
-            ) : tests && tests.length ? (
-              tests.map((t) => (
-                <motion.div
-                  key={t.testId || `${t.title}-${t.location}`}
-                  initial={{ y: -8, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -8, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded"
-                  onClick={() => onTestClick?.(t)}
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="inline-flex items-center gap-2">
-                      <StatusDot status={t.status} />
-                      <span className="truncate">{t.title}</span>
-                    </span>
-                  </div>
-                  <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
-                    <span>Duration: {formatDuration(t.duration)}</span>
-                    {t.retry && Number(t.retry) > 0 && (
-                      <span>Retry: {t.retry}</span>
-                    )}
-                    {t.projectName && (
-                      <span>Project: {String(t.projectName)}</span>
-                    )}
-                    {t.testTags?.length ? (
-                      <span className="truncate">
-                        Tags: {t.testTags.join(", ")}
-                      </span>
-                    ) : null}
-                  </div>
-                </motion.div>
+    /** ─────────────────────────────
+     * Render suites (no projects)
+     */
+    const renderSuiteWithoutProjects = (
+      suiteName: string,
+      suiteData: unknown,
+      filePath: string
+    ) => {
+      const testArray = ensureArray(suiteData) as TestResultItem[];
+      if (!hasVisibleTests(testArray)) return null;
+
+      const visibleTests = testArray.filter((t) => filteredKeys.has(t.key));
+
+      const shouldSkipSuite = visibleTests.every(
+        (test) => test.title === suiteName
+      );
+
+      return shouldSkipSuite ? (
+        visibleTests.map(renderTest)
+      ) : (
+        <TestAccordionItem
+          key={`suite:${filePath}::${suiteName}`}
+          title={`${suiteName} (${visibleTests.length} tests)`}
+          tests={visibleTests}
+          isParent={false}
+          onTestClick={handleTestClick}
+          defaultOpen={filtered.length !== flattened.length}
+        />
+      );
+    };
+
+    /** ─────────────────────────────
+     * Render suites (with projects)
+     */
+    const renderSuiteWithProjects = (
+      suiteName: string,
+      suiteData: unknown,
+      filePath: string
+    ) => {
+      const projects = suiteData as Record<string, TestResultItem[]>;
+      const hasVisibleProjects = Object.values(projects).some(hasVisibleTests);
+      if (!hasVisibleProjects) return null;
+
+      return (
+        <TestAccordionItem
+          key={`suite:${filePath}::${suiteName}`}
+          title={suiteName}
+          isParent={true}
+          defaultOpen={filtered.length !== flattened.length}
+        >
+          {Object.entries(projects).map(([projectName, testArray]) => {
+            if (!hasVisibleTests(testArray)) return null;
+
+            const visibleTests = testArray.filter((t) =>
+              filteredKeys.has(t.key)
+            );
+
+            const shouldSkipSuite = visibleTests.every(
+              (test) => test.title === suiteName
+            );
+
+            return shouldSkipSuite ? (
+              visibleTests.map((test) => (
+                <TestAccordionItem
+                  key={`leaf:${test.key}`}
+                  title={projectName}
+                  tests={[test]}
+                  isParent={false}
+                  onTestClick={() => handleTestClick(test)}
+                  defaultOpen={filtered.length !== flattened.length}
+                />
               ))
             ) : (
-              <div className="text-xs text-muted-foreground">
-                No tests to display.
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
+              <TestAccordionItem
+                key={`proj:${filePath}::${suiteName}::${projectName}`}
+                title={`${projectName} (${visibleTests.length} tests)`}
+                tests={visibleTests}
+                isParent={false}
+                onTestClick={handleTestClick}
+                defaultOpen={filtered.length !== flattened.length}
+              />
+            );
+          })}
+        </TestAccordionItem>
+      );
+    };
 
-export function StatusDot({ status }: { status: string }) {
-  const color =
-    status === "passed"
-      ? "bg-emerald-500"
-      : status === "failed" || status === "timedOut"
-      ? "bg-red-500"
-      : status === "flaky"
-      ? "bg-amber-500"
-      : status === "skipped"
-      ? "bg-slate-400"
-      : "bg-muted-foreground";
-  return <span className={`inline-block h-2.5 w-2.5 rounded-full ${color}`} />;
-}
+    /** ─────────────────────────────
+     * Main Render
+     */
+    return (
+      <>
+        {/* Test Details Sheet */}
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetContent
+            side="right"
+            className="
+              inset-y-0 right-0 left-auto
+              sm:!max-w-none
+              w-[75vw] sm:w-[70vw] md:w-[65vw] lg:w-[60vw] xl:w-[75vw] 2xl:w-[50vw]
+              max-w-[min(100vw-16px,1200px)]
+              h-dvh sm:h-auto sm:max-h-[calc(100dvh)]
+              overflow-y-auto overflow-x-hidden
+            "
+          >
+            <SheetTitle className="sr-only">Test Details</SheetTitle>
+            <TestDetails
+              test={selectedTest}
+              testHistories={tests.testHistories}
+            />
+            <SheetDescription className="sr-only">
+              Test Details
+            </SheetDescription>
+          </SheetContent>
+        </Sheet>
+
+        {/* 🔍 Filter Bar */}
+        <div className="mb-4">
+          <FilterBar flattened={flattened} onFilter={setFiltered} />
+        </div>
+
+        {filtered.length === 0 ? (
+          <p className="text-center py-4 text-muted-foreground">
+            No tests match the current filters
+          </p>
+        ) : (
+          <ScrollArea className="space-y-3">
+            {Object.entries(tests.tests ?? {}).map(([filePath, suites]) => {
+              const hasTestsInFile = Object.values(suites ?? {}).some(
+                (suiteData) => {
+                  if (showProject) {
+                    const projects = suiteData as Record<
+                      string,
+                      TestResultItem[]
+                    >;
+                    return Object.values(projects).some(hasVisibleTests);
+                  } else {
+                    const testArray = ensureArray(
+                      suiteData
+                    ) as TestResultItem[];
+                    return hasVisibleTests(testArray);
+                  }
+                }
+              );
+
+              if (!hasTestsInFile) return null;
+
+              return (
+                <TestAccordionItem
+                  key={`file:${filePath}`}
+                  title={filePath}
+                  isParent
+                  defaultOpen={filtered.length !== flattened.length}
+                >
+                  {Object.entries(suites ?? {}).map(([suiteName, suiteData]) =>
+                    showProject
+                      ? renderSuiteWithProjects(suiteName, suiteData, filePath)
+                      : renderSuiteWithoutProjects(
+                          suiteName,
+                          suiteData,
+                          filePath
+                        )
+                  )}
+                </TestAccordionItem>
+              );
+            })}
+          </ScrollArea>
+        )}
+      </>
+    );
+  }
+);

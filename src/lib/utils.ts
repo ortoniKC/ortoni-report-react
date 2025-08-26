@@ -6,16 +6,29 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDuration(d: unknown) {
-  const n =
-    typeof d === "number" ? d : Number(String(d).replace(/[^\d.]/g, ""));
-  if (!isFinite(n)) return String(d ?? "");
-  if (n < 1000) return `${n} ms`;
-  const s = n / 1000;
-  if (s < 60) return `${s.toFixed(2)} s`;
-  const m = Math.floor(s / 60);
-  const rs = Math.round(s % 60);
-  return `${m}m ${rs.toFixed(2)}s`;
+export function formatDuration(duration: number): string {
+  // round to nearest ms
+  const totalMs = Math.round(duration);
+
+  const ms = totalMs % 1000;
+  const totalSeconds = Math.floor(totalMs / 1000);
+  const seconds = totalSeconds % 60;
+  const minutes = Math.floor(totalSeconds / 60) % 60;
+  const hours = Math.floor(totalSeconds / 3600);
+
+  const parts: string[] = [];
+
+  if (hours) parts.push(`${hours}h`);
+  if (minutes || hours) parts.push(`${minutes.toString().padStart(2, "0")}m`);
+  if (seconds || minutes || hours)
+    parts.push(`${seconds.toString().padStart(2, "0")}s`);
+  if (ms && !(hours || minutes || seconds)) {
+    parts.push(`${ms}ms`);
+  } else if (ms) {
+    parts.push(`${ms.toString().padStart(3, "0")}ms`);
+  }
+
+  return parts.join(":");
 }
 
 export function ensureArray(value: unknown): TestResultItem[] {
@@ -58,27 +71,6 @@ export const renderSuiteWithProjects = (
     tests: ensureArray(testArray) as TestResultItem[],
   }));
 };
-
-export function statusVariant(status: string) {
-  switch (status) {
-    case "passed":
-      return {
-        label: "Passed",
-        className: "bg-emerald-500/15 text-emerald-600",
-      };
-    case "failed":
-      return { label: "Failed", className: "bg-red-500/15 text-red-600" };
-    case "timedOut":
-      return {
-        label: "Timed out",
-        className: "bg-orange-500/15 text-orange-600",
-      };
-    case "skipped":
-      return { label: "Skipped", className: "bg-slate-500/15 text-slate-600" };
-    default:
-      return { label: status, className: "bg-zinc-500/15 text-zinc-600" };
-  }
-}
 
 export function copyToClipboard(text: string) {
   navigator.clipboard?.writeText(text).catch(() => {});

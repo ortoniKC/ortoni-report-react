@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -12,8 +11,8 @@ import {
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
-import { cn, statusVariant } from "@/lib/utils";
 import type { TestStatus } from "@/lib/types/OrtoniReportData";
+import { StatusPill } from "./utils";
 
 interface FilterBarProps {
   flattened: {
@@ -23,8 +22,10 @@ interface FilterBarProps {
     filePath: string;
     projectName: string;
     status: TestStatus;
-    duration: string;
+    duration: number;
     testTags: string[];
+    key: string;
+    location: string;
   }[];
   onFilter: (filtered: FilterBarProps["flattened"]) => void;
 }
@@ -88,14 +89,15 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
           <SelectContent>
             {statuses.map((s) => (
               <SelectItem key={s} value={s}>
-                <Badge
+                <StatusPill status={s} />
+                {/* <Badge
                   className={cn(
                     "rounded-full px-2 py-1 text-xs",
                     statusVariant(s).className
                   )}
                 >
                   {statusVariant(s).label}
-                </Badge>
+                </Badge> */}
               </SelectItem>
             ))}
           </SelectContent>

@@ -1,9 +1,9 @@
 "use client";
 
 import { memo } from "react";
-import { TestList } from "./testList";
 import type { Preferences, TestResult } from "@/lib/types/OrtoniReportData";
-import TextGenerateEffect from "../ui/typewriter";
+import TextGenerateEffect from "../../ui/typewriter";
+import { TestList } from "./testList";
 
 export const TestsPage = memo(
   (props: { tests: TestResult; preferences: Preferences }) => {

@@ -5,7 +5,13 @@ import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), viteSingleFile()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    viteSingleFile({
+      useRecommendedBuildConfig: true,
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -14,9 +20,10 @@ export default defineConfig({
   build: {
     minify: "terser",
     terserOptions: {
-      format: {
-        comments: false,
-      },
+      format: { comments: false },
     },
+  },
+  esbuild: {
+    drop: ["console", "debugger"],
   },
 });

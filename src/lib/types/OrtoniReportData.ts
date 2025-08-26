@@ -16,24 +16,25 @@ export interface Result {
   allTags: string[];
   set: Record<string, unknown>;
 }
+export interface Annotations {
+  type: string;
+  location?: { file: string; line: number; column: number };
+  description?: string;
+}
 export interface TestResultItem {
-  annotations: [
-    {
-      type: string;
-      location?: { file: string; line: number; column: number };
-      description?: string;
-    }
-  ];
+  key: string;
+  annotations: Annotations[];
+  description?: string;
   testTags: string[];
   location: string;
-  retry: string;
-  isRetry: number;
+  retryAttemptCount: number;
   projectName: string;
   suite: string;
+  suiteHierarchy: string;
   title: string;
   status: TestStatus;
   flaky: string;
-  duration: string;
+  duration: number;
   errors: string[];
   steps: Steps[];
   logs: string;
@@ -82,7 +83,7 @@ export interface UserMeta {
 }
 
 export interface Preferences {
-  theme: string;
+  theme?: "light" | "dark";
   logo?: string;
   showProject: boolean;
 }
@@ -124,7 +125,7 @@ export interface TestHistory {
 
 export interface TestHistoryItem {
   status: TestStatus;
-  duration: string;
+  duration: number;
   error_message: string;
   run_date: string;
 }

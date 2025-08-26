@@ -13,10 +13,10 @@ import type {
   UserConfig,
   UserMeta,
 } from "@/lib/types/OrtoniReportData";
-import { OverallExecutionResult } from "../charts/overallExecutionChart";
-import { EachProjectChart } from "../charts/projectBarChart";
-import { ProjectChart } from "../charts/projectChart";
-import TextGenerateEffect from "../ui/typewriter";
+import { OverallExecutionResult } from "../../charts/overallExecutionChart";
+import { EachProjectChart } from "../../charts/projectBarChart";
+import { ProjectChart } from "../../charts/projectChart";
+import TextGenerateEffect from "../../ui/typewriter";
 import { MetaCard } from "./metaCard";
 import { memo } from "react";
 
@@ -25,7 +25,7 @@ export const Dashboard = memo(
     const { summary, userConfig, userMeta } = props;
     const stats = [
       {
-        title: "All tests",
+        title: "All tests - (Pass + Fail)",
         value: String(summary.overAllResult.total),
         icon: TestTubes,
         color: "text-purple-500",

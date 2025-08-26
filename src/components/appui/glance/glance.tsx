@@ -2,10 +2,9 @@
 
 import type { Preferences, TestResultItem } from "@/lib/types/OrtoniReportData";
 import {
-  cn,
+  formatDuration,
   renderSuiteWithoutProjects,
   renderSuiteWithProjects,
-  statusVariant,
 } from "@/lib/utils";
 import { memo, useMemo, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -17,10 +16,10 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import TextGenerateEffect from "../ui/typewriter";
-import { FilterBar } from "./filterBar";
+import TextGenerateEffect from "@/components/ui/typewriter";
+import { StatusPill } from "../common/utils";
+import { FilterBar } from "../common/filterBar";
 
 interface SuiteData {
   name: string;
@@ -45,11 +44,13 @@ export const GlancePage = memo(
           testId: t.testId,
           title: t.title,
           suite: suite.name,
-          filePath: t.filePath ?? "",
-          projectName: t.projectName ?? "",
+          filePath: t.filePath,
+          projectName: t.projectName,
           status: t.status,
-          duration: t.duration ?? "",
+          duration: t.duration,
           testTags: t.testTags ?? [],
+          key: t.key,
+          location: t.location,
         }))
       );
     }, [tests, showProject]);
@@ -94,15 +95,15 @@ export const GlancePage = memo(
                       <AnimatePresence>
                         {filtered.map((r) => (
                           <motion.tr
-                            key={r.testId}
+                            key={r.key}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.25 }}
-                            className="group cursor-pointer transition-colors"
+                            className="group transition-colors"
                           >
                             <TableCell className="max-w-[240px] truncate group-hover:bg-muted/20 group-hover:shadow-inner transition-all duration-200">
-                              {r.filePath}
+                              {r.filePath + r.location}
                             </TableCell>
                             <TableCell className="max-w-[280px] truncate group-hover:bg-muted/20 transition-colors duration-200">
                               {r.suite}
@@ -114,17 +115,10 @@ export const GlancePage = memo(
                               {r.projectName}
                             </TableCell>
                             <TableCell>
-                              <Badge
-                                className={cn(
-                                  "rounded-full transition-colors duration-200 group-hover:scale-105",
-                                  statusVariant(r.status).className
-                                )}
-                              >
-                                {statusVariant(r.status).label}
-                              </Badge>
+                              <StatusPill status={r.status} />
                             </TableCell>
                             <TableCell className="group-hover:bg-muted/20 transition-colors duration-200">
-                              {r.duration}
+                              {formatDuration(r.duration) || "-"}
                             </TableCell>
                           </motion.tr>
                         ))}
