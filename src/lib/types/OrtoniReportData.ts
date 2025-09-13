@@ -135,6 +135,7 @@ export interface AnalyticsReportData {
   trends: Trend[];
   flakyTests: SlowTest[];
   slowTests: SlowTest[];
+  note?: string;
 }
 
 export interface AnalyticsSummary {

@@ -17,18 +17,26 @@ export const AnalyticsPage = memo((props: { analytics: Analytics }) => {
               className="text-3xl font-bold tracking-tight sm:text-3xl"
             />
           </div>
-          <AnalyticsSummaryPage
-            analyticsSummary={analytics.reportData.summary}
-          />
-          <TrendChart trends={analytics.reportData.trends} />
-          <SlowTests
-            slowTest={analytics.reportData.slowTests}
-            title="Slow Tests"
-          />
-          <SlowTests
-            slowTest={analytics.reportData.flakyTests}
-            title="Flaky Tests"
-          />
+          {analytics.reportData.note ? (
+            <div className="rounded-lg bg-secondary/10 p-4 text-sm text-secondary-foreground">
+              {analytics.reportData.note}
+            </div>
+          ) : (
+            <>
+              <AnalyticsSummaryPage
+                analyticsSummary={analytics.reportData.summary}
+              />
+              <TrendChart trends={analytics.reportData.trends} />
+              <SlowTests
+                slowTest={analytics.reportData.slowTests}
+                title="Slow Tests"
+              />
+              <SlowTests
+                slowTest={analytics.reportData.flakyTests}
+                title="Flaky Tests"
+              />
+            </>
+          )}
         </div>
       </div>
     </div>
