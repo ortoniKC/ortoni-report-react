@@ -6,16 +6,7 @@ import {
   renderSuiteWithoutProjects,
   renderSuiteWithProjects,
 } from "@/lib/utils";
-import { memo, useMemo, useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
+import { memo, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TextGenerateEffect from "@/components/ui/typewriter";
 import { StatusPill } from "../common/utils";
@@ -54,78 +45,126 @@ export const GlancePage = memo(
         }))
       );
     }, [tests, showProject]);
+
     const [filtered, setFiltered] = useState(flattened);
+    const [page, setPage] = useState(1);
+    const pageSize = 15;
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+
+    const currentPageData = useMemo(() => {
+      const start = (page - 1) * pageSize;
+      return filtered.slice(start, start + pageSize);
+    }, [filtered, page]);
+
+    // Reset page when filters change or when page is out of bounds
+    useEffect(() => {
+      if (page > totalPages) setPage(1);
+    }, [filtered, totalPages, page]);
+
+    const goToPage = (p: number) => {
+      if (p < 1 || p > totalPages) return;
+      setPage(p);
+    };
 
     return (
-      <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">
-        <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
-          <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
+      <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4 overflow-hidden">
+        <div className="flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6 overflow-hidden">
+          <div className="h-full flex flex-col space-y-4 sm:space-y-6 overflow-hidden">
             <div className="px-2 sm:px-0">
               <TextGenerateEffect
                 words={"Test Glance"}
                 className="text-3xl font-bold tracking-tight sm:text-3xl"
               />
             </div>
-            <FilterBar flattened={flattened} onFilter={setFiltered} />
+            <div className="mb-2">
+              <FilterBar flattened={flattened} onFilter={setFiltered} />
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="overflow-hidden rounded-2xl border shadow-sm hover:shadow-md transition-shadow"
+              className="flex-1 flex flex-col overflow-hidden rounded-2xl border shadow-sm hover:shadow-md transition-shadow"
             >
               {filtered.length === 0 ? (
                 <p className="text-center py-4 text-muted-foreground">
                   No tests match the current filters
                 </p>
               ) : (
-                <ScrollArea className="h-[75vh] w-full hide-scrollbar">
-                  <Table>
-                    <TableHeader className="bg-muted">
-                      <TableRow>
-                        <TableHead className="text-left">File</TableHead>
-                        <TableHead className="text-left">Suite</TableHead>
-                        <TableHead className="text-left">Test</TableHead>
-                        <TableHead className="text-left">Project</TableHead>
-                        <TableHead className="text-left">Status</TableHead>
-                        <TableHead className="text-left">Duration</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <AnimatePresence>
-                        {filtered.map((r) => (
-                          <motion.tr
-                            key={r.key}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.25 }}
-                            className="group transition-colors"
-                          >
-                            <TableCell className="max-w-[240px] truncate group-hover:bg-muted/20 group-hover:shadow-inner transition-all duration-200">
-                              {r.filePath + r.location}
-                            </TableCell>
-                            <TableCell className="max-w-[280px] truncate group-hover:bg-muted/20 transition-colors duration-200">
-                              {r.suite}
-                            </TableCell>
-                            <TableCell className="max-w-[320px] truncate font-medium group-hover:bg-muted/30 transition-colors duration-200">
-                              {r.title}
-                            </TableCell>
-                            <TableCell className="capitalize group-hover:bg-muted/20 transition-colors duration-200">
-                              {r.projectName}
-                            </TableCell>
-                            <TableCell>
-                              <StatusPill status={r.status} />
-                            </TableCell>
-                            <TableCell className="group-hover:bg-muted/20 transition-colors duration-200">
-                              {formatDuration(r.duration) || "-"}
-                            </TableCell>
-                          </motion.tr>
-                        ))}
-                      </AnimatePresence>
-                    </TableBody>
-                  </Table>
-                </ScrollArea>
+                <>
+                  {/* Scrollable Table */}
+                  <div className="flex-1 overflow-auto">
+                    <table className="table-auto whitespace-nowrap min-w-[900px] w-full text-sm">
+                      <thead className="bg-muted sticky top-0 z-10">
+                        <tr>
+                          <th className="text-left px-3 py-2">File</th>
+                          <th className="text-left px-3 py-2">Suite</th>
+                          <th className="text-left px-3 py-2">Test</th>
+                          <th className="text-left px-3 py-2">Project</th>
+                          <th className="text-left px-3 py-2">Status</th>
+                          <th className="text-left px-3 py-2">Duration</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <AnimatePresence>
+                          {currentPageData.map((r) => (
+                            <motion.tr
+                              key={r.key}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.25 }}
+                              className="group transition-colors border-b"
+                            >
+                              <td className="px-3 py-2 truncate max-w-[240px] group-hover:bg-muted/20">
+                                {r.location}
+                              </td>
+                              <td className="px-3 py-2 truncate max-w-[280px] group-hover:bg-muted/20">
+                                {r.suite}
+                              </td>
+                              <td className="px-3 py-2 truncate max-w-[320px] font-medium group-hover:bg-muted/30">
+                                {r.title}
+                              </td>
+                              <td className="px-3 py-2 capitalize group-hover:bg-muted/20">
+                                {r.projectName}
+                              </td>
+                              <td className="px-3 py-2">
+                                <StatusPill status={r.status} />
+                              </td>
+                              <td className="px-3 py-2 group-hover:bg-muted/20">
+                                {formatDuration(r.duration) || "-"}
+                              </td>
+                            </motion.tr>
+                          ))}
+                        </AnimatePresence>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Pagination */}
+                  <div className="flex items-center justify-between p-3 border-t bg-muted/30 text-sm">
+                    <span>
+                      Page {page} of {totalPages}
+                    </span>
+                    <div className="flex gap-2">
+                      <button
+                        className="px-2 py-1 rounded bg-muted hover:bg-muted/70 disabled:opacity-50"
+                        onClick={() => goToPage(page - 1)}
+                        disabled={page <= 1}
+                      >
+                        Prev
+                      </button>
+                      <button
+                        className="px-2 py-1 rounded bg-muted hover:bg-muted/70 disabled:opacity-50"
+                        onClick={() => goToPage(page + 1)}
+                        disabled={page >= totalPages}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                </>
               )}
             </motion.div>
           </div>

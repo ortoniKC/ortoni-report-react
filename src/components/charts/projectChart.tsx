@@ -55,13 +55,12 @@ export const ProjectChart = memo((props: { summary: Summary }) => {
               tickLine={true}
               tickMargin={10}
               axisLine={true}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value.slice(0, 3) + "..."}
             />
             <YAxis
-              dataKey="projects"
               axisLine={false}
               tickLine={false}
-              width={10} // 👈 reduce space reserved for labels
+              width={30} // 👈 reduce space reserved for labels
             />
 
             <ChartTooltip

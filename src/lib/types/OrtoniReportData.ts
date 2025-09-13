@@ -157,10 +157,3 @@ export interface SlowTest {
   test_id: string;
   avg_duration: number;
 }
-
-// export interface ChartTrendData {
-//   labels: string[];
-//   passed: number[];
-//   failed: number[];
-//   avgDuration: number[];
-// }

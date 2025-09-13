@@ -40,6 +40,12 @@ export const EachProjectChart = memo((props: { summary: Summary }) => {
   const dynamicChartConfig = Object.fromEntries(
     (stats?.projectNames ?? []).map((name: string) => [name, { label: name }])
   );
+
+  // helper to check if bar values exist
+  const hasPass = chartData.some((d) => d.pass > 0);
+  const hasFailed = chartData.some((d) => d.failed > 0);
+  const hasSkipped = chartData.some((d) => d.skipped > 0);
+
   return (
     <Card>
       <CardHeader>
@@ -55,9 +61,7 @@ export const EachProjectChart = memo((props: { summary: Summary }) => {
             accessibilityLayer
             data={chartData}
             layout="vertical"
-            margin={{
-              right: 16,
-            }}
+            margin={{ right: 16 }}
           >
             <CartesianGrid horizontal={false} />
             <YAxis
@@ -75,48 +79,57 @@ export const EachProjectChart = memo((props: { summary: Summary }) => {
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
-            <Bar
-              dataKey="pass"
-              layout="vertical"
-              fill="var(--chart-2)" // green for pass
-              radius={4}
-            >
-              <LabelList
+
+            {hasPass && (
+              <Bar
                 dataKey="pass"
-                position="right"
-                offset={8}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
-            <Bar
-              dataKey="failed"
-              layout="vertical"
-              fill="var(--chart-5)" // red for failed
-              radius={4}
-            >
-              <LabelList
+                layout="vertical"
+                fill="var(--chart-2)" // green
+                radius={4}
+              >
+                <LabelList
+                  dataKey="pass"
+                  position="right"
+                  offset={8}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
+            )}
+
+            {hasFailed && (
+              <Bar
                 dataKey="failed"
-                position="right"
-                offset={8}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
-            <Bar
-              dataKey="skipped"
-              layout="vertical"
-              fill="var(--chart-1)" // blue for skipped
-              radius={4}
-            >
-              <LabelList
+                layout="vertical"
+                fill="var(--chart-5)" // red
+                radius={4}
+              >
+                <LabelList
+                  dataKey="failed"
+                  position="right"
+                  offset={8}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
+            )}
+
+            {hasSkipped && (
+              <Bar
                 dataKey="skipped"
-                position="right"
-                offset={8}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
+                layout="vertical"
+                fill="var(--chart-1)" // blue
+                radius={4}
+              >
+                <LabelList
+                  dataKey="skipped"
+                  position="right"
+                  offset={8}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
+            )}
           </BarChart>
         </ChartContainer>
       </CardContent>
