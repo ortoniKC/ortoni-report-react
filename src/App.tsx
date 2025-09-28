@@ -22,6 +22,7 @@ export function App({ reportData }: { reportData: ReportResponse }) {
                 summary={data.summary}
                 userConfig={data.userConfig}
                 userMeta={data.userMeta}
+                preferences={data.preferences}
               />
             }
           />

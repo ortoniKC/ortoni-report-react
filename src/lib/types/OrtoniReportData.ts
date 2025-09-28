@@ -79,7 +79,7 @@ export interface UserConfig {
 }
 
 export interface UserMeta {
-  meta: Record<string, any>;
+  meta: Record<string, unknown>;
 }
 
 export interface Preferences {
