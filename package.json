@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "VITE_DEBUG=true vite",
     "build": "tsc -b && vite build && node ./copy-html.js",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

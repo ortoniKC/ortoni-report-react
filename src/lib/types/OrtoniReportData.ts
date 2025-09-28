@@ -58,7 +58,7 @@ export interface Summary {
     flaky: number;
     total: number;
   };
-  successRate: number;
+  successRate: string;
   lastRunDate: string;
   totalDuration: number;
   stats: Stats;
