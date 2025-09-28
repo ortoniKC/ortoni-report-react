@@ -24,7 +24,7 @@ if (debug) {
     ? JSON.parse(dataTag.textContent || "{}")
     : {};
   if (reportData.data.userConfig.title) {
-    document.title = `Ortoni Report | ${reportData.data.userConfig.title}`;
+    document.title = `${reportData.data.userConfig.title} | Ortoni Report`;
   }
 
   createRoot(document.getElementById("root")!).render(

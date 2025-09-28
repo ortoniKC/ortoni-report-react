@@ -8,6 +8,7 @@ import { AnalyticsPage } from "./components/appui/analytics/analytics";
 import { GlancePage } from "./components/appui/glance/glance";
 
 export function App({ reportData }: { reportData: ReportResponse }) {
+  const data = reportData.data;
   return (
     <ThemeProvider defaultTheme="dark" storageKey="ortoni-theme">
       <Routes>
@@ -18,9 +19,9 @@ export function App({ reportData }: { reportData: ReportResponse }) {
             path="dashboard"
             element={
               <Dashboard
-                summary={reportData.data.summary}
-                userConfig={reportData.data.userConfig}
-                userMeta={reportData.data.userMeta}
+                summary={data.summary}
+                userConfig={data.userConfig}
+                userMeta={data.userMeta}
               />
             }
           />
@@ -28,8 +29,8 @@ export function App({ reportData }: { reportData: ReportResponse }) {
             path="tests"
             element={
               <TestsPage
-                tests={reportData.data.testResult}
-                preferences={reportData.data.preferences}
+                tests={data.testResult}
+                preferences={data.preferences}
               />
             }
           />
@@ -37,14 +38,14 @@ export function App({ reportData }: { reportData: ReportResponse }) {
             path="glance"
             element={
               <GlancePage
-                tests={reportData.data.testResult.tests}
-                showProject={reportData.data.preferences}
+                tests={data.testResult.tests}
+                showProject={data.preferences}
               />
             }
           />
           <Route
             path="analytics"
-            element={<AnalyticsPage analytics={reportData.data.analytics} />}
+            element={<AnalyticsPage analytics={data.analytics} />}
           />
         </Route>
       </Routes>
