@@ -48,7 +48,7 @@ export const DashboardSidebar = memo(() => {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Ortoni Report</span>
-                  <span className="truncate text-xs">V 4.0.0</span>
+                  <span className="truncate text-xs">V 4.0.2</span>
                 </div>
               </div>
             </SidebarMenuButton>
