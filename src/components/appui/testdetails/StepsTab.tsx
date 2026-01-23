@@ -12,33 +12,41 @@ function renderStepsRecursive(steps: Steps[], level = 0) {
 
     return (
       <div key={index} className="mb-1">
-        <div className="flex items-start gap-2">
-          <span className="whitespace-pre">
-            {indent}
-            {numbering}
-          </span>
+        <div className="flex items-start gap-2 justify-between">
+          <div className="flex items-start gap-2 flex-1">
+            <span className="whitespace-pre">
+              {indent}
+              {numbering}
+            </span>
 
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span
-                className={
-                  s.snippet ? "text-destructive font-medium" : undefined
-                }
-              >
-                {s.title}
-              </span>
+            <div className="flex flex-col flex-1">
+              <div className="flex items-center gap-2">
+                <span
+                  className={
+                    s.snippet ? "text-destructive font-medium" : undefined
+                  }
+                >
+                  {s.title}
+                </span>
+              </div>
 
-              {s.duration && (
-                <span className="text-muted-foreground">({s.duration}ms)</span>
-              )}
-
-              {s.status && (
-                <StatusPill status={s.status as TestStatus} size="xs" />
+              {s.snippet && (
+                <span className="text-sm text-muted-foreground">
+                  {s.snippet}
+                </span>
               )}
             </div>
+          </div>
 
-            {s.snippet && (
-              <span className="text-sm text-muted-foreground">{s.snippet}</span>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {s.duration && (
+              <span className="text-muted-foreground text-xs">
+                {s.duration} ms
+              </span>
+            )}
+
+            {s.status && (
+              <StatusPill status={s.status as TestStatus} size="xs" />
             )}
           </div>
         </div>

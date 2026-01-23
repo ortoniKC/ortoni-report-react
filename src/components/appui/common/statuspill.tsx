@@ -12,7 +12,7 @@ export function StatusPill({
 }) {
   const sizeMap = {
     xs: {
-      pill: "px-2 py-0.5 text-[10px] gap-0.5",
+      pill: "px-2 py-0.3 text-[8px] gap-0.5",
       icon: "h-2 w-2",
     },
     sm: {
