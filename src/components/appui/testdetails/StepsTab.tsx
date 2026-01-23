@@ -31,9 +31,10 @@ function renderStepsRecursive(steps: Steps[], level = 0) {
               </div>
 
               {s.snippet && (
-                <span className="text-sm text-muted-foreground">
-                  {s.snippet}
-                </span>
+                <span
+                  className="text-sm text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: s.snippet }}
+                />
               )}
             </div>
           </div>

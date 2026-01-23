@@ -16,7 +16,7 @@ export const EllipsisBlock = memo(
     children?: React.ReactNode;
   }) => {
     const [status, setStatus] = useState<"idle" | "copied">("idle");
-    const contentRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLPreElement>(null);
 
     useEffect(() => {
       if (status !== "idle") {
@@ -28,7 +28,7 @@ export const EllipsisBlock = memo(
     const handleCopy = (e: React.MouseEvent) => {
       e.stopPropagation();
       if (contentRef.current) {
-        const textToCopy = contentRef.current.textContent ?? "";
+        const textToCopy = contentRef.current.innerText;
         copyToClipboard(textToCopy);
         setStatus("copied");
       }
@@ -74,20 +74,19 @@ export const EllipsisBlock = memo(
             </button>
           </div>
 
-          <div
+          <pre
             ref={contentRef}
             className="overflow-x-auto rounded-b-xl bg-stone-900 p-4 text-xs text-blue-100 whitespace-pre-wrap"
           >
-            {children ? (
-              children
-            ) : Array.isArray(errors) ? (
+            {children}
+            {Array.isArray(errors) ? (
               errors.map((e, i) => (
-                <div key={i} dangerouslySetInnerHTML={{ __html: e }} />
+                <pre key={i} dangerouslySetInnerHTML={{ __html: e }} />
               ))
             ) : errors ? (
-              <div dangerouslySetInnerHTML={{ __html: errors }} />
+              <pre key={0} dangerouslySetInnerHTML={{ __html: errors }} />
             ) : null}
-          </div>
+          </pre>
         </div>
       </div>
     );
