@@ -79,7 +79,7 @@ export interface UserConfig {
 }
 
 export interface UserMeta {
-  meta: Record<string, any>;
+  meta: Record<string, string>;
 }
 
 export interface Preferences {
@@ -116,6 +116,10 @@ export interface Steps {
   snippet: string | undefined;
   title: string;
   location: string;
+  duration?: number;
+  status?: string;
+  category?: string;
+  steps?: Steps[];
 }
 
 export interface TestHistory {

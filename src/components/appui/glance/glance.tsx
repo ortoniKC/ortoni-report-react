@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { motion, AnimatePresence } from "framer-motion";
 import TextGenerateEffect from "@/components/ui/typewriter";
-import { StatusPill } from "../common/utils";
+import { StatusPill } from "../common/statuspill";
 import { FilterBar } from "../common/filterBar";
 
 interface SuiteData {
@@ -36,7 +36,7 @@ export const GlancePage = memo(
         ([suiteName, suiteData]) =>
           showProject
             ? renderSuiteWithProjects(suiteName, suiteData)
-            : renderSuiteWithoutProjects(suiteName, suiteData)
+            : renderSuiteWithoutProjects(suiteName, suiteData),
       );
 
       return suites.flatMap((suite) =>
@@ -51,7 +51,7 @@ export const GlancePage = memo(
           testTags: t.testTags ?? [],
           key: t.key,
           location: t.location,
-        }))
+        })),
       );
     }, [tests, showProject]);
     const [filtered, setFiltered] = useState(flattened);
@@ -132,5 +132,5 @@ export const GlancePage = memo(
         </div>
       </div>
     );
-  }
+  },
 );
