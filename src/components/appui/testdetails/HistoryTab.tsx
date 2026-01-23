@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/table";
-import { StatusPill } from "../common/utils";
+import { StatusPill } from "../common/statuspill";
 import { Button } from "@/components/ui/button";
 import { formatDuration } from "@/lib/utils";
 import { Portal } from "@radix-ui/react-portal";

@@ -10,7 +10,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { useState } from "react";
-import { StatusPill } from "../../common/utils";
+import { StatusPill } from "../../common/statuspill";
 import type { TestStatus } from "@/lib/types/OrtoniReportData";
 
 export function TestMeta({

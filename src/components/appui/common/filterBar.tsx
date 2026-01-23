@@ -12,7 +12,7 @@ import {
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import type { TestStatus } from "@/lib/types/OrtoniReportData";
-import { StatusPill } from "./utils";
+import { StatusPill } from "./statuspill";
 
 interface FilterBarProps {
   flattened: {
@@ -39,17 +39,17 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
   // Memoize unique values for dropdowns
   const statuses = useMemo(
     () => Array.from(new Set(flattened.map((t) => t.status))),
-    [flattened]
+    [flattened],
   );
 
   const tags = useMemo(
     () => Array.from(new Set(flattened.map((t) => t.testTags).flat())),
-    [flattened]
+    [flattened],
   );
 
   const projects = useMemo(
     () => Array.from(new Set(flattened.map((t) => t.projectName))),
-    [flattened]
+    [flattened],
   );
 
   const filtered = useMemo(() => {
