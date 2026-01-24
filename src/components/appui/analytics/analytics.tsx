@@ -13,7 +13,7 @@ export const AnalyticsPage = memo((props: { analytics: Analytics }) => {
         <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
           <div className="px-2 sm:px-0">
             <TextGenerateEffect
-              words={"Test Analytics"}
+              words={"Test Suite Analytics"}
               className="text-3xl font-bold tracking-tight sm:text-3xl"
             />
           </div>

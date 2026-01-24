@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 import TextGenerateEffect from "../ui/typewriter";
+import { Description } from "@radix-ui/react-dialog";
 
 interface MasonryGalleryProps {
   tests: TestResultItem[];
@@ -89,6 +90,7 @@ export default function MasonryGallery({ tests }: MasonryGalleryProps) {
       >
         <DialogContent className="max-w-2xl w-full">
           <DialogHeader>
+            <Description className="sr-only">Screenshot Preview</Description>
             <DialogTitle>{selectedScreenshot?.testName}</DialogTitle>
           </DialogHeader>
           {selectedScreenshot && (
