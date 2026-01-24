@@ -76,7 +76,7 @@ export const EllipsisBlock = memo(
 
           <pre
             ref={contentRef}
-            className="overflow-x-auto rounded-b-xl bg-stone-900 p-4 text-xs text-blue-100 whitespace-pre-wrap"
+            className="overflow-x-auto rounded-b-xl bg-stone-900 p-4 text-xs text-blue-100"
           >
             {children}
             {Array.isArray(errors) ? (
