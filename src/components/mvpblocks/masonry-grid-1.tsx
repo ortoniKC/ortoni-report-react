@@ -19,6 +19,7 @@ interface MasonryGalleryProps {
 interface ScreenshotInfo {
   src: string;
   testName: string;
+  project: string;
 }
 
 export default function MasonryGallery({ tests }: MasonryGalleryProps) {
@@ -35,6 +36,7 @@ export default function MasonryGallery({ tests }: MasonryGalleryProps) {
             screenshots.push({
               src: screenshot,
               testName: test.title || "Unknown Test",
+              project: test.projectName || "Unknown Project",
             });
           });
         }
@@ -90,8 +92,8 @@ export default function MasonryGallery({ tests }: MasonryGalleryProps) {
       >
         <DialogContent className="max-w-2xl w-full">
           <DialogHeader>
-            <Description className="sr-only">Screenshot Preview</Description>
             <DialogTitle>{selectedScreenshot?.testName}</DialogTitle>
+            <Description>{selectedScreenshot?.project}</Description>
           </DialogHeader>
           {selectedScreenshot && (
             <div className="flex justify-center">
