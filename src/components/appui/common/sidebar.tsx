@@ -21,6 +21,7 @@ import {
   BarChart3,
   TestTube2,
   TableOfContents,
+  Image,
 } from "lucide-react";
 import { ModeToggle } from "@/hooks/toggle-theme";
 
@@ -29,6 +30,7 @@ const menuItems = [
   { title: "Tests", icon: TestTube2, href: "tests" },
   { title: "Glance", icon: TableOfContents, href: "glance" },
   { title: "Analytics", icon: BarChart3, href: "analytics" },
+  { title: "Screenshots", icon: Image, href: "screenshots" },
 ];
 
 export const DashboardSidebar = memo(() => {

@@ -6,6 +6,7 @@ import { TestsPage } from "./components/appui/testdetails/testPage";
 import { Dashboard } from "./components/appui/home/dashboard";
 import { AnalyticsPage } from "./components/appui/analytics/analytics";
 import { GlancePage } from "./components/appui/glance/glance";
+import Screenshots from "./components/appui/screenshots/screenshots";
 
 export function App({ reportData }: { reportData: ReportResponse }) {
   return (
@@ -45,6 +46,10 @@ export function App({ reportData }: { reportData: ReportResponse }) {
           <Route
             path="analytics"
             element={<AnalyticsPage analytics={reportData.data.analytics} />}
+          />
+          <Route
+            path="screenshots"
+            element={<Screenshots tests={reportData.data.testResult.tests} />}
           />
         </Route>
       </Routes>
