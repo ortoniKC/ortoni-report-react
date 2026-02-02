@@ -20,15 +20,18 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/table";
-import { StatusPill } from "../common/utils";
+import { StatusPill } from "../common/statuspill";
 import { Button } from "@/components/ui/button";
 import { formatDuration } from "@/lib/utils";
 import { Portal } from "@radix-ui/react-portal";
+import { TestHistoryTrendChart } from "@/components/charts/testHistoryTrend";
+
 export function HistoryTab({ history }: { history?: any }) {
   if (!history) return null;
 
   return (
-    <TabsContent value="history">
+    <TabsContent value="history" className="space-y-6">
+      <TestHistoryTrendChart history={history.history} />
       <ShowHistory history={history.history} />
     </TabsContent>
   );

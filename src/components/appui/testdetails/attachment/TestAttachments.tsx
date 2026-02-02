@@ -15,11 +15,12 @@ import {
 } from "../../../ui/tooltip";
 import { getAdjustedBaseUrl, isLocalFile } from "../../common/utils";
 import { Button } from "@/components/ui/button";
+import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 export function TestAttachments({
   test,
   toFileUrl,
 }: {
-  test: any;
+  test: TestResultItem;
   toFileUrl: (p: string) => string;
 }) {
   const hasAttachments =

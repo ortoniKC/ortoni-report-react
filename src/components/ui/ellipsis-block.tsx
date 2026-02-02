@@ -6,9 +6,17 @@ import { Clipboard, ClipboardCheck } from "lucide-react";
 import { memo, useEffect, useRef, useState } from "react";
 
 export const EllipsisBlock = memo(
-  ({ errors, title }: { errors: string[] | string; title: string }) => {
+  ({
+    errors,
+    title,
+    children,
+  }: {
+    errors?: string[] | string;
+    title: string;
+    children?: React.ReactNode;
+  }) => {
     const [status, setStatus] = useState<"idle" | "copied">("idle");
-    const errorRef = useRef<HTMLPreElement>(null);
+    const contentRef = useRef<HTMLPreElement>(null);
 
     useEffect(() => {
       if (status !== "idle") {
@@ -19,8 +27,8 @@ export const EllipsisBlock = memo(
 
     const handleCopy = (e: React.MouseEvent) => {
       e.stopPropagation();
-      if (errorRef.current) {
-        const textToCopy = errorRef.current.innerText; // 👈 visible text only
+      if (contentRef.current) {
+        const textToCopy = contentRef.current.innerText;
         copyToClipboard(textToCopy);
         setStatus("copied");
       }
@@ -48,8 +56,9 @@ export const EllipsisBlock = memo(
             </div>
 
             <p className="text-sm font-medium text-gray-400">{title}</p>
+
             <button
-              aria-label="Copy errors"
+              aria-label="Copy"
               onClick={handleCopy}
               className="rounded-xl bg-gray-800 p-2 text-gray-100 hover:bg-gray-700 focus:outline-none"
             >
@@ -64,20 +73,22 @@ export const EllipsisBlock = memo(
               </motion.div>
             </button>
           </div>
+
           <pre
-            ref={errorRef}
+            ref={contentRef}
             className="overflow-x-auto rounded-b-xl bg-stone-900 p-4 text-xs text-blue-100"
           >
+            {children}
             {Array.isArray(errors) ? (
               errors.map((e, i) => (
                 <pre key={i} dangerouslySetInnerHTML={{ __html: e }} />
               ))
-            ) : (
+            ) : errors ? (
               <pre key={0} dangerouslySetInnerHTML={{ __html: errors }} />
-            )}
+            ) : null}
           </pre>
         </div>
       </div>
     );
-  }
+  },
 );

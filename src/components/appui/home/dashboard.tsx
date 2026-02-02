@@ -123,5 +123,5 @@ export const Dashboard = memo(
         </div>
       </div>
     );
-  }
+  },
 );

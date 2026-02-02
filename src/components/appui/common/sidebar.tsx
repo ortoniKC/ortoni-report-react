@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useReport } from "@/hooks/use-report-context";
 
 import {
   Sidebar,
@@ -21,6 +22,7 @@ import {
   BarChart3,
   TestTube2,
   TableOfContents,
+  Image,
 } from "lucide-react";
 import { ModeToggle } from "@/hooks/toggle-theme";
 
@@ -28,11 +30,17 @@ const menuItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "dashboard" },
   { title: "Tests", icon: TestTube2, href: "tests" },
   { title: "Glance", icon: TableOfContents, href: "glance" },
-  { title: "Analytics", icon: BarChart3, href: "analytics" },
+  { title: "Analytics", icon: BarChart3, href: "analytics", key: "analytics" },
+  { title: "Screenshots", icon: Image, href: "screenshots" },
 ];
 
 export const DashboardSidebar = memo(() => {
   const location = useLocation();
+  const { reportData } = useReport();
+
+  // Check if there's history data by looking at the note field
+  const hasHistoryNote = reportData?.data?.analytics?.reportData?.note;
+  const hasHistory = !hasHistoryNote?.includes("unavailable");
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -48,7 +56,7 @@ export const DashboardSidebar = memo(() => {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Ortoni Report</span>
-                  <span className="truncate text-xs">V 4.0.4</span>
+                  <span className="truncate text-xs">V 4.0.5</span>
                 </div>
               </div>
             </SidebarMenuButton>
@@ -63,10 +71,27 @@ export const DashboardSidebar = memo(() => {
               {menuItems.map((item) => {
                 const isActive = location.pathname === "/" + item.href;
                 const Icon = item.icon;
+                const isDisabled = item.key === "analytics" && !hasHistory;
+
                 return (
                   <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton asChild isActive={isActive}>
-                      <Link to={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      disabled={isDisabled}
+                      className={
+                        isDisabled ? "opacity-50 cursor-not-allowed" : ""
+                      }
+                      title={isDisabled ? "No history data available" : ""}
+                    >
+                      <Link
+                        to={item.href}
+                        onClick={(e) => {
+                          if (isDisabled) {
+                            e.preventDefault();
+                          }
+                        }}
+                      >
                         <Icon />
                         <span>{item.title}</span>
                       </Link>
