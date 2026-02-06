@@ -60,17 +60,6 @@ export const renderSuiteWithoutProjects = (
   ];
 };
 
-export const renderSuiteWithProjects = (
-  _suiteName: string,
-  suiteData: unknown
-): SuiteData[] => {
-  const projects = suiteData as Record<string, unknown>;
-
-  return Object.entries(projects).map(([projectName, testArray]) => ({
-    name: `${projectName}`,
-    tests: ensureArray(testArray) as TestResultItem[],
-  }));
-};
 
 export function copyToClipboard(text: string) {
   navigator.clipboard?.writeText(text).catch(() => {});

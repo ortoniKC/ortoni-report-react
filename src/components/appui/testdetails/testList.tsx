@@ -2,7 +2,7 @@
 
 import { memo, useState, useMemo, useEffect } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { ensureArray, formatDuration } from "@/lib/utils";
+import { cn, ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 import type {
@@ -28,6 +28,7 @@ export const TestList = memo(
       null
     );
     const [open, setOpen] = useState(false);
+    const [isAllExpanded, setIsAllExpanded] = useState(false);
     const showProject = preferences?.showProject;
 
     /** ─────────────────────────────
@@ -103,6 +104,45 @@ export const TestList = memo(
     };
 
     /** ─────────────────────────────
+     * Calculate summary for a file/suite
+     */
+    const getStatusSummary = (testArray: TestResultItem[]) => {
+      const visible = testArray.filter((t) => filteredKeys.has(t.key));
+      const counts = visible.reduce(
+        (acc, t) => {
+          acc[t.status] = (acc[t.status] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
+
+      return (
+        <div className="flex gap-2 text-[10px] font-bold uppercase tracking-wider">
+          {counts.passed > 0 && (
+            <span className="text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">
+              {counts.passed} P
+            </span>
+          )}
+          {counts.failed > 0 && (
+            <span className="text-red-500 bg-red-500/10 px-1.5 py-0.5 rounded">
+              {counts.failed} F
+            </span>
+          )}
+          {counts.flaky > 0 && (
+            <span className="text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
+              {counts.flaky} FL
+            </span>
+          )}
+          {counts.skipped > 0 && (
+            <span className="text-slate-500 bg-slate-500/10 px-1.5 py-0.5 rounded">
+              {counts.skipped} S
+            </span>
+          )}
+        </div>
+      );
+    };
+
+    /** ─────────────────────────────
      * Check if a test suite has visible tests after filtering
      */
     const hasVisibleTests = (testArray: TestResultItem[]) => {
@@ -119,7 +159,14 @@ export const TestList = memo(
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: -8, opacity: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded"
+        className={cn(
+          "text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded-r border-l-2 transition-all group",
+          test.status === "passed"
+            ? "border-emerald-500/30 hover:border-emerald-500"
+            : test.status === "failed"
+            ? "border-red-500/30 hover:border-red-500"
+            : "border-muted/30 hover:border-muted-foreground"
+        )}
         onClick={() => handleTestClick(test)}
       >
         <div className="flex items-center justify-between gap-3">
@@ -167,66 +214,12 @@ export const TestList = memo(
           tests={visibleTests}
           isParent={false}
           onTestClick={handleTestClick}
-          defaultOpen={filtered.length !== flattened.length}
+          defaultOpen={isAllExpanded || filtered.length !== flattened.length}
+          headerRight={getStatusSummary(visibleTests)}
         />
       );
     };
 
-    /** ─────────────────────────────
-     * Render suites (with projects)
-     */
-    const renderSuiteWithProjects = (
-      suiteName: string,
-      suiteData: unknown,
-      filePath: string
-    ) => {
-      const projects = suiteData as Record<string, TestResultItem[]>;
-      const hasVisibleProjects = Object.values(projects).some(hasVisibleTests);
-      if (!hasVisibleProjects) return null;
-
-      return (
-        <TestAccordionItem
-          key={`suite:${filePath}::${suiteName}`}
-          title={suiteName}
-          isParent={true}
-          defaultOpen={filtered.length !== flattened.length}
-        >
-          {Object.entries(projects).map(([projectName, testArray]) => {
-            if (!hasVisibleTests(testArray)) return null;
-
-            const visibleTests = testArray.filter((t) =>
-              filteredKeys.has(t.key)
-            );
-
-            const shouldSkipSuite = visibleTests.every(
-              (test) => test.title === suiteName
-            );
-
-            return shouldSkipSuite ? (
-              visibleTests.map((test) => (
-                <TestAccordionItem
-                  key={`leaf:${test.key}`}
-                  title={projectName}
-                  tests={[test]}
-                  isParent={false}
-                  onTestClick={() => handleTestClick(test)}
-                  defaultOpen={filtered.length !== flattened.length}
-                />
-              ))
-            ) : (
-              <TestAccordionItem
-                key={`proj:${filePath}::${suiteName}::${projectName}`}
-                title={`${projectName} (${visibleTests.length} tests)`}
-                tests={visibleTests}
-                isParent={false}
-                onTestClick={handleTestClick}
-                defaultOpen={filtered.length !== flattened.length}
-              />
-            );
-          })}
-        </TestAccordionItem>
-      );
-    };
 
     /** ─────────────────────────────
      * Main Render
@@ -257,9 +250,25 @@ export const TestList = memo(
           </SheetContent>
         </Sheet>
 
-        {/* 🔍 Filter Bar */}
-        <div className="mb-4">
-          <FilterBar flattened={flattened} onFilter={setFiltered} />
+        {/* 🔍 Filter Bar & Actions */}
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex-1">
+            <FilterBar flattened={flattened} onFilter={setFiltered} />
+          </div>
+          <div className="flex gap-2 self-end sm:self-auto">
+            <button
+              onClick={() => setIsAllExpanded(true)}
+              className="text-xs font-bold px-4 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-all border border-primary/20 shadow-sm"
+            >
+              Expand All
+            </button>
+            <button
+              onClick={() => setIsAllExpanded(false)}
+              className="text-xs font-bold px-4 py-2 rounded-full bg-muted text-muted-foreground hover:bg-muted-foreground/10 transition-all border shadow-sm"
+            >
+              Collapse All
+            </button>
+          </div>
         </div>
 
         {filtered.length === 0 ? (
@@ -271,18 +280,8 @@ export const TestList = memo(
             {Object.entries(tests.tests ?? {}).map(([filePath, suites]) => {
               const hasTestsInFile = Object.values(suites ?? {}).some(
                 (suiteData) => {
-                  if (showProject) {
-                    const projects = suiteData as Record<
-                      string,
-                      TestResultItem[]
-                    >;
-                    return Object.values(projects).some(hasVisibleTests);
-                  } else {
-                    const testArray = ensureArray(
-                      suiteData
-                    ) as TestResultItem[];
-                    return hasVisibleTests(testArray);
-                  }
+                  const testArray = ensureArray(suiteData) as TestResultItem[];
+                  return hasVisibleTests(testArray);
                 }
               );
 
@@ -293,16 +292,15 @@ export const TestList = memo(
                   key={`file:${filePath}`}
                   title={filePath}
                   isParent
-                  defaultOpen={filtered.length !== flattened.length}
+                  defaultOpen={
+                    isAllExpanded || filtered.length !== flattened.length
+                  }
+                  headerRight={getStatusSummary(
+                    Object.values(suites ?? {}).flatMap((s) => ensureArray(s))
+                  )}
                 >
                   {Object.entries(suites ?? {}).map(([suiteName, suiteData]) =>
-                    showProject
-                      ? renderSuiteWithProjects(suiteName, suiteData, filePath)
-                      : renderSuiteWithoutProjects(
-                          suiteName,
-                          suiteData,
-                          filePath
-                        )
+                    renderSuiteWithoutProjects(suiteName, suiteData, filePath)
                   )}
                 </TestAccordionItem>
               );

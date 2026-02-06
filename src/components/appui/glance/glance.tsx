@@ -4,7 +4,6 @@ import type { Preferences, TestResultItem } from "@/lib/types/OrtoniReportData";
 import {
   formatDuration,
   renderSuiteWithoutProjects,
-  renderSuiteWithProjects,
 } from "@/lib/utils";
 import { memo, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,10 +23,7 @@ export const GlancePage = memo(
     // Flatten suites → tests
     const flattened = useMemo(() => {
       const suites: SuiteData[] = Object.entries(tests).flatMap(
-        ([suiteName, suiteData]) =>
-          showProject
-            ? renderSuiteWithProjects(suiteName, suiteData)
-            : renderSuiteWithoutProjects(suiteName, suiteData),
+        ([suiteName, suiteData]) => renderSuiteWithoutProjects(suiteName, suiteData),
       );
 
       return suites.flatMap((suite) =>

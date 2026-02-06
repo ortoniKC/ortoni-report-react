@@ -11,6 +11,7 @@ interface TestAccordionItemProps {
   children?: React.ReactNode;
   onTestClick?: (test: TestResultItem) => void;
   defaultOpen?: boolean;
+  headerRight?: React.ReactNode;
 }
 
 export function TestAccordionItem({
@@ -20,12 +21,13 @@ export function TestAccordionItem({
   children,
   onTestClick,
   defaultOpen = false,
+  headerRight,
 }: TestAccordionItemProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   // Sync external defaultOpen changes with internal state
   useEffect(() => {
-    if (defaultOpen) setIsOpen(true);
+    setIsOpen(defaultOpen);
   }, [defaultOpen]);
 
   // Don't render if there are no tests and no children
@@ -52,17 +54,20 @@ export function TestAccordionItem({
           isParent ? "px-6" : "px-4"
         )}
       >
-        <h3
-          className={cn(
-            "text-left font-medium transition-colors duration-200",
-            isParent
-              ? "text-base text-foreground"
-              : "text-sm text-foreground/90",
-            isOpen && "text-foreground"
-          )}
-        >
-          {title}
-        </h3>
+        <div className="flex flex-1 items-center justify-between min-w-0 mr-2">
+          <h3
+            className={cn(
+              "text-left font-medium transition-colors duration-200 truncate",
+              isParent
+                ? "text-base text-foreground"
+                : "text-sm text-foreground/90",
+              isOpen && "text-foreground"
+            )}
+          >
+            {title}
+          </h3>
+          {headerRight && <div className="shrink-0">{headerRight}</div>}
+        </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
