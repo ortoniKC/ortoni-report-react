@@ -24,6 +24,7 @@ export function App({ reportData }: { reportData: ReportResponse }) {
                   summary={reportData.data.summary}
                   userConfig={reportData.data.userConfig}
                   userMeta={reportData.data.userMeta}
+                  testResult={reportData.data.testResult}
                 />
               }
             />
