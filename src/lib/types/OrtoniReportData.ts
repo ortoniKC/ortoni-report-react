@@ -104,13 +104,13 @@ export interface Stats {
 
 export type TestStatus =
   | "passed"
+  | "skipped"
+  | "flaky"
   | "failed"
   | "timedOut"
-  | "skipped"
   | "interrupted"
   | "expected"
   | "unexpected"
-  | "flaky";
 
 export interface Steps {
   snippet: string | undefined;

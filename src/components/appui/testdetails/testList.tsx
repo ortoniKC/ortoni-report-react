@@ -35,7 +35,6 @@ export const TestList = memo(
     );
     const [open, setOpen] = useState(false);
     const [isAllExpanded, setIsAllExpanded] = useState(false);
-    const showProject = preferences?.showProject;
 
     /** ─────────────────────────────
      * Flatten all tests (for filters)
@@ -56,45 +55,25 @@ export const TestList = memo(
 
       Object.entries(tests.tests ?? {}).forEach(([filePath, suites]) => {
         Object.entries(suites ?? {}).forEach(([suiteName, suiteData]) => {
-          if (showProject) {
-            const projects = suiteData as Record<string, TestResultItem[]>;
-            Object.entries(projects).forEach(([projectName, testArray]) => {
-              testArray.forEach((t: TestResultItem) =>
-                results.push({
-                  ...t,
-                  filePath,
-                  suite: suiteName,
-                  projectName,
-                  testId: t.testId,
-                  status: t.status,
-                  duration: t.duration,
-                  testTags: t.testTags || [],
-                  location: t.location,
-                  key: t.key, // always unique
-                })
-              );
-            });
-          } else {
-            const testArray = ensureArray(suiteData) as TestResultItem[];
-            testArray.forEach((t: TestResultItem) =>
-              results.push({
-                ...t,
-                filePath,
-                suite: suiteName,
-                projectName: t.projectName || "",
-                testId: t.testId,
-                status: t.status,
-                duration: t.duration,
-                testTags: t.testTags || [],
-                location: t.location,
-                key: t.key,
-              })
-            );
-          }
+          const testArray = ensureArray(suiteData) as TestResultItem[];
+          testArray.forEach((t: TestResultItem) =>
+            results.push({
+              ...t,
+              filePath,
+              suite: suiteName,
+              projectName: t.projectName || "",
+              testId: t.testId,
+              status: t.status,
+              duration: t.duration,
+              testTags: t.testTags || [],
+              location: t.location,
+              key: t.key,
+            })
+          );
         });
       });
       return results;
-    }, [tests, showProject]);
+    }, [tests]);
 
     const [filtered, setFiltered] = useState(flattened);
     const [filteredKeys, setFilteredKeys] = useState<Set<string>>(new Set());
@@ -116,7 +95,15 @@ export const TestList = memo(
       const visible = testArray.filter((t) => filteredKeys.has(t.key));
       const counts = visible.reduce(
         (acc, t) => {
-          acc[t.status] = (acc[t.status] || 0) + 1;
+          let status: string = t.status;
+          if (
+            ["failed", "timedOut", "interrupted", "expected", "unexpected"].includes(
+              status
+            )
+          ) {
+            status = "failed";
+          }
+          acc[status] = (acc[status] || 0) + 1;
           return acc;
         },
         {} as Record<string, number>
@@ -169,9 +156,9 @@ export const TestList = memo(
           "text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded-r border-l-2 transition-all group",
           test.status === "passed"
             ? "border-emerald-500/30 hover:border-emerald-500"
-            : test.status === "failed"
-            ? "border-red-500/30 hover:border-red-500"
-            : "border-muted/30 hover:border-muted-foreground"
+            : ["failed", "timedOut", "interrupted", "expected", "unexpected"].includes(test.status)
+              ? "border-red-500/30 hover:border-red-500"
+              : "border-muted/30 hover:border-muted-foreground"
         )}
         onClick={() => handleTestClick(test)}
       >
@@ -268,8 +255,8 @@ export const TestList = memo(
                   onClick={() => setIsAllExpanded(!isAllExpanded)}
                   className={cn(
                     "p-2 rounded-lg transition-all border shadow-sm",
-                    isAllExpanded 
-                      ? "bg-primary/10 text-primary border-primary/20 hover:bg-primary/20" 
+                    isAllExpanded
+                      ? "bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
                       : "bg-muted text-muted-foreground hover:bg-muted-foreground/10"
                   )}
                   aria-label={isAllExpanded ? "Collapse All" : "Expand All"}

@@ -159,12 +159,14 @@ export function StatusDot({ status }: { status: string }) {
   const color =
     status === "passed"
       ? "bg-emerald-500"
-      : status === "failed" || status === "timedOut"
-      ? "bg-red-500"
-      : status === "flaky"
-      ? "bg-amber-500"
-      : status === "skipped"
-      ? "bg-slate-400"
-      : "bg-muted-foreground";
+      : ["failed", "timedOut", "interrupted", "expected", "unexpected"].includes(
+        status
+      )
+        ? "bg-red-500"
+        : status === "flaky"
+          ? "bg-amber-500"
+          : status === "skipped"
+            ? "bg-slate-400"
+            : "bg-muted-foreground";
   return <span className={`inline-block h-2.5 w-2.5 rounded-full ${color}`} />;
 }
