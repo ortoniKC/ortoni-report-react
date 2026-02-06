@@ -7,6 +7,7 @@ export interface ErrorGroup {
   count: number;
   tests: {
     testId: string;
+    key: string;
     title: string;
     filePath: string;
     projectName: string;
@@ -69,6 +70,7 @@ export function groupErrors(testResult: TestResult): ErrorGroup[] {
           groups[normalized].count++;
           groups[normalized].tests.push({
             testId: test.testId,
+            key: test.key,
             title: test.title,
             filePath: filePath,
             projectName: test.projectName,

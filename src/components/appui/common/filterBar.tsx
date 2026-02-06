@@ -11,22 +11,11 @@ import {
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
-import type { TestStatus } from "@/lib/types/OrtoniReportData";
+import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 import { StatusPill } from "./statuspill";
 
 interface FilterBarProps {
-  flattened: {
-    testId: string;
-    title: string;
-    suite: string;
-    filePath: string;
-    projectName: string;
-    status: TestStatus;
-    duration: number;
-    testTags: string[];
-    key: string;
-    location: string;
-  }[];
+  flattened: (TestResultItem & { filePath: string; suite: string })[];
   onFilter: (filtered: FilterBarProps["flattened"]) => void;
 }
 
@@ -59,9 +48,9 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
       const matchesSearch =
         search.length > 0
           ? [t.title, t.filePath, t.suite]
-              .join(" ")
-              .toLowerCase()
-              .includes(search.toLowerCase())
+            .join(" ")
+            .toLowerCase()
+            .includes(search.toLowerCase())
           : true;
       const matchesTag = tag ? t.testTags.includes(tag) : true;
 

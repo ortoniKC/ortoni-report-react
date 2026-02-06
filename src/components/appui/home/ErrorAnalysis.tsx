@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { AlertTriangle, ChevronRight, TestTube2 } from "lucide-react";
 import { groupErrors } from "@/lib/error-utils";
 import type { TestResult } from "@/lib/types/OrtoniReportData";
+import { useNavigate } from "react-router-dom";
 import {
     Accordion,
     AccordionContent,
@@ -20,6 +21,7 @@ interface ErrorAnalysisProps {
 
 export const ErrorAnalysis = memo(({ testResult }: ErrorAnalysisProps) => {
     const errorGroups = useMemo(() => groupErrors(testResult), [testResult]);
+    const navigate = useNavigate();
 
     if (errorGroups.length === 0) return null;
 
@@ -44,7 +46,7 @@ export const ErrorAnalysis = memo(({ testResult }: ErrorAnalysisProps) => {
                     <Accordion type="single" collapsible className="w-full space-y-2">
                         {errorGroups.slice(0, 5).map((group, index) => (
                             <AccordionItem
-                                key={index}
+                                key={`pattern-${index}`}
                                 value={`error-${index}`}
                                 className="border rounded-lg px-2 bg-background/50"
                             >
@@ -74,11 +76,12 @@ export const ErrorAnalysis = memo(({ testResult }: ErrorAnalysisProps) => {
                                                 Impacted Tests
                                             </p>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                                                {group.tests.map((test, tIdx) => (
+                                                {group.tests.map((test) => (
                                                     <div
-                                                        key={tIdx}
+                                                        key={test.key}
                                                         className="flex items-start gap-2 p-2 rounded border bg-card/80 text-xs hover:bg-accent transition-colors cursor-pointer group"
                                                         title={test.title}
+                                                        onClick={() => navigate(`/tests?id=${test.key}`)}
                                                     >
                                                         <TestTube2 className="h-3 w-3 mt-0.5 shrink-0 text-muted-foreground" />
                                                         <div className="min-w-0">

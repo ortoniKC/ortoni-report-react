@@ -6,10 +6,10 @@ import { cn, ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
 
+import { useSearchParams } from "react-router-dom";
 import type {
   TestResult,
   TestResultItem,
-  TestStatus,
 } from "@/lib/types/OrtoniReportData";
 import { StatusDot, TestAccordionItem } from "./TestAccordion";
 import {
@@ -34,23 +34,19 @@ export const TestList = memo(
     );
     const [open, setOpen] = useState(false);
     const [isAllExpanded, setIsAllExpanded] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const handleTestClick = (test: TestResultItem) => {
+      setSearchParams({ id: test.key }, { replace: true });
+      setSelectedTest(test);
+      setOpen(true);
+    };
 
     /** ─────────────────────────────
      * Flatten all tests (for filters)
      */
     const flattened = useMemo(() => {
-      const results: {
-        testId: string;
-        title: string;
-        suite: string;
-        filePath: string;
-        projectName: string;
-        status: TestStatus;
-        duration: number;
-        testTags: string[];
-        key: string;
-        location: string;
-      }[] = [];
+      const results: (TestResultItem & { filePath: string; suite: string })[] = [];
 
       Object.entries(tests.tests ?? {}).forEach(([filePath, suites]) => {
         Object.entries(suites ?? {}).forEach(([suiteName, suiteData]) => {
@@ -77,15 +73,29 @@ export const TestList = memo(
     const [filtered, setFiltered] = useState(flattened);
     const [filteredKeys, setFilteredKeys] = useState<Set<string>>(new Set());
 
+    // Deep linking: Handle id from URL
+    useEffect(() => {
+      const id = searchParams.get("id");
+      if (id && flattened.length > 0) {
+        const targetTest = flattened.find((t) => t.key === id);
+        if (targetTest && (!selectedTest || selectedTest.key !== id)) {
+          setSelectedTest(targetTest);
+          setOpen(true);
+        }
+      }
+    }, [searchParams, flattened, selectedTest]);
+
+    // Clear URL when sheet is closed manually
+    useEffect(() => {
+      if (!open && searchParams.has("id")) {
+        setSearchParams({}, { replace: true });
+      }
+    }, [open, searchParams, setSearchParams]);
+
     // Update filtered keys whenever filtered changes
     useEffect(() => {
       setFilteredKeys(new Set(filtered.map((t) => t.key)));
     }, [filtered]);
-
-    const handleTestClick = (test: TestResultItem) => {
-      setSelectedTest(test);
-      setOpen(true);
-    };
 
     /** ─────────────────────────────
      * Calculate summary for a file/suite
