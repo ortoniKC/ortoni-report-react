@@ -35,6 +35,7 @@ const menuItems = [
 ];
 
 export const DashboardSidebar = memo(() => {
+  const version = "4.0.6";
   const location = useLocation();
   const { reportData } = useReport();
 
@@ -56,7 +57,7 @@ export const DashboardSidebar = memo(() => {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Ortoni Report</span>
-                  <span className="truncate text-xs">V 4.0.5</span>
+                  <span className="truncate text-xs">{version}</span>
                 </div>
               </div>
             </SidebarMenuButton>
