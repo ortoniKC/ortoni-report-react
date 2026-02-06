@@ -103,6 +103,44 @@ export const DashboardSidebar = memo(() => {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel>Shortcuts</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <div className="flex items-center justify-between px-2 py-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Search</span>
+                  </div>
+                  <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    <span className="text-xs">⌘</span>K
+                  </kbd>
+                </div>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <div className="flex items-center justify-between px-2 py-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Theme</span>
+                  </div>
+                  <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    T
+                  </kbd>
+                </div>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <div className="flex items-center justify-between px-2 py-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Nav</span>
+                  </div>
+                  <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    J / K
+                  </kbd>
+                </div>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter>

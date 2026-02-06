@@ -3,13 +3,13 @@
 import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ListChecks, AlertCircle, ScrollText, History, RefreshCcw } from "lucide-react";
-import { RetryTab } from "./RetryTab";
 
 import { StepsTab } from "./StepsTab";
 import { ErrorsTab } from "./ErrorsTab";
 import { LogsTab } from "./LogsTab";
 import { HistoryTab } from "./HistoryTab";
 import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
+import { RetryTab } from "./RetryTab";
 
 export function TestTabs({
   test,

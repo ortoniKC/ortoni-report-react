@@ -35,6 +35,7 @@ export const TestList = memo(
     const [open, setOpen] = useState(false);
     const [isAllExpanded, setIsAllExpanded] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [focusedIndex, setFocusedIndex] = useState(-1);
 
     const handleTestClick = (test: TestResultItem) => {
       setSearchParams({ id: test.key }, { replace: true });
@@ -95,7 +96,34 @@ export const TestList = memo(
     // Update filtered keys whenever filtered changes
     useEffect(() => {
       setFilteredKeys(new Set(filtered.map((t) => t.key)));
+      setFocusedIndex(-1);
     }, [filtered]);
+
+    // Keyboard navigation J/K
+    useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        // Ignore if user is typing in an input
+        if (
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement
+        ) {
+          return;
+        }
+
+        if (e.key.toLowerCase() === "j") {
+          setFocusedIndex((prev) =>
+            prev < filtered.length - 1 ? prev + 1 : prev
+          );
+        } else if (e.key.toLowerCase() === "k") {
+          setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+        } else if (e.key === "Enter" && focusedIndex >= 0) {
+          handleTestClick(filtered[focusedIndex]);
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [filtered, focusedIndex]);
 
     /** ─────────────────────────────
      * Calculate summary for a file/suite
@@ -154,41 +182,48 @@ export const TestList = memo(
     /** ─────────────────────────────
      * Render leaf node test
      */
-    const renderTest = (test: TestResultItem) => (
-      <motion.div
-        key={test.key}
-        initial={{ y: -8, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -8, opacity: 0 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        className={cn(
-          "text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded-r transition-all group"
-        )}
-        onClick={() => handleTestClick(test)}
-      >
-        <div className="flex items-center justify-between gap-3">
-          <span className="inline-flex items-center gap-2">
-            <StatusDot status={test.status} />
-            <span className="truncate">{test.title}</span>
-          </span>
-        </div>
-        <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
-          {test.suite && (
-            <span className="font-medium text-foreground/70">
-              Suite: {test.suite}
+    const renderTest = (test: TestResultItem, idx: number) => {
+      const isFocused = idx === focusedIndex;
+      return (
+        <motion.div
+          key={test.key}
+          initial={{ y: -8, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -8, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className={cn(
+            "text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded-r transition-all group",
+            isFocused && "bg-primary/10 ring-1 ring-primary/30 ring-inset"
+          )}
+          onClick={() => {
+            setFocusedIndex(idx);
+            handleTestClick(test);
+          }}
+        >
+          <div className="flex items-center justify-between gap-3">
+            <span className="inline-flex items-center gap-2">
+              <StatusDot status={test.status} />
+              <span className="truncate">{test.title}</span>
             </span>
-          )}
-          <span>Duration: {formatDuration(test.duration)}</span>
-          {test.retryAttemptCount > 0 && (
-            <span>Retry: {test.retryAttemptCount}</span>
-          )}
-          {test.projectName && <span>Project: {String(test.projectName)}</span>}
-          {test.testTags?.length ? (
-            <span className="truncate">Tags: {test.testTags.join(", ")}</span>
-          ) : null}
-        </div>
-      </motion.div>
-    );
+          </div>
+          <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
+            {test.suite && (
+              <span className="font-medium text-foreground/70">
+                Suite: {test.suite}
+              </span>
+            )}
+            <span>Duration: {formatDuration(test.duration)}</span>
+            {test.retryAttemptCount > 0 && (
+              <span>Retry: {test.retryAttemptCount}</span>
+            )}
+            {test.projectName && <span>Project: {String(test.projectName)}</span>}
+            {test.testTags?.length ? (
+              <span className="truncate">Tags: {test.testTags.join(", ")}</span>
+            ) : null}
+          </div>
+        </motion.div>
+      );
+    };
 
     /** ─────────────────────────────
      * Render File tests
@@ -205,7 +240,11 @@ export const TestList = memo(
         });
       });
 
-      return allTestsInFile.map(renderTest);
+      return allTestsInFile.map((t) => {
+        // Find global index in filtered list
+        const globalIdx = filtered.findIndex((ft) => ft.key === t.key);
+        return renderTest(t, globalIdx);
+      });
     };
 
 
