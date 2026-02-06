@@ -1,13 +1,13 @@
 "use client";
 
 import { memo } from "react";
-import type { Preferences, TestResult } from "@/lib/types/OrtoniReportData";
+import type { TestResult } from "@/lib/types/OrtoniReportData";
 import TextGenerateEffect from "../../ui/typewriter";
 import { TestList } from "./testList";
 
 export const TestsPage = memo(
-  (props: { tests: TestResult; preferences: Preferences }) => {
-    const { tests, preferences } = props;
+  (props: { tests: TestResult }) => {
+    const { tests } = props;
 
     return (
       <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">
@@ -19,7 +19,7 @@ export const TestsPage = memo(
                 className="text-3xl font-bold tracking-tight sm:text-3xl"
               />
             </div>
-            <TestList tests={tests} preferences={preferences} />
+            <TestList tests={tests} />
           </div>
         </div>
       </div>

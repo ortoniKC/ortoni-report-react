@@ -17,7 +17,10 @@ interface SuiteData {
 }
 
 export const GlancePage = memo(
-  (props: { tests: TestResultItem[]; showProject: Preferences }) => {
+  (props: {
+    tests: Record<string, Record<string, TestResultItem[]>>;
+    showProject: Preferences;
+  }) => {
     const { tests, showProject } = props;
 
     // Flatten suites → tests

@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
 
 import type {
-  Preferences,
   TestResult,
   TestResultItem,
   TestStatus,
@@ -28,8 +27,8 @@ import {
 } from "@/components/ui/tooltip";
 
 export const TestList = memo(
-  (props: { tests: TestResult; preferences: Preferences }) => {
-    const { tests, preferences } = props;
+  (props: { tests: TestResult }) => {
+    const { tests } = props;
     const [selectedTest, setSelectedTest] = useState<TestResultItem | null>(
       null
     );
@@ -153,12 +152,7 @@ export const TestList = memo(
         exit={{ y: -8, opacity: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
         className={cn(
-          "text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded-r border-l-2 transition-all group",
-          test.status === "passed"
-            ? "border-emerald-500/30 hover:border-emerald-500"
-            : ["failed", "timedOut", "interrupted", "expected", "unexpected"].includes(test.status)
-              ? "border-red-500/30 hover:border-red-500"
-              : "border-muted/30 hover:border-muted-foreground"
+          "text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded-r transition-all group"
         )}
         onClick={() => handleTestClick(test)}
       >
@@ -169,6 +163,11 @@ export const TestList = memo(
           </span>
         </div>
         <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
+          {test.suite && (
+            <span className="font-medium text-foreground/70">
+              Suite: {test.suite}
+            </span>
+          )}
           <span>Duration: {formatDuration(test.duration)}</span>
           {test.retryAttemptCount > 0 && (
             <span>Retry: {test.retryAttemptCount}</span>
@@ -182,35 +181,21 @@ export const TestList = memo(
     );
 
     /** ─────────────────────────────
-     * Render suites (no projects)
+     * Render File tests
      */
-    const renderSuiteWithoutProjects = (
-      suiteName: string,
-      suiteData: unknown,
-      filePath: string
-    ) => {
-      const testArray = ensureArray(suiteData) as TestResultItem[];
-      if (!hasVisibleTests(testArray)) return null;
+    const renderFileTests = (suites: Record<string, unknown>) => {
+      const allTestsInFile: TestResultItem[] = [];
 
-      const visibleTests = testArray.filter((t) => filteredKeys.has(t.key));
+      Object.entries(suites ?? {}).forEach(([suiteName, suiteData]) => {
+        const testArray = ensureArray(suiteData) as TestResultItem[];
+        testArray.forEach((t) => {
+          if (filteredKeys.has(t.key)) {
+            allTestsInFile.push({ ...t, suite: suiteName });
+          }
+        });
+      });
 
-      const shouldSkipSuite = visibleTests.every(
-        (test) => test.title === suiteName
-      );
-
-      return shouldSkipSuite ? (
-        visibleTests.map(renderTest)
-      ) : (
-        <TestAccordionItem
-          key={`suite:${filePath}::${suiteName}`}
-          title={`${suiteName} (${visibleTests.length} tests)`}
-          tests={visibleTests}
-          isParent={false}
-          onTestClick={handleTestClick}
-          defaultOpen={isAllExpanded || filtered.length !== flattened.length}
-          headerRight={getStatusSummary(visibleTests)}
-        />
-      );
+      return allTestsInFile.map(renderTest);
     };
 
 
@@ -303,9 +288,7 @@ export const TestList = memo(
                     Object.values(suites ?? {}).flatMap((s) => ensureArray(s))
                   )}
                 >
-                  {Object.entries(suites ?? {}).map(([suiteName, suiteData]) =>
-                    renderSuiteWithoutProjects(suiteName, suiteData, filePath)
-                  )}
+                  {renderFileTests(suites ?? {})}
                 </TestAccordionItem>
               );
             })}

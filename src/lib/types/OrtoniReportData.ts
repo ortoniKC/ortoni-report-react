@@ -65,7 +65,7 @@ export interface Summary {
 }
 
 export interface TestResult {
-  tests: TestResultItem[];
+  tests: Record<string, Record<string, TestResultItem[]>>;
   testHistories: TestHistory[];
   allTags: string[];
   set: string | string[];

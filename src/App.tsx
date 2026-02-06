@@ -32,7 +32,6 @@ export function App({ reportData }: { reportData: ReportResponse }) {
               element={
                 <TestsPage
                   tests={reportData.data.testResult}
-                  preferences={reportData.data.preferences}
                 />
               }
             />
