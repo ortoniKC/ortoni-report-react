@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ListChecks, AlertCircle, ScrollText, History } from "lucide-react";
+import { ListChecks, AlertCircle, ScrollText, History, RefreshCcw } from "lucide-react";
+import { RetryTab } from "./RetryTab";
 
 import { StepsTab } from "./StepsTab";
 import { ErrorsTab } from "./ErrorsTab";
@@ -13,9 +14,11 @@ import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
 export function TestTabs({
   test,
   history,
+  allAttempts = [],
 }: {
   test: TestResultItem;
   history?: TestHistory;
+  allAttempts?: TestResultItem[];
 }) {
   const defaultTab =
     test.steps?.length > 0
@@ -56,6 +59,15 @@ export function TestTabs({
               Logs
             </TabsTrigger>
           )}
+          {allAttempts.length > 1 && (
+            <TabsTrigger
+              value="retries"
+              className="py-2 text-xs gap-1 rounded-md"
+            >
+              <RefreshCcw className="h-4 w-4" />
+              Retries ({allAttempts.length})
+            </TabsTrigger>
+          )}
           <TabsTrigger
             value="history"
             className="py-2 text-xs gap-1 rounded-md"
@@ -68,6 +80,7 @@ export function TestTabs({
         <StepsTab steps={test.steps} />
         <ErrorsTab errors={test.errors} />
         <LogsTab logs={test.logs} />
+        <RetryTab attempts={allAttempts} currentKey={test.key} />
         <HistoryTab history={history} />
       </Tabs>
     </motion.section>

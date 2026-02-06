@@ -1,6 +1,7 @@
 "use client";
 
 import { FileText } from "lucide-react";
+import { useMemo } from "react";
 import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
 import { toFileUrl } from "../common/utils";
 import { TestAttachments } from "./attachment/TestAttachments";
@@ -11,9 +12,11 @@ import { TestHeader } from "./header/TestHeader";
 export function TestDetails({
   test,
   testHistories,
+  allTests = [],
 }: {
   test: TestResultItem | null;
   testHistories: TestHistory[];
+  allTests?: TestResultItem[];
 }) {
   if (!test) {
     return (
@@ -31,7 +34,12 @@ export function TestDetails({
     );
   }
 
-  const history = testHistories.find((h) => h.testId === test.testId);
+  const allAttempts = useMemo(() => {
+    if (!test) return [];
+    return allTests.filter((t) => t.testId === test.testId);
+  }, [allTests, test]);
+
+  const testHistory = testHistories.find((h) => h.testId === test.testId);
 
   return (
     <div className="h-full flex flex-col border bg-background overflow-hidden">
@@ -50,7 +58,7 @@ export function TestDetails({
         {/* Annotations Section */}
         <TestAnnotations annotations={test.annotations} />
         {/* Tabbed Section */}
-        <TestTabs test={test} history={history} />
+        <TestTabs test={test} history={testHistory} allAttempts={allAttempts} />
       </div>
     </div>
   );

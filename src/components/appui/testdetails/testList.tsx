@@ -231,6 +231,7 @@ export const TestList = memo(
             <TestDetails
               test={selectedTest}
               testHistories={tests.testHistories}
+              allTests={flattened}
             />
             <SheetDescription className="sr-only">
               Test Details
