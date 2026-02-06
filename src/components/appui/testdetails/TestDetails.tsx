@@ -8,6 +8,7 @@ import { TestAttachments } from "./attachment/TestAttachments";
 import { TestAnnotations } from "./TestAnnotations";
 import { TestTabs } from "./TestTabs";
 import { TestHeader } from "./header/TestHeader";
+import { TestExportActions } from "./TestExportActions";
 
 export function TestDetails({
   test,
@@ -48,6 +49,9 @@ export function TestDetails({
         <div className="flex items-start justify-between gap-4 mb-3">
           <div className="flex-1 min-w-0">
             <TestHeader test={test} />
+          </div>
+          <div className="flex-shrink-0 pr-6">
+            <TestExportActions test={test} />
           </div>
         </div>
       </div>
