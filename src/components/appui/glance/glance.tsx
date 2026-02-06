@@ -117,13 +117,22 @@ export const GlancePage = memo(
                               transition={{ duration: 0.25 }}
                               className="group transition-colors border-b"
                             >
-                              <td className="px-3 py-2 truncate max-w-[240px] group-hover:bg-muted/20">
+                              <td
+                                className="px-3 py-2 truncate max-w-[240px] group-hover:bg-muted/20"
+                                title={r.location}
+                              >
                                 {r.location}
                               </td>
-                              <td className="px-3 py-2 truncate max-w-[280px] group-hover:bg-muted/20">
+                              <td
+                                className="px-3 py-2 truncate max-w-[280px] group-hover:bg-muted/20"
+                                title={r.suite}
+                              >
                                 {r.suite}
                               </td>
-                              <td className="px-3 py-2 truncate max-w-[320px] font-medium group-hover:bg-muted/30">
+                              <td
+                                className="px-3 py-2 truncate max-w-[320px] font-medium group-hover:bg-muted/30"
+                                title={r.title}
+                              >
                                 {r.title}
                               </td>
                               <td className="px-3 py-2 capitalize group-hover:bg-muted/20">
