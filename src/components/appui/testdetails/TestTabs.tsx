@@ -78,7 +78,7 @@ export function TestTabs({
         </TabsList>
 
         <StepsTab steps={test.steps} />
-        <ErrorsTab errors={test.errors} />
+        <ErrorsTab test={test} />
         <LogsTab logs={test.logs} />
         <RetryTab attempts={allAttempts} currentKey={test.key} />
         <HistoryTab history={history} />

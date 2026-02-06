@@ -76,6 +76,11 @@ export interface UserConfig {
   authorName: string;
   type: string;
   title: string;
+  ai?: {
+    provider: string;
+    apiKey: string;
+    model?: string;
+  };
 }
 
 export interface UserMeta {

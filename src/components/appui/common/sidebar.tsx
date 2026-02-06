@@ -25,6 +25,7 @@ import {
   Image,
 } from "lucide-react";
 import { ModeToggle } from "@/hooks/toggle-theme";
+import { AISettings } from "./AISettings";
 
 const menuItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "dashboard" },
@@ -145,7 +146,8 @@ export const DashboardSidebar = memo(() => {
 
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem className="flex flex-col gap-1 px-2 pb-2">
+            <AISettings />
             <ModeToggle />
           </SidebarMenuItem>
         </SidebarMenu>
