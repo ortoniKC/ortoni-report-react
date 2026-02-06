@@ -21,8 +21,8 @@ export function TestTabs({
     test.steps?.length > 0
       ? "steps"
       : test.errors?.length > 0
-      ? "errors"
-      : "logs";
+        ? "errors"
+        : "logs";
 
   return (
     <motion.section
@@ -31,7 +31,7 @@ export function TestTabs({
       transition={{ duration: 0.25 }}
     >
       <Tabs defaultValue={defaultTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-muted p-1 h-auto rounded-md">
+        <TabsList className="flex w-full bg-muted p-1 h-auto rounded-md overflow-x-auto">
           {test.steps?.length > 0 && (
             <TabsTrigger
               value="steps"
