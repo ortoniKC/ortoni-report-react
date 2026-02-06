@@ -35,9 +35,12 @@ export const TestHistoryTrendChart = memo(
   (props: { history: TestHistoryItem[] }) => {
     const { history } = props;
 
-    console.log("TestHistoryTrendChart history:", history);
     if (!history || history.length === 0) {
-      return null;
+      return (
+        <p className="text-center text-muted-foreground py-6">
+          No history available for this test.
+        </p>
+      );
     }
 
     const chartData = history.slice().map((item) => ({
