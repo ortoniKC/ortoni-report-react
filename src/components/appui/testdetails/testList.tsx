@@ -4,6 +4,7 @@ import { memo, useState, useMemo, useEffect } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { cn, ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
 
 import type {
   Preferences,
@@ -20,6 +21,11 @@ import {
 } from "@/components/ui/sheet";
 import { FilterBar } from "../common/filterBar";
 import { TestDetails } from "./TestDetails";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const TestList = memo(
   (props: { tests: TestResult; preferences: Preferences }) => {
@@ -256,18 +262,29 @@ export const TestList = memo(
             <FilterBar flattened={flattened} onFilter={setFiltered} />
           </div>
           <div className="flex gap-2 self-end sm:self-auto">
-            <button
-              onClick={() => setIsAllExpanded(true)}
-              className="text-xs font-bold px-4 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-all border border-primary/20 shadow-sm"
-            >
-              Expand All
-            </button>
-            <button
-              onClick={() => setIsAllExpanded(false)}
-              className="text-xs font-bold px-4 py-2 rounded-full bg-muted text-muted-foreground hover:bg-muted-foreground/10 transition-all border shadow-sm"
-            >
-              Collapse All
-            </button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={() => setIsAllExpanded(!isAllExpanded)}
+                  className={cn(
+                    "p-2 rounded-lg transition-all border shadow-sm",
+                    isAllExpanded 
+                      ? "bg-primary/10 text-primary border-primary/20 hover:bg-primary/20" 
+                      : "bg-muted text-muted-foreground hover:bg-muted-foreground/10"
+                  )}
+                  aria-label={isAllExpanded ? "Collapse All" : "Expand All"}
+                >
+                  {isAllExpanded ? (
+                    <ChevronsDownUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronsUpDown className="h-4 w-4" />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {isAllExpanded ? "Collapse All" : "Expand All"}
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
 
