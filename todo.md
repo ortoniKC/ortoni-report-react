@@ -22,7 +22,7 @@ I've implemented several "premium" features to transform the report into a high-
 - [x] **AI-Driven Root Cause Analysis**: Integrated "Suggest Fix" button that uses LLMs (OpenAI, Gemini, Claude, Ollama) to explain failures. Users can configure model/key in settings.
 
 #### 2. Data Visualization & Analytics
-- **Heatmaps**: A "Test Reliability" heatmap showing which days/times the suite is most flaky.
+- [x] **Heatmaps**: A "Test Reliability" heatmap showing which days/times the suite is most flaky. Integrated on the main dashboard.
 - **Trace Viewer Overlay**: Embed a "Quick Preview" of the Playwright Trace Viewer or a "Timeline View" of the test steps.
 
 #### 3. Performance & Scalability

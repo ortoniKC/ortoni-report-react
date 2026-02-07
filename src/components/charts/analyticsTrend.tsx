@@ -65,6 +65,8 @@ export const TrendChart = memo((props: { trends: Trend[] }) => {
           </div>
         </CardHeader>
 
+        {/* Heatmap Analysis */}
+
         <CardContent className="px-2 sm:p-6">
           <ChartContainer
             config={chartConfig}

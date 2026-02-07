@@ -47,7 +47,7 @@ export function App({ reportData }: { reportData: ReportResponse }) {
             />
             <Route
               path="analytics"
-              element={<AnalyticsPage analytics={reportData.data.analytics} />}
+              element={<AnalyticsPage analytics={reportData.data.analytics} testHistories={reportData.data.testResult.testHistories} />}
             />
             <Route
               path="screenshots"

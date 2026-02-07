@@ -83,14 +83,14 @@ export function TestExportActions({ test }: { test: TestResultItem }) {
                     <Copy className="h-4 w-4" />
                     <span>Copy Report Link</span>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                {/* <DropdownMenuSeparator />
                 <DropdownMenuItem
                     onClick={() => window.open(window.location.href, '_blank')}
                     className="gap-2 cursor-pointer"
                 >
                     <ExternalLink className="h-4 w-4" />
                     <span>Open in New Tab</span>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
             </DropdownMenuContent>
         </DropdownMenu>
     );

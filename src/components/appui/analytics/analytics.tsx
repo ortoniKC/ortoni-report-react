@@ -1,12 +1,13 @@
 import { TrendChart } from "@/components/charts/analyticsTrend";
 import TextGenerateEffect from "@/components/ui/typewriter";
-import type { Analytics } from "@/lib/types/OrtoniReportData";
+import type { Analytics, TestHistory } from "@/lib/types/OrtoniReportData";
 import { memo } from "react";
 import { SlowTests } from "./slowTest";
 import { AnalyticsSummaryPage } from "./anlyticsSummary";
+import { ReliabilityHeatmap } from "@/components/charts/reliabilityHeatmap";
 
-export const AnalyticsPage = memo((props: { analytics: Analytics }) => {
-  const { analytics } = props;
+export const AnalyticsPage = memo((props: { analytics: Analytics, testHistories: TestHistory[] }) => {
+  const { analytics, testHistories } = props;
   return (
     <div className="flex flex-1 flex-col gap-2 p-2 pt-0 sm:gap-4 sm:p-4">
       <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
@@ -20,6 +21,7 @@ export const AnalyticsPage = memo((props: { analytics: Analytics }) => {
           <AnalyticsSummaryPage
             analyticsSummary={analytics.reportData.summary}
           />
+          <ReliabilityHeatmap testHistories={testHistories} />
           <TrendChart trends={analytics.reportData.trends} />
           <SlowTests
             slowTest={analytics.reportData.slowTests}
