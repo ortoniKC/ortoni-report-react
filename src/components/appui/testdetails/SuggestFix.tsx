@@ -47,7 +47,7 @@ export function SuggestFix({ test, error }: { test: TestResultItem, error: strin
         try {
             const cleanError = getCleanErrorMessage(error);
             const prompt = `You are an expert Playwright automation engineer.
-Analyze the following test failure and suggest a root cause and a fix.
+Analyze the following test failure and suggest a root cause and a fix in Javascript.
 Be concise. If there is a clear code fix, provide it in a markdown code block.
 
 TEST CONTEXT:

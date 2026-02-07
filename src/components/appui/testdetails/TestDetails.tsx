@@ -56,7 +56,7 @@ export function TestDetails({
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-5">
+      <div className="flex-1 overflow-y-auto p-5 custom-scrollbar">
         {/* Media Section */}
         <TestAttachments test={test} toFileUrl={toFileUrl} />
         {/* Annotations Section */}

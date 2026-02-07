@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Terminal, Zap, FileText, LayoutDashboard, BarChart3, ScanEye, Image as ImageIcon } from "lucide-react";
+import { Search, Terminal, FileText, LayoutDashboard, BarChart3, ScanEye, Image as ImageIcon } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -76,8 +76,43 @@ export function CommandPalette() {
         return [...pages, ...tests];
     }, [query, flattenedTests, navigate]);
 
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!open) return;
+
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                setSelectedIndex((prev) =>
+                    prev < filteredItems.length - 1 ? prev + 1 : prev
+                );
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+            } else if (e.key === "Enter" && filteredItems[selectedIndex]) {
+                e.preventDefault();
+                filteredItems[selectedIndex].action();
+                setOpen(false);
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [open, filteredItems, selectedIndex]);
+
+    // Reset selection when query changes
+    useEffect(() => {
+        setSelectedIndex(0);
+    }, [query]);
+
+
+
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={(val) => {
+            setOpen(val);
+            if (!val) setQuery("");
+        }}>
             <DialogContent className="max-w-2xl p-0 overflow-hidden border-zinc-200 dark:border-zinc-800 shadow-2xl">
                 <DialogHeader className="p-4 border-b bg-muted/20">
                     <div className="flex items-center gap-2">
@@ -89,14 +124,10 @@ export function CommandPalette() {
                             className="border-none focus-visible:ring-0 text-lg p-0 h-auto bg-transparent shadow-none"
                             autoFocus
                         />
-                        <div className="flex items-center gap-1 border rounded px-1.5 py-0.5 bg-background text-[10px] text-muted-foreground font-mono">
-                            <Zap className="w-3 h-3" />
-                            ESC
-                        </div>
                     </div>
                 </DialogHeader>
 
-                <div className="max-h-[60vh] overflow-y-auto p-2">
+                <div className="max-h-[60vh] overflow-y-auto p-2 custom-scrollbar">
                     {query === "" && (
                         <div className="p-4 text-center space-y-2">
                             <p className="text-sm text-muted-foreground">Type to search for tests or pages</p>
@@ -120,29 +151,44 @@ export function CommandPalette() {
                                             {category}
                                         </h3>
                                         <div className="grid gap-1">
-                                            {categoryItems.map((item) => (
-                                                <button
-                                                    key={item.id}
-                                                    onClick={() => {
-                                                        item.action();
-                                                        setOpen(false);
-                                                    }}
-                                                    className="flex items-center gap-3 w-full p-2.5 rounded-lg text-left hover:bg-muted transition-colors group"
-                                                >
-                                                    <div className="p-2 rounded-md bg-muted group-hover:bg-background border border-transparent group-hover:border-border">
-                                                        <item.icon className="w-4 h-4 text-muted-foreground" />
-                                                    </div>
-                                                    <div className="flex-1 min-w-0">
-                                                        <div className="text-sm font-medium truncate">{item.title}</div>
-                                                        {item.subtitle && (
-                                                            <div className="text-xs text-muted-foreground truncate">{item.subtitle}</div>
+                                            {categoryItems.map((item) => {
+                                                const globalIdx = filteredItems.findIndex(i => i.id === item.id);
+                                                const isSelected = globalIdx === selectedIndex;
+
+                                                return (
+                                                    <button
+                                                        key={item.id}
+                                                        onClick={() => {
+                                                            item.action();
+                                                            setOpen(false);
+                                                        }}
+                                                        onMouseEnter={() => setSelectedIndex(globalIdx)}
+                                                        className={cn(
+                                                            "flex items-center gap-3 w-full p-2.5 rounded-lg text-left transition-colors group",
+                                                            isSelected ? "bg-muted" : "hover:bg-muted/50"
                                                         )}
-                                                    </div>
-                                                    <div className="text-[10px] text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                                        Jump to item
-                                                    </div>
-                                                </button>
-                                            ))}
+                                                    >
+                                                        <div className={cn(
+                                                            "p-2 rounded-md border border-transparent transition-colors",
+                                                            isSelected ? "bg-background border-border" : "bg-muted group-hover:bg-background group-hover:border-border"
+                                                        )}>
+                                                            <item.icon className="w-4 h-4 text-muted-foreground" />
+                                                        </div>
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className="text-sm font-medium truncate">{item.title}</div>
+                                                            {item.subtitle && (
+                                                                <div className="text-xs text-muted-foreground truncate">{item.subtitle}</div>
+                                                            )}
+                                                        </div>
+                                                        <div className={cn(
+                                                            "text-[10px] text-muted-foreground transition-opacity whitespace-nowrap",
+                                                            isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                                        )}>
+                                                            {isSelected ? "Press Enter" : "Jump to item"}
+                                                        </div>
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 );

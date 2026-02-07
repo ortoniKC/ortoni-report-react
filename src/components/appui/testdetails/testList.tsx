@@ -417,7 +417,7 @@ export const TestList = memo(
         ) : (
           <div
             ref={parentRef}
-            className="h-[calc(100vh-14rem)] overflow-auto rounded-xl border bg-card/10"
+            className="h-[calc(100vh-14rem)] overflow-auto rounded-xl border bg-card/10 custom-scrollbar"
           >
             <div
               style={{
