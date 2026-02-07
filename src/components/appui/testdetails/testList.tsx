@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useState, useMemo, useEffect } from "react";
+import { memo, useState, useMemo, useEffect, useCallback } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { cn, ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -37,11 +37,11 @@ export const TestList = memo(
     const [searchParams, setSearchParams] = useSearchParams();
     const [focusedIndex, setFocusedIndex] = useState(-1);
 
-    const handleTestClick = (test: TestResultItem) => {
+    const handleTestClick = useCallback((test: TestResultItem) => {
       setSearchParams({ id: test.key }, { replace: true });
       setSelectedTest(test);
       setOpen(true);
-    };
+    }, [setSearchParams]);
 
     /** ─────────────────────────────
      * Flatten all tests (for filters)
@@ -82,11 +82,28 @@ export const TestList = memo(
         if (targetTest && (!selectedTest || selectedTest.key !== id)) {
           setSelectedTest(targetTest);
           setOpen(true);
+          // Sync focused index for keyboard navigation
+          const idx = flattened.findIndex((t) => t.key === id);
+          if (idx !== -1) setFocusedIndex(idx);
         }
       }
     }, [searchParams, flattened, selectedTest]);
 
 
+
+    // Clear search params when sheet is closed manually
+    const handleClose = useCallback(() => {
+      setOpen(false);
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev);
+        if (next.has("id")) {
+          next.delete("id");
+        }
+        return next;
+      }, { replace: true });
+      // We DON'T clear selectedTest here to prevent the deep-linking useEffect 
+      // from re-opening the sheet before the URL param is fully cleared.
+    }, [setSearchParams]);
 
     // Update filtered keys whenever filtered changes
     useEffect(() => {
@@ -105,20 +122,57 @@ export const TestList = memo(
           return;
         }
 
-        if (e.key.toLowerCase() === "j") {
-          setFocusedIndex((prev) =>
-            prev < filtered.length - 1 ? prev + 1 : prev
-          );
-        } else if (e.key.toLowerCase() === "k") {
-          setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
-        } else if (e.key === "Enter" && focusedIndex >= 0) {
+        const key = e.key.toLowerCase();
+        if (["j", "k", "enter"].includes(key)) {
+          // Always prevent default for navigation keys on this page
+          // to avoid unexpected browser behavior
+          e.preventDefault();
+        }
+
+        if (key === "j") {
+          let nextIdx = focusedIndex;
+          if (open && selectedTest) {
+            // Find next test in the SAME file
+            const fileTests = filtered.filter(t => t.filePath === selectedTest.filePath);
+            const currIdx = fileTests.findIndex(t => t.key === selectedTest.key);
+            if (currIdx < fileTests.length - 1) {
+              const nextTest = fileTests[currIdx + 1];
+              nextIdx = filtered.findIndex(t => t.key === nextTest.key);
+            }
+          } else {
+            nextIdx = focusedIndex < filtered.length - 1 ? focusedIndex + 1 : Math.max(0, focusedIndex);
+          }
+
+          if (nextIdx !== -1) {
+            setFocusedIndex(nextIdx);
+            if (open && nextIdx !== focusedIndex) handleTestClick(filtered[nextIdx]);
+          }
+        } else if (key === "k") {
+          let prevIdx = focusedIndex;
+          if (open && selectedTest) {
+            // Find prev test in the SAME file
+            const fileTests = filtered.filter(t => t.filePath === selectedTest.filePath);
+            const currIdx = fileTests.findIndex(t => t.key === selectedTest.key);
+            if (currIdx > 0) {
+              const prevTest = fileTests[currIdx - 1];
+              prevIdx = filtered.findIndex(t => t.key === prevTest.key);
+            }
+          } else {
+            prevIdx = focusedIndex > 0 ? focusedIndex - 1 : 0;
+          }
+
+          if (prevIdx !== -1) {
+            setFocusedIndex(prevIdx);
+            if (open && prevIdx !== focusedIndex) handleTestClick(filtered[prevIdx]);
+          }
+        } else if (key === "enter" && focusedIndex >= 0) {
           handleTestClick(filtered[focusedIndex]);
         }
       };
 
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [filtered, focusedIndex]);
+    }, [filtered, focusedIndex, open, handleTestClick, selectedTest]);
 
     /** ─────────────────────────────
      * Calculate summary for a file/suite
@@ -249,9 +303,14 @@ export const TestList = memo(
     return (
       <>
         {/* Test Details Sheet */}
-        <Sheet open={open} onOpenChange={setOpen}>
+        <Sheet open={open} onOpenChange={(val) => {
+          if (!val) handleClose();
+          else setOpen(true);
+        }}>
           <SheetContent
             side="right"
+            onOpenAutoFocus={(e) => e.preventDefault()}
+            onCloseAutoFocus={(e) => e.preventDefault()}
             className="
               inset-y-0 right-0 left-auto
               sm:!max-w-none
