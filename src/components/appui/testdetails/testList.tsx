@@ -1,17 +1,17 @@
 "use client";
 
-import { memo, useState, useMemo, useEffect, useCallback } from "react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { memo, useState, useMemo, useEffect, useCallback, useRef } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn, ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ChevronsUpDown, ChevronsDownUp } from "lucide-react";
+import { ChevronsUpDown, ChevronsDownUp, ChevronDown } from "lucide-react";
 
 import { useSearchParams } from "react-router-dom";
 import type {
   TestResult,
   TestResultItem,
 } from "@/lib/types/OrtoniReportData";
-import { StatusDot, TestAccordionItem } from "./TestAccordion";
+import { StatusDot } from "./TestAccordion";
 import {
   Sheet,
   SheetContent,
@@ -34,8 +34,28 @@ export const TestList = memo(
     );
     const [open, setOpen] = useState(false);
     const [isAllExpanded, setIsAllExpanded] = useState(false);
+    const [expandedFiles, setExpandedFiles] = useState<Set<string>>(new Set());
     const [searchParams, setSearchParams] = useSearchParams();
     const [focusedIndex, setFocusedIndex] = useState(-1);
+    const parentRef = useRef<HTMLDivElement>(null);
+
+    const toggleFile = (filePath: string) => {
+      setExpandedFiles((prev) => {
+        const next = new Set(prev);
+        if (next.has(filePath)) next.delete(filePath);
+        else next.add(filePath);
+        return next;
+      });
+    };
+
+    // Auto-expand all or collapse all
+    useEffect(() => {
+      if (isAllExpanded) {
+        setExpandedFiles(new Set(Object.keys(tests.tests ?? {})));
+      } else {
+        setExpandedFiles(new Set());
+      }
+    }, [isAllExpanded, tests.tests]);
 
     const handleTestClick = useCallback((test: TestResultItem) => {
       setSearchParams({ id: test.key }, { replace: true });
@@ -107,9 +127,20 @@ export const TestList = memo(
 
     // Update filtered keys whenever filtered changes
     useEffect(() => {
-      setFilteredKeys(new Set(filtered.map((t) => t.key)));
+      const keys = new Set(filtered.map((t) => t.key));
+      setFilteredKeys(keys);
       setFocusedIndex(-1);
-    }, [filtered]);
+
+      // If filtering is active, auto-expand files that have matches
+      if (filtered.length !== flattened.length) {
+        const matchingFiles = new Set(filtered.map(t => t.filePath));
+        setExpandedFiles(prev => {
+          const next = new Set(prev);
+          matchingFiles.forEach(f => next.add(f));
+          return next;
+        });
+      }
+    }, [filtered, flattened.length]);
 
     // Keyboard navigation J/K
     useEffect(() => {
@@ -175,6 +206,51 @@ export const TestList = memo(
     }, [filtered, focusedIndex, open, handleTestClick, selectedTest]);
 
     /** ─────────────────────────────
+     * Virtualization Logic
+     */
+    const virtualData = useMemo(() => {
+      const data: any[] = [];
+      Object.entries(tests.tests ?? {}).map(([filePath, suites]) => {
+        const hasVisible = Object.values(suites ?? {}).some(suiteData =>
+          ensureArray(suiteData).some(t => filteredKeys.has(t.key))
+        );
+
+        if (!hasVisible) return;
+
+        data.push({ type: 'header', filePath, suites, key: `header:${filePath}` });
+
+        if (expandedFiles.has(filePath)) {
+          Object.entries(suites ?? {}).map(([suiteName, suiteData]) => {
+            ensureArray(suiteData).map(t => {
+              if (filteredKeys.has(t.key)) {
+                data.push({ type: 'test', test: { ...t, suite: suiteName }, key: t.key });
+              }
+            });
+          });
+        }
+      });
+      return data;
+    }, [tests.tests, expandedFiles, filteredKeys]);
+
+    const rowVirtualizer = useVirtualizer({
+      count: virtualData.length,
+      getScrollElement: () => parentRef.current,
+      estimateSize: (index) => (virtualData[index]?.type === 'header' ? 56 : 70),
+      overscan: 10,
+    });
+
+    // Scroll to focused index when navigating with keys
+    useEffect(() => {
+      if (focusedIndex >= 0 && filtered[focusedIndex]) {
+        const testKey = filtered[focusedIndex].key;
+        const virtualIdx = virtualData.findIndex(item => item.key === testKey);
+        if (virtualIdx !== -1) {
+          rowVirtualizer.scrollToIndex(virtualIdx, { align: 'center', behavior: 'smooth' });
+        }
+      }
+    }, [focusedIndex, filtered, virtualData, rowVirtualizer]);
+
+    /** ─────────────────────────────
      * Calculate summary for a file/suite
      */
     const getStatusSummary = (testArray: TestResultItem[]) => {
@@ -222,13 +298,6 @@ export const TestList = memo(
     };
 
     /** ─────────────────────────────
-     * Check if a test suite has visible tests after filtering
-     */
-    const hasVisibleTests = (testArray: TestResultItem[]) => {
-      return testArray.some((test) => filteredKeys.has(test.key));
-    };
-
-    /** ─────────────────────────────
      * Render leaf node test
      */
     const renderTest = (test: TestResultItem, idx: number) => {
@@ -273,29 +342,6 @@ export const TestList = memo(
         </motion.div>
       );
     };
-
-    /** ─────────────────────────────
-     * Render File tests
-     */
-    const renderFileTests = (suites: Record<string, unknown>) => {
-      const allTestsInFile: TestResultItem[] = [];
-
-      Object.entries(suites ?? {}).forEach(([suiteName, suiteData]) => {
-        const testArray = ensureArray(suiteData) as TestResultItem[];
-        testArray.forEach((t) => {
-          if (filteredKeys.has(t.key)) {
-            allTestsInFile.push({ ...t, suite: suiteName });
-          }
-        });
-      });
-
-      return allTestsInFile.map((t) => {
-        // Find global index in filtered list
-        const globalIdx = filtered.findIndex((ft) => ft.key === t.key);
-        return renderTest(t, globalIdx);
-      });
-    };
-
 
     /** ─────────────────────────────
      * Main Render
@@ -369,34 +415,74 @@ export const TestList = memo(
             No tests match the current filters
           </p>
         ) : (
-          <ScrollArea className="space-y-3">
-            {Object.entries(tests.tests ?? {}).map(([filePath, suites]) => {
-              const hasTestsInFile = Object.values(suites ?? {}).some(
-                (suiteData) => {
-                  const testArray = ensureArray(suiteData) as TestResultItem[];
-                  return hasVisibleTests(testArray);
-                }
-              );
+          <div
+            ref={parentRef}
+            className="h-[calc(100vh-14rem)] overflow-auto rounded-xl border bg-card/10"
+          >
+            <div
+              style={{
+                height: `${rowVirtualizer.getTotalSize()}px`,
+                width: '100%',
+                position: 'relative',
+              }}
+            >
+              {rowVirtualizer.getVirtualItems().map((virtualItem) => {
+                const item = virtualData[virtualItem.index];
+                if (!item) return null;
 
-              if (!hasTestsInFile) return null;
+                const isHeader = item.type === 'header';
 
-              return (
-                <TestAccordionItem
-                  key={`file:${filePath}`}
-                  title={filePath}
-                  isParent
-                  defaultOpen={
-                    isAllExpanded || filtered.length !== flattened.length
-                  }
-                  headerRight={getStatusSummary(
-                    Object.values(suites ?? {}).flatMap((s) => ensureArray(s))
-                  )}
-                >
-                  {renderFileTests(suites ?? {})}
-                </TestAccordionItem>
-              );
-            })}
-          </ScrollArea>
+                return (
+                  <div
+                    key={virtualItem.key}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: `${virtualItem.size}px`,
+                      transform: `translateY(${virtualItem.start}px)`,
+                    }}
+                    className="px-2 py-1"
+                  >
+                    {isHeader ? (
+                      <div
+                        className={cn(
+                          "border-border/60 rounded-lg border bg-card/10 transition-all cursor-pointer hover:bg-card/20 flex items-center justify-between p-4 h-full",
+                          expandedFiles.has(item.filePath) && "bg-card/20 shadow-sm"
+                        )}
+                        onClick={() => toggleFile(item.filePath)}
+                      >
+                        <div className="flex flex-1 items-center justify-between min-w-0 mr-2">
+                          <h3 className="text-left font-medium text-base truncate">
+                            {item.filePath}
+                          </h3>
+                          <div className="shrink-0">
+                            {getStatusSummary(
+                              Object.values(item.suites ?? {}).flatMap((s) => ensureArray(s))
+                            )}
+                          </div>
+                        </div>
+                        <motion.div
+                          animate={{ rotate: expandedFiles.has(item.filePath) ? 180 : 0 }}
+                          className={cn(
+                            "shrink-0 rounded-full p-0.5 transition-colors",
+                            expandedFiles.has(item.filePath) ? "text-primary" : "text-muted-foreground"
+                          )}
+                        >
+                          <ChevronDown className="h-4 w-4" />
+                        </motion.div>
+                      </div>
+                    ) : (
+                      <div className="pl-6 h-full">
+                        {renderTest(item.test, filtered.findIndex(t => t.key === item.key))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         )}
       </>
     );
