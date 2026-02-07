@@ -146,7 +146,7 @@ export const DashboardSidebar = memo(() => {
 
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem className="flex flex-col gap-1 px-2 pb-2">
+          <SidebarMenuItem className="flex flex-col">
             <AISettings />
             <ModeToggle />
           </SidebarMenuItem>

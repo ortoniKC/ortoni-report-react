@@ -53,9 +53,11 @@ export function AISettings() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-full justify-start gap-2 h-9 px-2">
+                <Button variant="ghost"
+                    size="icon"
+                    className="rounded-full">
                     <Brain className="h-4 w-4 text-purple-500" />
-                    <span className="text-xs font-medium">AI Insights Settings</span>
+                    <span className="sr-only">AI Insights Settings</span>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">

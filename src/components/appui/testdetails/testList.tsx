@@ -86,12 +86,7 @@ export const TestList = memo(
       }
     }, [searchParams, flattened, selectedTest]);
 
-    // Clear URL when sheet is closed manually
-    useEffect(() => {
-      if (!open && searchParams.has("id")) {
-        setSearchParams({}, { replace: true });
-      }
-    }, [open, searchParams, setSearchParams]);
+
 
     // Update filtered keys whenever filtered changes
     useEffect(() => {

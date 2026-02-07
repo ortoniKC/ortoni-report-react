@@ -28,6 +28,7 @@ export function TestExportActions({ test }: { test: TestResultItem }) {
 
     const copyToClipboard = (format: 'slack' | 'jira' | 'link') => {
         const reportUrl = window.location.href;
+
         let text = "";
 
         if (format === 'link') {

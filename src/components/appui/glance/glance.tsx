@@ -31,16 +31,8 @@ export const GlancePage = memo(
 
       return suites.flatMap((suite) =>
         suite.tests.map((t) => ({
-          testId: t.testId,
-          title: t.title,
+          ...t,
           suite: suite.name,
-          filePath: t.filePath,
-          projectName: t.projectName,
-          status: t.status,
-          duration: t.duration,
-          testTags: t.testTags ?? [],
-          key: t.key,
-          location: t.location,
         })),
       );
     }, [tests, showProject]);
