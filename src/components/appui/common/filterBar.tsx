@@ -72,21 +72,13 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
       {/* Status Filter */}
       <div className="flex items-center gap-2">
         <Select onValueChange={(val) => setStatus(val)} value={status ?? ""}>
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Filter Status" />
           </SelectTrigger>
           <SelectContent>
             {statuses.map((s) => (
               <SelectItem key={s} value={s}>
                 <StatusPill status={s} />
-                {/* <Badge
-                  className={cn(
-                    "rounded-full px-2 py-1 text-xs",
-                    statusVariant(s).className
-                  )}
-                >
-                  {statusVariant(s).label}
-                </Badge> */}
               </SelectItem>
             ))}
           </SelectContent>
@@ -155,7 +147,7 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
         placeholder="Search test, suite, or file..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full sm:w-[280px]"
+        className="w-full sm:w-[300px]"
       />
     </motion.div>
   );

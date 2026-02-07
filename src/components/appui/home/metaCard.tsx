@@ -30,7 +30,7 @@ export const MetaCard = memo(
               {/* left side -> project */}
               <motion.div
                 whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-                className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10 backdrop-blur-3xl"
+                className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10"
               >
                 <BorderBeam
                   duration={8}
@@ -42,7 +42,7 @@ export const MetaCard = memo(
                   <div className="from-purple-500/20 to-purple-500/5 inline-flex aspect-square h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br backdrop-blur-sm">
                     <Rocket className="text-purple-500 h-6 w-6" />
                   </div>
-                  <h2 className="from-purple-500/90 to-purple-500/70 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
+                  <h2 className="from-purple-500/90 to-purple-500/70  bg-clip-text text-2xl font-bold text-transparent">
                     {userConfig?.projectName || "Result"}
                   </h2>
                 </div>
@@ -75,7 +75,7 @@ export const MetaCard = memo(
               {/* Right side - meta */}
               <motion.div
                 whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-                className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10 backdrop-blur-3xl"
+                className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10"
               >
                 <BorderBeam
                   duration={8}
