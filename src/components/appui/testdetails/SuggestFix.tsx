@@ -4,8 +4,11 @@ import { useState } from "react";
 import { Sparkles, Loader2, AlertCircle, CheckCircle2, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+
+
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 import { useReport } from "@/hooks/use-report-context";
+import { SuggestFixMarkdown } from "./SuggestFixMarkdown";
 
 export function SuggestFix({ test, error }: { test: TestResultItem, error: string }) {
     const { reportData } = useReport();
@@ -186,8 +189,8 @@ Please provide your analysis in Markdown format.`;
                         <span className="text-sm font-bold uppercase tracking-tight">Root Cause & Solution</span>
                     </div>
 
-                    <div className="prose prose-sm dark:prose-invert max-w-none text-xs leading-relaxed text-foreground/80 whitespace-pre-wrap font-sans">
-                        {suggestion}
+                    <div className="prose prose-sm dark:prose-invert max-w-none text-xs leading-relaxed text-foreground/80 font-sans">
+                        <SuggestFixMarkdown content={suggestion} />
                     </div>
 
                     <div className="flex items-center justify-between pt-2 border-t border-purple-500/10">
