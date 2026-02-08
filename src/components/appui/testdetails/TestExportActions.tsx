@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Share2, Check, Copy, ExternalLink, Slack, MessageSquareText } from "lucide-react";
+import { Share2, Check, Copy, Slack, MessageSquareText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
