@@ -2,6 +2,7 @@
 
 import { ScrollText } from "lucide-react";
 import { TabsContent } from "@/components/ui/tabs";
+import { decodeHtmlEntities } from "@/lib/utils";
 
 export function LogsTab({ logs }: { logs?: string }) {
   if (!logs) return null;
@@ -14,7 +15,7 @@ export function LogsTab({ logs }: { logs?: string }) {
           Log Output
         </h4>
         <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto whitespace-pre-wrap font-mono max-h-60">
-          {logs}
+          {decodeHtmlEntities(logs)}
         </pre>
       </div>
     </TabsContent>

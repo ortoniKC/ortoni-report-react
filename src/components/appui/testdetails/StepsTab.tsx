@@ -4,6 +4,7 @@ import { EllipsisBlock } from "@/components/ui/ellipsis-block";
 import { TabsContent } from "@/components/ui/tabs";
 import type { Steps, TestStatus } from "@/lib/types/OrtoniReportData";
 import { StatusPill } from "../common/statuspill";
+import { decodeHtmlEntities } from "@/lib/utils";
 
 function renderStepsRecursive(steps: Steps[], level = 0) {
   return steps.map((s, index) => {
@@ -33,7 +34,9 @@ function renderStepsRecursive(steps: Steps[], level = 0) {
               {s.snippet && (
                 <span
                   className="text-sm text-muted-foreground"
-                  dangerouslySetInnerHTML={{ __html: s.snippet }}
+                  dangerouslySetInnerHTML={{
+                    __html: decodeHtmlEntities(s.snippet),
+                  }}
                 />
               )}
             </div>

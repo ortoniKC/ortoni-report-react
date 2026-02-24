@@ -1,5 +1,5 @@
 import type { TestResult } from "./types/OrtoniReportData";
-import { ensureArray } from "./utils";
+import { ensureArray, decodeHtmlEntities } from "./utils";
 
 export interface ErrorGroup {
   message: string;
@@ -23,25 +23,21 @@ export function normalizeErrorMessage(error: string): string {
 
   // Remove HTML tags (Playwright reports often pre-format errors with spans for colors)
   let normalized = error.replace(/<[^>]*>?/gm, "");
-  
-  // Decode common HTML entities
-  normalized = normalized
-    .replace(/&#039;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&");
+
+  // Decode common HTML entities so that grouping logic works on the
+  // human-readable message rather than on the encoded text.
+  normalized = decodeHtmlEntities(normalized);
 
   // Remove Playwright specific location noise (e.g., "demo.spec.ts:12:3")
   normalized = normalized.replace(/at .*\.spec\.ts:\d+:\d+/g, "at [location]");
-  
+
   // Remove line number references in the snippet part
   normalized = normalized.replace(/^(\s*)\d+(\s*)\|/gm, "$1[line]$2|");
 
   // Keep only the first few lines for the summary grouping
   const lines = normalized.split("\n");
   if (lines.length > 5) {
-      return lines.slice(0, 3).join("\n").trim();
+    return lines.slice(0, 3).join("\n").trim();
   }
 
   return normalized.trim();
@@ -54,7 +50,11 @@ export function groupErrors(testResult: TestResult): ErrorGroup[] {
     Object.entries(suites ?? {}).forEach(([, suiteData]) => {
       const testArray = ensureArray(suiteData);
       testArray.forEach((test) => {
-        if (test.status === "failed" || test.status === "timedOut" || test.status === "unexpected") {
+        if (
+          test.status === "failed" ||
+          test.status === "timedOut" ||
+          test.status === "unexpected"
+        ) {
           const rawError = test.errors?.[0] || "Unknown Error";
           const normalized = normalizeErrorMessage(rawError);
 

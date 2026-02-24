@@ -35,7 +35,7 @@ export function ensureArray(value: unknown): TestResultItem[] {
   if (Array.isArray(value)) return value;
   if (value && typeof value === "object") {
     const arrays = Object.values(value as Record<string, unknown>).filter(
-      Array.isArray
+      Array.isArray,
     ) as TestResultItem[][];
     return arrays.flat();
   }
@@ -49,7 +49,7 @@ interface SuiteData {
 
 export const renderSuiteWithoutProjects = (
   suiteName: string,
-  suiteData: unknown
+  suiteData: unknown,
 ): SuiteData[] => {
   const testArray = ensureArray(suiteData) as TestResultItem[];
   return [
@@ -60,7 +60,20 @@ export const renderSuiteWithoutProjects = (
   ];
 };
 
-
 export function copyToClipboard(text: string) {
   navigator.clipboard?.writeText(text).catch(() => {});
+}
+
+/**
+ * Decode a few common HTML entities that appear in logs/snippets.
+ * We manually handle only the ones we expect from Playwright output
+ * so we don't need a full DOM parser.
+ */
+export function decodeHtmlEntities(input: string): string {
+  return input
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 }
