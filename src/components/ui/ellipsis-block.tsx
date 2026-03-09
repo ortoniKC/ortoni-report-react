@@ -88,10 +88,10 @@ export const EllipsisBlock = memo(
             {children}
             {Array.isArray(errors) ? (
               errors.map((e, i) => (
-                <pre key={i} dangerouslySetInnerHTML={{ __html: renderError(e) }} />
+                <span key={i} className="block whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: renderError(e) }} />
               ))
             ) : errors ? (
-              <pre key={0} dangerouslySetInnerHTML={{ __html: renderError(errors) }} />
+              <span key={0} className="block whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: renderError(errors) }} />
             ) : null}
           </pre>
         </div>

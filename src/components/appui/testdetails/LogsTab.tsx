@@ -1,26 +1,14 @@
 "use client";
 
-import { ScrollText } from "lucide-react";
+import { EllipsisBlock } from "@/components/ui/ellipsis-block";
 import { TabsContent } from "@/components/ui/tabs";
-import { decodeHtmlEntities, formatIfJson } from "@/lib/utils";
 
 export function LogsTab({ logs }: { logs?: string }) {
   if (!logs) return null;
 
-  const decodedLogs = decodeHtmlEntities(logs);
-  const formattedLogs = formatIfJson(decodedLogs);
-
   return (
     <TabsContent value="logs" className="pt-4">
-      <div className="rounded-md border bg-muted/20 p-4">
-        <h4 className="font-medium mb-3 flex items-center gap-2">
-          <ScrollText className="h-4 w-4" />
-          Log Output
-        </h4>
-        <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto whitespace-pre-wrap font-mono max-h-60">
-          {formattedLogs}
-        </pre>
-      </div>
+      <EllipsisBlock title="Log Output" errors={logs} key="logs" />
     </TabsContent>
   );
 }
