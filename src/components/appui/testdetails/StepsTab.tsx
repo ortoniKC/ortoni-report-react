@@ -4,10 +4,11 @@ import { EllipsisBlock } from "@/components/ui/ellipsis-block";
 import { TabsContent } from "@/components/ui/tabs";
 import type { Steps, TestStatus } from "@/lib/types/OrtoniReportData";
 import { StatusPill } from "../common/statuspill";
-import { decodeHtmlEntities } from "@/lib/utils";
+import { decodeHtmlEntities, formatIfJson } from "@/lib/utils";
 
 function renderStepsRecursive(steps: Steps[], level = 0) {
   return steps.map((s, index) => {
+    // ... numbering and indent ...
     const indent = Array(level).fill("  ").join("");
     const numbering = `${index + 1}.`;
 
@@ -32,16 +33,16 @@ function renderStepsRecursive(steps: Steps[], level = 0) {
               </div>
 
               {s.snippet && (
-                <span
-                  className="text-sm text-muted-foreground"
+                <pre
+                  className="text-sm text-muted-foreground whitespace-pre-wrap font-mono p-2 bg-muted/40 rounded mt-1"
                   dangerouslySetInnerHTML={{
-                    __html: decodeHtmlEntities(s.snippet),
+                    __html: formatIfJson(decodeHtmlEntities(s.snippet)),
                   }}
                 />
               )}
             </div>
           </div>
-
+          {/* ... duration and status ... */}
           <div className="flex items-center gap-2 flex-shrink-0">
             {s.duration && (
               <span className="text-muted-foreground text-xs">
@@ -54,7 +55,7 @@ function renderStepsRecursive(steps: Steps[], level = 0) {
             )}
           </div>
         </div>
-
+        {/* ... recursive steps ... */}
         {s.steps && s.category === "test.step" && s.steps.length > 0 && (
           <div>{renderStepsRecursive(s.steps, level + 1)}</div>
         )}

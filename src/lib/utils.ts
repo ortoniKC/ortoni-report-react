@@ -70,10 +70,28 @@ export function copyToClipboard(text: string) {
  * so we don't need a full DOM parser.
  */
 export function decodeHtmlEntities(input: string): string {
+  if (!input) return "";
   return input
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&amp;/g, "&");
+}
+
+/**
+ * Try to parse a string as JSON and return pretty-printed JSON if successful.
+ * Otherwise, return the original string.
+ */
+export function formatIfJson(input: string): string {
+  if (!input) return "";
+  try {
+    const parsed = JSON.parse(input);
+    if (typeof parsed === "object" && parsed !== null) {
+      return JSON.stringify(parsed, null, 2);
+    }
+  } catch (e) {
+    // Not a valid JSON or not a single JSON object, keep original
+  }
+  return input;
 }

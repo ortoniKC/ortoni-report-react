@@ -5,7 +5,7 @@ import { TabsContent } from "@/components/ui/tabs";
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 import { Badge } from "@/components/ui/badge";
 import { StatusDot } from "./TestAccordion";
-import { formatDuration, decodeHtmlEntities } from "@/lib/utils";
+import { formatDuration, decodeHtmlEntities, formatIfJson } from "@/lib/utils";
 import { Camera, ScrollText, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -39,7 +39,7 @@ export function RetryTab({
           ? "border-primary bg-primary/5"
           : "border-border bg-card/50",
         compareIndices.includes(index) &&
-          "ring-2 ring-primary/40 ring-offset-1",
+        "ring-2 ring-primary/40 ring-offset-1",
       )}
       onClick={() => {
         // Toggle selection for comparison
@@ -108,7 +108,12 @@ export function RetryTab({
         {test.errors.length > 0 ? (
           <div className="bg-red-500/5 border border-red-500/20 rounded p-2 text-[10px] font-mono whitespace-pre-wrap break-all max-h-40 overflow-y-auto">
             {test.errors.map((e, i) => (
-              <div key={i} dangerouslySetInnerHTML={{ __html: e }} />
+              <div
+                key={i}
+                dangerouslySetInnerHTML={{
+                  __html: formatIfJson(decodeHtmlEntities(e)),
+                }}
+              />
             ))}
           </div>
         ) : (
@@ -150,7 +155,7 @@ export function RetryTab({
         </div>
         <div className="bg-muted/30 rounded p-2 text-[10px] font-mono h-32 overflow-y-auto whitespace-pre-wrap">
           {test.logs
-            ? decodeHtmlEntities(test.logs)
+            ? formatIfJson(decodeHtmlEntities(test.logs))
             : "No logs available for this attempt."}
         </div>
       </div>
