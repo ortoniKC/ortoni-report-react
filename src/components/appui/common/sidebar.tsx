@@ -25,6 +25,7 @@ import {
   Image,
 } from "lucide-react";
 import { ModeToggle } from "@/hooks/toggle-theme";
+import { AISettings } from "./AISettings";
 
 const menuItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "dashboard" },
@@ -35,6 +36,7 @@ const menuItems = [
 ];
 
 export const DashboardSidebar = memo(() => {
+  const version = "4.0.8";
   const location = useLocation();
   const { reportData } = useReport();
 
@@ -56,7 +58,7 @@ export const DashboardSidebar = memo(() => {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Ortoni Report</span>
-                  <span className="truncate text-xs">V 4.0.5</span>
+                  <span className="truncate text-xs">{version}</span>
                 </div>
               </div>
             </SidebarMenuButton>
@@ -102,11 +104,50 @@ export const DashboardSidebar = memo(() => {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel>Shortcuts</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <div className="flex items-center justify-between px-2 py-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Search</span>
+                  </div>
+                  <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    <span className="text-xs">⌘</span>K
+                  </kbd>
+                </div>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <div className="flex items-center justify-between px-2 py-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Theme</span>
+                  </div>
+                  <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    T
+                  </kbd>
+                </div>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <div className="flex items-center justify-between px-2 py-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Nav</span>
+                  </div>
+                  <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    J / K
+                  </kbd>
+                </div>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem className="flex flex-col">
+            <AISettings />
             <ModeToggle />
           </SidebarMenuItem>
         </SidebarMenu>

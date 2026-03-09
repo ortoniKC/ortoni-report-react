@@ -2,15 +2,19 @@
 
 import { EllipsisBlock } from "@/components/ui/ellipsis-block";
 import { TabsContent } from "@/components/ui/tabs";
+import { SuggestFix } from "./SuggestFix";
+import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 
-export function ErrorsTab({ errors }: { errors: string[] }) {
+export function ErrorsTab({ test }: { test: TestResultItem }) {
+  const errors = test.errors;
   if (!errors?.length) return null;
 
   return (
-    <TabsContent value="errors" className="pt-4">
+    <TabsContent value="errors" className="pt-4 space-y-4">
       {errors.map((e, i) => (
-        <div key={i} className="flex gap-2">
+        <div key={i} className="flex flex-col gap-2">
           <EllipsisBlock errors={[e]} title="Error" />
+          <SuggestFix test={test} error={e} />
         </div>
       ))}
     </TabsContent>

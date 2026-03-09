@@ -11,22 +11,11 @@ import {
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
-import type { TestStatus } from "@/lib/types/OrtoniReportData";
+import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 import { StatusPill } from "./statuspill";
 
 interface FilterBarProps {
-  flattened: {
-    testId: string;
-    title: string;
-    suite: string;
-    filePath: string;
-    projectName: string;
-    status: TestStatus;
-    duration: number;
-    testTags: string[];
-    key: string;
-    location: string;
-  }[];
+  flattened: (TestResultItem & { filePath: string; suite: string })[];
   onFilter: (filtered: FilterBarProps["flattened"]) => void;
 }
 
@@ -59,9 +48,9 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
       const matchesSearch =
         search.length > 0
           ? [t.title, t.filePath, t.suite]
-              .join(" ")
-              .toLowerCase()
-              .includes(search.toLowerCase())
+            .join(" ")
+            .toLowerCase()
+            .includes(search.toLowerCase())
           : true;
       const matchesTag = tag ? t.testTags.includes(tag) : true;
 
@@ -83,21 +72,13 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
       {/* Status Filter */}
       <div className="flex items-center gap-2">
         <Select onValueChange={(val) => setStatus(val)} value={status ?? ""}>
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Filter Status" />
           </SelectTrigger>
           <SelectContent>
             {statuses.map((s) => (
               <SelectItem key={s} value={s}>
                 <StatusPill status={s} />
-                {/* <Badge
-                  className={cn(
-                    "rounded-full px-2 py-1 text-xs",
-                    statusVariant(s).className
-                  )}
-                >
-                  {statusVariant(s).label}
-                </Badge> */}
               </SelectItem>
             ))}
           </SelectContent>
@@ -166,7 +147,7 @@ export function FilterBar({ flattened, onFilter }: FilterBarProps) {
         placeholder="Search test, suite, or file..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full sm:w-[280px]"
+        className="w-full sm:w-[300px]"
       />
     </motion.div>
   );

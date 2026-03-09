@@ -4,7 +4,6 @@ import type { Preferences, TestResultItem } from "@/lib/types/OrtoniReportData";
 import {
   formatDuration,
   renderSuiteWithoutProjects,
-  renderSuiteWithProjects,
 } from "@/lib/utils";
 import { memo, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,30 +17,22 @@ interface SuiteData {
 }
 
 export const GlancePage = memo(
-  (props: { tests: TestResultItem[]; showProject: Preferences }) => {
+  (props: {
+    tests: Record<string, Record<string, TestResultItem[]>>;
+    showProject: Preferences;
+  }) => {
     const { tests, showProject } = props;
 
     // Flatten suites → tests
     const flattened = useMemo(() => {
       const suites: SuiteData[] = Object.entries(tests).flatMap(
-        ([suiteName, suiteData]) =>
-          showProject
-            ? renderSuiteWithProjects(suiteName, suiteData)
-            : renderSuiteWithoutProjects(suiteName, suiteData),
+        ([suiteName, suiteData]) => renderSuiteWithoutProjects(suiteName, suiteData),
       );
 
       return suites.flatMap((suite) =>
         suite.tests.map((t) => ({
-          testId: t.testId,
-          title: t.title,
+          ...t,
           suite: suite.name,
-          filePath: t.filePath,
-          projectName: t.projectName,
-          status: t.status,
-          duration: t.duration,
-          testTags: t.testTags ?? [],
-          key: t.key,
-          location: t.location,
         })),
       );
     }, [tests, showProject]);
@@ -117,13 +108,22 @@ export const GlancePage = memo(
                               transition={{ duration: 0.25 }}
                               className="group transition-colors border-b"
                             >
-                              <td className="px-3 py-2 truncate max-w-[240px] group-hover:bg-muted/20">
+                              <td
+                                className="px-3 py-2 truncate max-w-[240px] group-hover:bg-muted/20"
+                                title={r.location}
+                              >
                                 {r.location}
                               </td>
-                              <td className="px-3 py-2 truncate max-w-[280px] group-hover:bg-muted/20">
+                              <td
+                                className="px-3 py-2 truncate max-w-[280px] group-hover:bg-muted/20"
+                                title={r.suite}
+                              >
                                 {r.suite}
                               </td>
-                              <td className="px-3 py-2 truncate max-w-[320px] font-medium group-hover:bg-muted/30">
+                              <td
+                                className="px-3 py-2 truncate max-w-[320px] font-medium group-hover:bg-muted/30"
+                                title={r.title}
+                              >
                                 {r.title}
                               </td>
                               <td className="px-3 py-2 capitalize group-hover:bg-muted/20">

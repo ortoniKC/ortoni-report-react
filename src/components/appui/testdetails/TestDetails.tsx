@@ -1,19 +1,23 @@
 "use client";
 
 import { FileText } from "lucide-react";
+import { useMemo } from "react";
 import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
 import { toFileUrl } from "../common/utils";
 import { TestAttachments } from "./attachment/TestAttachments";
 import { TestAnnotations } from "./TestAnnotations";
 import { TestTabs } from "./TestTabs";
 import { TestHeader } from "./header/TestHeader";
+import { TestExportActions } from "./TestExportActions";
 
 export function TestDetails({
   test,
   testHistories,
+  allTests = [],
 }: {
   test: TestResultItem | null;
   testHistories: TestHistory[];
+  allTests?: TestResultItem[];
 }) {
   if (!test) {
     return (
@@ -31,7 +35,12 @@ export function TestDetails({
     );
   }
 
-  const history = testHistories.find((h) => h.testId === test.testId);
+  const allAttempts = useMemo(() => {
+    if (!test) return [];
+    return allTests.filter((t) => t.testId === test.testId);
+  }, [allTests, test]);
+
+  const testHistory = testHistories.find((h) => h.testId === test.testId);
 
   return (
     <div className="h-full flex flex-col border bg-background overflow-hidden">
@@ -41,16 +50,19 @@ export function TestDetails({
           <div className="flex-1 min-w-0">
             <TestHeader test={test} />
           </div>
+          <div className="flex-shrink-0 pr-6">
+            <TestExportActions test={test} />
+          </div>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-5">
+      <div className="flex-1 overflow-y-auto p-5 custom-scrollbar">
         {/* Media Section */}
         <TestAttachments test={test} toFileUrl={toFileUrl} />
         {/* Annotations Section */}
         <TestAnnotations annotations={test.annotations} />
         {/* Tabbed Section */}
-        <TestTabs test={test} history={history} />
+        <TestTabs test={test} history={testHistory} allAttempts={allAttempts} />
       </div>
     </div>
   );

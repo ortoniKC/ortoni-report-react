@@ -24,6 +24,7 @@ export function App({ reportData }: { reportData: ReportResponse }) {
                   summary={reportData.data.summary}
                   userConfig={reportData.data.userConfig}
                   userMeta={reportData.data.userMeta}
+                  testResult={reportData.data.testResult}
                 />
               }
             />
@@ -32,7 +33,6 @@ export function App({ reportData }: { reportData: ReportResponse }) {
               element={
                 <TestsPage
                   tests={reportData.data.testResult}
-                  preferences={reportData.data.preferences}
                 />
               }
             />
@@ -47,7 +47,7 @@ export function App({ reportData }: { reportData: ReportResponse }) {
             />
             <Route
               path="analytics"
-              element={<AnalyticsPage analytics={reportData.data.analytics} />}
+              element={<AnalyticsPage analytics={reportData.data.analytics} testHistories={reportData.data.testResult.testHistories} />}
             />
             <Route
               path="screenshots"

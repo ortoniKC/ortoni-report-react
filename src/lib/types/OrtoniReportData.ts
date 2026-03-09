@@ -65,7 +65,7 @@ export interface Summary {
 }
 
 export interface TestResult {
-  tests: TestResultItem[];
+  tests: Record<string, Record<string, TestResultItem[]>>;
   testHistories: TestHistory[];
   allTags: string[];
   set: string | string[];
@@ -76,6 +76,11 @@ export interface UserConfig {
   authorName: string;
   type: string;
   title: string;
+  ai?: {
+    provider: string;
+    apiKey: string;
+    model?: string;
+  };
 }
 
 export interface UserMeta {
@@ -104,13 +109,13 @@ export interface Stats {
 
 export type TestStatus =
   | "passed"
+  | "skipped"
+  | "flaky"
   | "failed"
   | "timedOut"
-  | "skipped"
   | "interrupted"
   | "expected"
   | "unexpected"
-  | "flaky";
 
 export interface Steps {
   snippet: string | undefined;

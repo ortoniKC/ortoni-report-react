@@ -1,6 +1,6 @@
 "use client";
 
-import { copyToClipboard } from "@/lib/utils";
+import { copyToClipboard, decodeHtmlEntities, formatIfJson } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Clipboard, ClipboardCheck } from "lucide-react";
 import { memo, useEffect, useRef, useState } from "react";
@@ -15,6 +15,7 @@ export const EllipsisBlock = memo(
     title: string;
     children?: React.ReactNode;
   }) => {
+    // ... existing state/effects/handlers ...
     const [status, setStatus] = useState<"idle" | "copied">("idle");
     const contentRef = useRef<HTMLPreElement>(null);
 
@@ -43,6 +44,12 @@ export const EllipsisBlock = memo(
           size={16}
         />
       ),
+    };
+
+    const renderError = (err: string) => {
+      const decoded = decodeHtmlEntities(err);
+      const formatted = formatIfJson(decoded);
+      return formatted;
     };
 
     return (
@@ -81,10 +88,10 @@ export const EllipsisBlock = memo(
             {children}
             {Array.isArray(errors) ? (
               errors.map((e, i) => (
-                <pre key={i} dangerouslySetInnerHTML={{ __html: e }} />
+                <span key={i} className="block whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: renderError(e) }} />
               ))
             ) : errors ? (
-              <pre key={0} dangerouslySetInnerHTML={{ __html: errors }} />
+              <span key={0} className="block whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: renderError(errors) }} />
             ) : null}
           </pre>
         </div>

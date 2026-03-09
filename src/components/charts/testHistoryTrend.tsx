@@ -36,7 +36,11 @@ export const TestHistoryTrendChart = memo(
     const { history } = props;
 
     if (!history || history.length === 0) {
-      return null;
+      return (
+        <p className="text-center text-muted-foreground py-6">
+          No history available for this test.
+        </p>
+      );
     }
 
     const chartData = history.slice().map((item) => ({
@@ -165,11 +169,12 @@ export const TestHistoryTrendChart = memo(
                   type="monotone"
                   stroke="var(--chart-1)"
                   strokeWidth={2}
-                  dot={(props) => {
-                    const { cx, cy, payload } = props;
+                  dot={(props: any) => {
+                    const { cx, cy, payload, index } = props;
                     const color = payload.statusColor;
                     return (
                       <circle
+                        key={`${payload.run_date}-${index}`}
                         cx={cx}
                         cy={cy}
                         r={4}

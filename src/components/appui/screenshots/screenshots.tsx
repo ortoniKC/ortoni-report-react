@@ -2,7 +2,7 @@ import MasonryGallery from "@/components/mvpblocks/masonry-grid-1";
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 
 interface ScreenshotsProps {
-  tests: TestResultItem[];
+  tests: Record<string, Record<string, TestResultItem[]>>;
 }
 
 export default function Screenshots({ tests }: ScreenshotsProps) {

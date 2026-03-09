@@ -8,10 +8,12 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { SummaryCard } from "./summaryCard";
+import { ErrorAnalysis } from "./ErrorAnalysis";
 import type {
   Summary,
   UserConfig,
   UserMeta,
+  TestResult,
 } from "@/lib/types/OrtoniReportData";
 import { OverallExecutionResult } from "../../charts/overallExecutionChart";
 import { EachProjectChart } from "../../charts/projectBarChart";
@@ -21,8 +23,13 @@ import { MetaCard } from "./metaCard";
 import { memo } from "react";
 
 export const Dashboard = memo(
-  (props: { summary: Summary; userConfig: UserConfig; userMeta: UserMeta }) => {
-    const { summary, userConfig, userMeta } = props;
+  (props: {
+    summary: Summary;
+    userConfig: UserConfig;
+    userMeta: UserMeta;
+    testResult: TestResult;
+  }) => {
+    const { summary, userConfig, userMeta, testResult } = props;
     const stats = [
       {
         title: "All tests - (Pass + Fail)",
@@ -73,13 +80,13 @@ export const Dashboard = memo(
           <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
             <div className="px-2 sm:px-0">
               <TextGenerateEffect
-                words={`Hello ${userConfig.authorName || "Tester"}!`}
+                words={`Hello ${userConfig.authorName || ""}!`}
                 className="text-3xl font-bold tracking-tight sm:text-3xl"
               />
               <p className="text-muted-foreground text-sm sm:text-base">
                 Here&apos;s what&apos;s happening with your{" "}
                 <strong className="text-primary">
-                  {userConfig.type || "test"}
+                  {userConfig.type || "test suite"}
                 </strong>{" "}
                 today.
               </p>
@@ -104,6 +111,9 @@ export const Dashboard = memo(
               summary={summary}
               userConfig={userConfig}
             />
+
+            {/* Error Analysis */}
+            <ErrorAnalysis testResult={testResult} />
 
             {/* Charts */}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">

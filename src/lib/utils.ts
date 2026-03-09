@@ -35,7 +35,7 @@ export function ensureArray(value: unknown): TestResultItem[] {
   if (Array.isArray(value)) return value;
   if (value && typeof value === "object") {
     const arrays = Object.values(value as Record<string, unknown>).filter(
-      Array.isArray
+      Array.isArray,
     ) as TestResultItem[][];
     return arrays.flat();
   }
@@ -49,7 +49,7 @@ interface SuiteData {
 
 export const renderSuiteWithoutProjects = (
   suiteName: string,
-  suiteData: unknown
+  suiteData: unknown,
 ): SuiteData[] => {
   const testArray = ensureArray(suiteData) as TestResultItem[];
   return [
@@ -60,18 +60,38 @@ export const renderSuiteWithoutProjects = (
   ];
 };
 
-export const renderSuiteWithProjects = (
-  _suiteName: string,
-  suiteData: unknown
-): SuiteData[] => {
-  const projects = suiteData as Record<string, unknown>;
-
-  return Object.entries(projects).map(([projectName, testArray]) => ({
-    name: `${projectName}`,
-    tests: ensureArray(testArray) as TestResultItem[],
-  }));
-};
-
 export function copyToClipboard(text: string) {
   navigator.clipboard?.writeText(text).catch(() => {});
+}
+
+/**
+ * Decode a few common HTML entities that appear in logs/snippets.
+ * We manually handle only the ones we expect from Playwright output
+ * so we don't need a full DOM parser.
+ */
+export function decodeHtmlEntities(input: string): string {
+  if (!input) return "";
+  return input
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
+/**
+ * Try to parse a string as JSON and return pretty-printed JSON if successful.
+ * Otherwise, return the original string.
+ */
+export function formatIfJson(input: string): string {
+  if (!input) return "";
+  try {
+    const parsed = JSON.parse(input);
+    if (typeof parsed === "object" && parsed !== null) {
+      return JSON.stringify(parsed, null, 2);
+    }
+  } catch (e) {
+    // Not a valid JSON or not a single JSON object, keep original
+  }
+  return input;
 }

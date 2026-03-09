@@ -39,7 +39,6 @@ const chartConfig = {
 
 export const TrendChart = memo((props: { trends: Trend[] }) => {
   const { trends } = props;
-  console.log("Rendering TrendChart with trends:", trends);
 
   const chartData = trends.map((t) => ({
     label: t.run_date,
@@ -65,6 +64,8 @@ export const TrendChart = memo((props: { trends: Trend[] }) => {
             </CardDescription>
           </div>
         </CardHeader>
+
+        {/* Heatmap Analysis */}
 
         <CardContent className="px-2 sm:p-6">
           <ChartContainer

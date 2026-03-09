@@ -2,27 +2,30 @@
 
 import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ListChecks, AlertCircle, ScrollText, History } from "lucide-react";
+import { ListChecks, AlertCircle, ScrollText, History, RefreshCcw } from "lucide-react";
 
 import { StepsTab } from "./StepsTab";
 import { ErrorsTab } from "./ErrorsTab";
 import { LogsTab } from "./LogsTab";
 import { HistoryTab } from "./HistoryTab";
 import type { TestHistory, TestResultItem } from "@/lib/types/OrtoniReportData";
+import { RetryTab } from "./RetryTab";
 
 export function TestTabs({
   test,
   history,
+  allAttempts = [],
 }: {
   test: TestResultItem;
   history?: TestHistory;
+  allAttempts?: TestResultItem[];
 }) {
   const defaultTab =
     test.steps?.length > 0
       ? "steps"
       : test.errors?.length > 0
-      ? "errors"
-      : "logs";
+        ? "errors"
+        : "logs";
 
   return (
     <motion.section
@@ -31,7 +34,7 @@ export function TestTabs({
       transition={{ duration: 0.25 }}
     >
       <Tabs defaultValue={defaultTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-muted p-1 h-auto rounded-md">
+        <TabsList className="flex w-full bg-muted p-1 h-auto rounded-md overflow-x-auto">
           {test.steps?.length > 0 && (
             <TabsTrigger
               value="steps"
@@ -56,6 +59,15 @@ export function TestTabs({
               Logs
             </TabsTrigger>
           )}
+          {allAttempts.length > 1 && (
+            <TabsTrigger
+              value="retries"
+              className="py-2 text-xs gap-1 rounded-md"
+            >
+              <RefreshCcw className="h-4 w-4" />
+              Retries ({allAttempts.length})
+            </TabsTrigger>
+          )}
           <TabsTrigger
             value="history"
             className="py-2 text-xs gap-1 rounded-md"
@@ -66,8 +78,9 @@ export function TestTabs({
         </TabsList>
 
         <StepsTab steps={test.steps} />
-        <ErrorsTab errors={test.errors} />
+        <ErrorsTab test={test} />
         <LogsTab logs={test.logs} />
+        <RetryTab attempts={allAttempts} currentKey={test.key} />
         <HistoryTab history={history} />
       </Tabs>
     </motion.section>
