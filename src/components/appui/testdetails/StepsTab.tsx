@@ -34,7 +34,7 @@ function renderStepsRecursive(steps: Steps[], level = 0) {
 
               {s.snippet && (
                 <pre
-                  className="text-sm text-muted-foreground whitespace-pre-wrap font-mono p-2 bg-muted/40 rounded mt-1"
+                  className="text-sm text-muted-foreground whitespace-pre-wrap font-mono p-2 bg-muted/10 rounded mt-1"
                   dangerouslySetInnerHTML={{
                     __html: formatIfJson(decodeHtmlEntities(s.snippet)),
                   }}
