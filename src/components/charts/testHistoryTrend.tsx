@@ -43,7 +43,7 @@ export const TestHistoryTrendChart = memo(
       );
     }
 
-    const chartData = history.slice().map((item) => ({
+    const chartData = history.slice().sort((a, b) => new Date(a.run_date).getTime() - new Date(b.run_date).getTime()).map((item) => ({
       label: new Date(item.run_date).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
