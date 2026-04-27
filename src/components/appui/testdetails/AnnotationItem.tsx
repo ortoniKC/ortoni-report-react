@@ -1,4 +1,3 @@
-import DOMPurify from "dompurify";
 import { formatIfJson } from "@/lib/utils";
 
 export function AnnotationItem({
@@ -21,7 +20,7 @@ export function AnnotationItem({
           <span className="text-xs text-muted-foreground">Description:</span>
           <pre
             className="text-muted-foreground whitespace-pre-wrap font-mono text-xs bg-muted/40 p-2 rounded"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(formattedDescription) }}
+            dangerouslySetInnerHTML={{ __html: formattedDescription }}
           />
         </div>
       )}
