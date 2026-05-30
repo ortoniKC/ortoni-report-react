@@ -7,7 +7,6 @@ import {
 } from "@/lib/utils";
 import { memo, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import TextGenerateEffect from "@/components/ui/typewriter";
 import { FilterBar } from "../common/filterBar";
 import { StatusPill } from "../common/statuspill";
 
@@ -63,10 +62,9 @@ export const GlancePage = memo(
         <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6 overflow-hidden">
           <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6 ovefrflow-hidden h-full">
             <div className="px-2 sm:px-0">
-              <TextGenerateEffect
-                words={"Test Glance"}
-                className="text-3xl font-bold tracking-tight sm:text-3xl"
-              />
+              <p className="text-3xl font-bold tracking-tight sm:text-3xl">
+                Test Glance
+              </p>
             </div>
             <div className="mb-2">
               <FilterBar flattened={flattened} onFilter={setFiltered} />

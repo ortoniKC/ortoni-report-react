@@ -2,7 +2,6 @@
 
 import { memo } from "react";
 import type { TestResult } from "@/lib/types/OrtoniReportData";
-import TextGenerateEffect from "../../ui/typewriter";
 import { TestList } from "./testList";
 
 export const TestsPage = memo(
@@ -14,10 +13,9 @@ export const TestsPage = memo(
         <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
           <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
             <div className="px-2 sm:px-0">
-              <TextGenerateEffect
-                words={"Tests"}
-                className="text-3xl font-bold tracking-tight sm:text-3xl"
-              />
+              <p className="text-3xl font-bold tracking-tight sm:text-3xl">
+                Tests
+              </p>
             </div>
             <TestList tests={tests} />
           </div>
