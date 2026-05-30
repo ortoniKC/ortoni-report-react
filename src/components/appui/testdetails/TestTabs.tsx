@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ListChecks, AlertCircle, ScrollText, History, RefreshCcw } from "lucide-react";
@@ -20,6 +21,8 @@ export function TestTabs({
   history?: TestHistory;
   allAttempts?: TestResultItem[];
 }) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
   const defaultTab =
     test.steps?.length > 0
       ? "steps"
@@ -27,14 +30,24 @@ export function TestTabs({
         ? "errors"
         : "logs";
 
+  const handleTabChange = () => {
+    if (sectionRef.current) {
+      const scrollParent = sectionRef.current.closest(".overflow-y-auto");
+      if (scrollParent) {
+        scrollParent.scrollTo({ top: 0 });
+      }
+    }
+  };
+
   return (
     <motion.section
+      ref={sectionRef}
       initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
     >
-      <Tabs defaultValue={defaultTab} className="w-full">
-        <TabsList className="flex w-full bg-muted p-1 h-auto rounded-md overflow-x-auto">
+      <Tabs defaultValue={defaultTab} onValueChange={handleTabChange} className="w-full">
+        <TabsList className="sticky top-0 z-40 flex w-full bg-background/95 dark:bg-background/95 backdrop-blur-md p-1 h-auto rounded-md overflow-x-auto border border-border/40 shadow-sm mb-4">
           {test.steps?.length > 0 && (
             <TabsTrigger
               value="steps"
