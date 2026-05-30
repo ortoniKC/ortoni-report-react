@@ -29,6 +29,9 @@ export const description = "Each Project Summary";
 export const EachProjectChart = memo((props: { summary: Summary }) => {
   const { summary } = props;
   const stats = summary.stats;
+  if (!stats?.projectNames || stats.projectNames.length <= 1) {
+    return null;
+  }
   const chartData =
     stats?.projectNames?.map((name: string, idx: number) => ({
       browser: name,
@@ -49,13 +52,14 @@ export const EachProjectChart = memo((props: { summary: Summary }) => {
       <CardContent>
         <ChartContainer
           config={dynamicChartConfig}
-          className="mx-auto aspect-square w-full max-h-[250px] max-w-[300px]"
+          className="mx-auto aspect-auto h-[250px] w-full"
         >
           <BarChart
             accessibilityLayer
             data={chartData}
             layout="vertical"
             margin={{
+              left: 20,
               right: 16,
             }}
           >
@@ -66,9 +70,11 @@ export const EachProjectChart = memo((props: { summary: Summary }) => {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) =>
-                value.length > 7 ? `${value.slice(0, 4)}...` : value
-              }
+              width={80}
+              tickFormatter={(value) => {
+                const formatted = value.replace(/\s+/g, "\u00A0");
+                return formatted.length > 12 ? `${formatted.slice(0, 10)}...` : formatted;
+              }}
             />
             <XAxis type="number" hide />
             <ChartTooltip

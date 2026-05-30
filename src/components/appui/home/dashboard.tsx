@@ -114,14 +114,16 @@ export const Dashboard = memo(
             <ErrorAnalysis testResult={testResult} />
 
             {/* Charts */}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
-              <div>
-                <ProjectChart summary={summary} />
+            {summary.stats?.projectNames && summary.stats.projectNames.length > 1 && (
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                <div>
+                  <ProjectChart summary={summary} />
+                </div>
+                <div>
+                  <EachProjectChart summary={summary} />
+                </div>
               </div>
-              <div>
-                <EachProjectChart summary={summary} />
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
