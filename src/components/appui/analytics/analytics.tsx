@@ -1,5 +1,4 @@
 import { TrendChart } from "@/components/charts/analyticsTrend";
-import TextGenerateEffect from "@/components/ui/typewriter";
 import type { Analytics, TestHistory } from "@/lib/types/OrtoniReportData";
 import { memo } from "react";
 import { SlowTests } from "./slowTest";
@@ -13,10 +12,9 @@ export const AnalyticsPage = memo((props: { analytics: Analytics, testHistories:
       <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
         <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
           <div className="px-2 sm:px-0">
-            <TextGenerateEffect
-              words={"Test Suite Analytics"}
-              className="text-3xl font-bold tracking-tight sm:text-3xl"
-            />
+            <p className="text-3xl font-bold tracking-tight sm:text-3xl">
+              Test Suite Analytics
+            </p>
           </div>
           <AnalyticsSummaryPage
             analyticsSummary={analytics.reportData.summary}

@@ -56,8 +56,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export const OverallExecutionResult = memo((props: { summary: Summary }) => {
-  const { summary } = props;
+export const OverallExecutionResult = memo((props: { summary: Summary; className?: string; borderless?: boolean }) => {
+  const { summary, className, borderless } = props;
   const summaryChartData = [
     {
       status: "pass",
@@ -100,7 +100,7 @@ export const OverallExecutionResult = memo((props: { summary: Summary }) => {
     .map((item) => item.status);
 
   return (
-    <Card data-chart={id} className="flex flex-col">
+    <Card data-chart={id} className={`flex flex-col ${borderless ? "bg-transparent border-0 shadow-none" : ""} ${className || ""}`}>
       <ChartStyle id={id} config={chartConfig} />
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
         <div className="grid gap-1">

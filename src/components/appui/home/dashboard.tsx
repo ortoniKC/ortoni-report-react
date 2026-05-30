@@ -15,10 +15,8 @@ import type {
   UserMeta,
   TestResult,
 } from "@/lib/types/OrtoniReportData";
-import { OverallExecutionResult } from "../../charts/overallExecutionChart";
 import { EachProjectChart } from "../../charts/projectBarChart";
 import { ProjectChart } from "../../charts/projectChart";
-import TextGenerateEffect from "../../ui/typewriter";
 import { MetaCard } from "./metaCard";
 import { memo } from "react";
 
@@ -79,8 +77,8 @@ export const Dashboard = memo(
         <div className="min-h-[calc(100vh-4rem)] flex-1 rounded-lg p-3 sm:rounded-xl sm:p-4 md:p-6">
           <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
             <div className="px-2 sm:px-0">
-              <TextGenerateEffect
-                words={`Hello ${userConfig.authorName || ""}!`}
+              <p
+                children={`Hello ${userConfig.authorName || ""}!`}
                 className="text-3xl font-bold tracking-tight sm:text-3xl"
               />
               <p className="text-muted-foreground text-sm sm:text-base">
@@ -116,19 +114,16 @@ export const Dashboard = memo(
             <ErrorAnalysis testResult={testResult} />
 
             {/* Charts */}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-              {/* Left half */}
-              <div>
-                <OverallExecutionResult summary={summary} />
+            {summary.stats?.projectNames && summary.stats.projectNames.length > 1 && (
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                <div>
+                  <ProjectChart summary={summary} />
+                </div>
+                <div>
+                  <EachProjectChart summary={summary} />
+                </div>
               </div>
-              {/* Right half */}
-              <div>
-                <ProjectChart summary={summary} />
-              </div>
-              <div>
-                <EachProjectChart summary={summary} />
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

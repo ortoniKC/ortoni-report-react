@@ -1,7 +1,8 @@
 import { motion, useInView } from "framer-motion";
-import { Rocket, Target, Gauge, CalendarClock, Timer } from "lucide-react";
+import { Target, Gauge, CalendarClock, Timer } from "lucide-react";
 import { memo, useRef } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { OverallExecutionResult } from "@/components/charts/overallExecutionChart";
 import type {
   Summary,
   UserConfig,
@@ -14,7 +15,7 @@ export const MetaCard = memo(
     const missionRef = useRef(null);
     const missionInView = useInView(missionRef, { once: true, amount: 0.3 });
 
-    const { UserMeta, summary, userConfig } = props;
+    const { UserMeta, summary } = props;
     return (
       <section className="relative w-full overflow-hidden">
         <div className="relative z-10 container mx-auto">
@@ -25,89 +26,80 @@ export const MetaCard = memo(
                 missionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }
               }
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="relative z-10 grid gap-12 md:grid-cols-2"
+              className="relative z-10"
             >
-              {/* left side -> project */}
               <motion.div
                 whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-                className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10"
+                className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-6 md:p-8"
               >
                 <BorderBeam
                   duration={8}
-                  size={300}
+                  size={500}
                   className="via-purple-500/40 from-transparent to-transparent"
                 />
 
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="from-purple-500/20 to-purple-500/5 inline-flex aspect-square h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br backdrop-blur-sm">
-                    <Rocket className="text-purple-500 h-6 w-6" />
-                  </div>
-                  <h2 className="from-purple-500/90 to-purple-500/70  bg-clip-text text-2xl font-bold text-transparent">
-                    {userConfig?.projectName || "Result"}
-                  </h2>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-center pb-6 border-b border-border/40">
+                  <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
                     <div className="flex items-center gap-2">
-                      <Gauge className="h-5 w-5 text-primary" />
-                      <span className="text-sm">Success Rate:</span>
-                      <span className="font-semibold">
+                      <Gauge className="h-4.5 w-4.5 text-primary" />
+                      <span className="text-sm text-muted-foreground">Success Rate:</span>
+                      <span className="text-sm font-semibold">
                         {summary.successRate}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CalendarClock className="h-5 w-5 text-primary" />
-                      <span className="text-sm">Last Run:</span>
-                      <span className="font-semibold">
+                      <CalendarClock className="h-4.5 w-4.5 text-primary" />
+                      <span className="text-sm text-muted-foreground">Last Run:</span>
+                      <span className="text-sm font-semibold">
                         {summary.lastRunDate || "N/A"}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Timer className="h-5 w-5 text-primary" />
-                      <span className="text-sm">Duration:</span>
-                      <span className="font-semibold">
+                      <Timer className="h-4.5 w-4.5 text-primary" />
+                      <span className="text-sm text-muted-foreground">Duration:</span>
+                      <span className="text-sm font-semibold">
                         {formatDuration(summary.totalDuration)}
                       </span>
                     </div>
                   </div>
                 </div>
-              </motion.div>
-              {/* Right side - meta */}
-              <motion.div
-                whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-                className="group border-border/40 relative block overflow-hidden rounded-2xl border bg-gradient-to-br p-10"
-              >
-                <BorderBeam
-                  duration={8}
-                  size={300}
-                  className="from-transparent via-blue-500/40 to-transparent"
-                  reverse
-                />
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 backdrop-blur-sm">
-                    <Target className="h-6 w-6 text-blue-500" />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 md:divide-x divide-border/40 pt-6">
+                  {/* Left Column: Overall Execution Chart */}
+                  <div className="flex flex-col justify-center">
+                    <OverallExecutionResult summary={summary} borderless />
                   </div>
-                  <h2 className="bg-gradient-to-r from-blue-500/90 to-blue-500/70 bg-clip-text text-xl font-semibold text-transparent mb-0">
-                    Meta Information
-                  </h2>
-                </div>
-                <div className="text-muted-foreground text-sm leading-relaxed">
-                  <ul className="list-disc divl-5 space-y-1">
-                    {Object.keys(UserMeta.meta ?? {}).length > 0 ? (
-                      Object.entries(UserMeta.meta!).map(([key, value]) => (
-                        <li key={key}>
-                          <strong>
-                            {key.charAt(0).toUpperCase() + key.slice(1)}:
-                          </strong>{" "}
-                          {String(value)}
-                        </li>
-                      ))
-                    ) : (
-                      <p className="text-muted-foreground">
-                        Add meta information in Ortoni Report Config
-                      </p>
-                    )}
-                  </ul>
+
+                  {/* Right Column: Meta Information */}
+                  <div className="flex flex-col justify-left pt-4">
+                    <div className="flex items-center gap-3">
+                      <div className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 backdrop-blur-sm">
+                        <Target className="h-5 w-5 text-blue-500" />
+                      </div>
+                      <h2 className="bg-gradient-to-r from-blue-500/90 to-blue-500/70 bg-clip-text text-xl font-semibold text-transparent mb-0">
+                        Meta Information
+                      </h2>
+                    </div>
+
+                    <div className="text-muted-foreground text-sm leading-relaxed pt-2">
+                      <ul className="list-disc pl-5 space-y-1.5">
+                        {Object.keys(UserMeta.meta ?? {}).length > 0 ? (
+                          Object.entries(UserMeta.meta!).map(([key, value]) => (
+                            <li key={key} className="text-sm">
+                              <strong>
+                                {key.charAt(0).toUpperCase() + key.slice(1)}:
+                              </strong>{" "}
+                              {String(value)}
+                            </li>
+                          ))
+                        ) : (
+                          <p className="text-muted-foreground text-sm">
+                            Add meta information in Ortoni Report Config
+                          </p>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>

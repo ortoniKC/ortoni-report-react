@@ -21,12 +21,16 @@ export const description = "A radial chart with a label";
 
 export const ProjectChart = memo((props: { summary: Summary }) => {
   const { summary } = props;
+  const stats = summary.stats;
+  if (!stats?.projectNames || stats.projectNames.length <= 1) {
+    return null;
+  }
+
   const getRandomColor = () =>
     `#${Math.floor(Math.random() * 16777215)
       .toString(16)
       .padStart(6, "0")}`;
 
-  const stats = summary.stats;
   const chartData =
     stats?.projectNames?.map((name: string, idx: number) => ({
       browser: name,
@@ -46,7 +50,7 @@ export const ProjectChart = memo((props: { summary: Summary }) => {
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={dynamicChartConfig}
-          className="mx-auto aspect-square max-h-[250px] max-w-[300px]"
+          className="mx-auto aspect-auto h-[250px] w-full"
         >
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
@@ -55,19 +59,23 @@ export const ProjectChart = memo((props: { summary: Summary }) => {
               tickLine={true}
               tickMargin={10}
               axisLine={true}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => {
+                const formatted = value.replace(/\s+/g, "\u00A0");
+                return formatted.length > 10 ? `${formatted.slice(0, 8)}...` : formatted;
+              }}
             />
             <YAxis
               dataKey="projects"
               axisLine={false}
               tickLine={false}
-              width={10} // 👈 reduce space reserved for labels
+              tickMargin={8}
+              width={35}
             />
 
             <ChartTooltip
               cursor={false}
               content={
-                <ChartTooltipContent hideLabel={true} nameKey="browser" />
+                <ChartTooltipContent hideLabel={false} nameKey="projects" />
               }
             />
             <Bar dataKey="projects" radius={8} />
