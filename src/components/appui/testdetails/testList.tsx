@@ -109,8 +109,6 @@ export const TestList = memo(
       }
     }, [searchParams, flattened, selectedTest]);
 
-
-
     // Clear search params when sheet is closed manually
     const handleClose = useCallback(() => {
       setOpen(false);
@@ -121,8 +119,6 @@ export const TestList = memo(
         }
         return next;
       }, { replace: true });
-      // We DON'T clear selectedTest here to prevent the deep-linking useEffect 
-      // from re-opening the sheet before the URL param is fully cleared.
     }, [setSearchParams]);
 
     // Update filtered keys whenever filtered changes
@@ -145,7 +141,6 @@ export const TestList = memo(
     // Keyboard navigation J/K
     useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
-        // Ignore if user is typing in an input
         if (
           e.target instanceof HTMLInputElement ||
           e.target instanceof HTMLTextAreaElement
@@ -155,15 +150,12 @@ export const TestList = memo(
 
         const key = e.key.toLowerCase();
         if (["j", "k", "enter"].includes(key)) {
-          // Always prevent default for navigation keys on this page
-          // to avoid unexpected browser behavior
           e.preventDefault();
         }
 
         if (key === "j") {
           let nextIdx = focusedIndex;
           if (open && selectedTest) {
-            // Find next test in the SAME file
             const fileTests = filtered.filter(t => t.filePath === selectedTest.filePath);
             const currIdx = fileTests.findIndex(t => t.key === selectedTest.key);
             if (currIdx < fileTests.length - 1) {
@@ -181,7 +173,6 @@ export const TestList = memo(
         } else if (key === "k") {
           let prevIdx = focusedIndex;
           if (open && selectedTest) {
-            // Find prev test in the SAME file
             const fileTests = filtered.filter(t => t.filePath === selectedTest.filePath);
             const currIdx = fileTests.findIndex(t => t.key === selectedTest.key);
             if (currIdx > 0) {
@@ -235,7 +226,7 @@ export const TestList = memo(
     const rowVirtualizer = useVirtualizer({
       count: virtualData.length,
       getScrollElement: () => parentRef.current,
-      estimateSize: (index) => (virtualData[index]?.type === 'header' ? 56 : 70),
+      estimateSize: (index) => (virtualData[index]?.type === 'header' ? 52 : 72),
       overscan: 10,
     });
 
@@ -272,25 +263,29 @@ export const TestList = memo(
       );
 
       return (
-        <div className="flex gap-2 text-[10px] font-bold uppercase tracking-wider">
+        <div className="flex gap-1.5 text-[10px] font-semibold">
           {counts.passed > 0 && (
-            <span className="text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">
-              {counts.passed} P
+            <span className="inline-flex items-center gap-1 text-emerald-500 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 px-2 py-0.5 rounded-lg shadow-sm">
+              <span>{counts.passed}</span>
+              <span className="text-[8px] font-bold opacity-80">PASSED</span>
             </span>
           )}
           {counts.failed > 0 && (
-            <span className="text-red-500 bg-red-500/10 px-1.5 py-0.5 rounded">
-              {counts.failed} F
+            <span className="inline-flex items-center gap-1 text-destructive bg-destructive/5 dark:bg-destructive/10 border border-destructive/10 dark:border-destructive/20 px-2 py-0.5 rounded-lg shadow-sm">
+              <span>{counts.failed}</span>
+              <span className="text-[8px] font-bold opacity-80">FAILED</span>
             </span>
           )}
           {counts.flaky > 0 && (
-            <span className="text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
-              {counts.flaky} FL
+            <span className="inline-flex items-center gap-1 text-amber-500 bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/10 dark:border-amber-500/20 px-2 py-0.5 rounded-lg shadow-sm">
+              <span>{counts.flaky}</span>
+              <span className="text-[8px] font-bold opacity-80">FLAKY</span>
             </span>
           )}
           {counts.skipped > 0 && (
-            <span className="text-slate-500 bg-slate-500/10 px-1.5 py-0.5 rounded">
-              {counts.skipped} S
+            <span className="inline-flex items-center gap-1 text-muted-foreground bg-muted border border-border/50 px-2 py-0.5 rounded-lg shadow-sm">
+              <span>{counts.skipped}</span>
+              <span className="text-[8px] font-bold opacity-80">SKIPPED</span>
             </span>
           )}
         </div>
@@ -305,13 +300,15 @@ export const TestList = memo(
       return (
         <motion.div
           key={test.key}
-          initial={{ y: -8, opacity: 0 }}
+          initial={{ y: -6, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -8, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          exit={{ y: -6, opacity: 0 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
           className={cn(
-            "text-sm leading-relaxed cursor-pointer hover:bg-muted/50 p-2 rounded-r transition-all group",
-            isFocused && "bg-primary/10 ring-1 ring-primary/30 ring-inset"
+            "text-xs cursor-pointer transition-all duration-300 group rounded-xl border border-transparent p-3 my-1 hover:border-border/60 hover:bg-muted/40",
+            isFocused
+              ? "bg-primary/[0.06] dark:bg-primary/[0.1] border-primary/20 dark:border-primary/30 shadow-inner"
+              : "bg-card/30 dark:bg-card/10"
           )}
           onClick={() => {
             setFocusedIndex(idx);
@@ -321,22 +318,22 @@ export const TestList = memo(
           <div className="flex items-center justify-between gap-3">
             <span className="inline-flex items-center gap-2">
               <StatusDot status={test.status} />
-              <span className="truncate">{test.title}</span>
+              <span className="font-semibold text-xs text-foreground group-hover:text-primary transition-colors truncate">{test.title}</span>
             </span>
           </div>
-          <div className="mt-0.5 text-muted-foreground text-xs flex flex-wrap gap-3 pb-3">
+          <div className="mt-1.5 text-muted-foreground text-[10.5px] flex flex-wrap gap-x-4 gap-y-1.5">
             {test.suite && (
               <span className="font-medium text-foreground/70">
-                Suite: {test.suite}
+                Suite: <span className="font-semibold text-foreground/80">{test.suite}</span>
               </span>
             )}
-            <span>Duration: {formatDuration(test.duration)}</span>
+            <span>Duration: <span className="font-semibold text-foreground/80">{formatDuration(test.duration)}</span></span>
             {test.retryAttemptCount > 0 && (
-              <span>Retry: {test.retryAttemptCount}</span>
+              <span className="text-amber-500 dark:text-amber-400 font-semibold bg-amber-500/[0.08] px-1.5 py-0.2 rounded-md">Retry: {test.retryAttemptCount}</span>
             )}
-            {test.projectName && <span>Project: {String(test.projectName)}</span>}
+            {test.projectName && <span>Project: <span className="font-semibold text-foreground/80">{String(test.projectName)}</span></span>}
             {test.testTags?.length ? (
-              <span className="truncate">Tags: {test.testTags.join(", ")}</span>
+              <span className="truncate">Tags: <span className="font-semibold text-foreground/80">{test.testTags.join(", ")}</span></span>
             ) : null}
           </div>
         </motion.div>
@@ -417,7 +414,7 @@ export const TestList = memo(
         ) : (
           <div
             ref={parentRef}
-            className="h-[calc(100vh-14rem)] overflow-auto rounded-xl border bg-card/10 custom-scrollbar"
+            className="h-[calc(100vh-14rem)] overflow-auto rounded-2xl border border-border/40 bg-gradient-to-br from-card/30 to-card/10 dark:from-card/20 dark:to-card/5 p-2 custom-scrollbar shadow-sm"
           >
             <div
               style={{
@@ -443,18 +440,18 @@ export const TestList = memo(
                       height: `${virtualItem.size}px`,
                       transform: `translateY(${virtualItem.start}px)`,
                     }}
-                    className="px-2 py-1"
+                    className="px-2 py-0.5"
                   >
                     {isHeader ? (
                       <div
                         className={cn(
-                          "border-border/60 rounded-lg border bg-card/10 transition-all cursor-pointer hover:bg-card/20 flex items-center justify-between p-4 h-full",
-                          expandedFiles.has(item.filePath) && "bg-card/20 shadow-sm"
+                          "border border-border/40 rounded-xl bg-gradient-to-r from-card/80 to-card/40 dark:from-card/30 dark:to-card/10 transition-all duration-300 cursor-pointer flex items-center justify-between py-2.5 px-4 h-full shadow-sm hover:border-border hover:from-card hover:to-card",
+                          expandedFiles.has(item.filePath) && "border-primary/20 dark:border-primary/10 bg-primary/[0.01] dark:bg-primary/[0.03] shadow-inner"
                         )}
                         onClick={() => toggleFile(item.filePath)}
                       >
                         <div className="flex flex-1 items-center justify-between min-w-0 mr-2">
-                          <h3 className="text-left font-medium text-base truncate">
+                          <h3 className="text-left font-semibold text-[13.5px] truncate text-foreground/90 mr-4">
                             {item.filePath}
                           </h3>
                           <div className="shrink-0">
@@ -488,3 +485,5 @@ export const TestList = memo(
     );
   }
 );
+
+TestList.displayName = "TestList";
