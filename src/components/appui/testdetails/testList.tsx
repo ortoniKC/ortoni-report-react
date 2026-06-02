@@ -92,7 +92,7 @@ export const TestList = memo(
     }, [tests]);
 
     const [filtered, setFiltered] = useState(flattened);
-    const [filteredKeys, setFilteredKeys] = useState<Set<string>>(new Set());
+    const filteredKeys = useMemo(() => new Set(filtered.map((t) => t.key)), [filtered]);
 
     // Deep linking: Handle id from URL
     useEffect(() => {
@@ -121,10 +121,8 @@ export const TestList = memo(
       }, { replace: true });
     }, [setSearchParams]);
 
-    // Update filtered keys whenever filtered changes
+    // Reset focus and auto-expand files when filtered changes
     useEffect(() => {
-      const keys = new Set(filtered.map((t) => t.key));
-      setFilteredKeys(keys);
       setFocusedIndex(-1);
 
       // If filtering is active, auto-expand files that have matches
@@ -154,38 +152,34 @@ export const TestList = memo(
         }
 
         if (key === "j") {
-          let nextIdx = focusedIndex;
-          if (open && selectedTest) {
-            const fileTests = filtered.filter(t => t.filePath === selectedTest.filePath);
-            const currIdx = fileTests.findIndex(t => t.key === selectedTest.key);
-            if (currIdx < fileTests.length - 1) {
-              const nextTest = fileTests[currIdx + 1];
-              nextIdx = filtered.findIndex(t => t.key === nextTest.key);
-            }
-          } else {
-            nextIdx = focusedIndex < filtered.length - 1 ? focusedIndex + 1 : Math.max(0, focusedIndex);
-          }
-
-          if (nextIdx !== -1) {
+          const nextIdx = focusedIndex < filtered.length - 1 ? focusedIndex + 1 : Math.max(0, focusedIndex);
+          if (nextIdx !== -1 && nextIdx !== focusedIndex) {
             setFocusedIndex(nextIdx);
-            if (open && nextIdx !== focusedIndex) handleTestClick(filtered[nextIdx]);
+            const nextTest = filtered[nextIdx];
+            setExpandedFiles((prev) => {
+              if (!prev.has(nextTest.filePath)) {
+                const next = new Set(prev);
+                next.add(nextTest.filePath);
+                return next;
+              }
+              return prev;
+            });
+            if (open) handleTestClick(nextTest);
           }
         } else if (key === "k") {
-          let prevIdx = focusedIndex;
-          if (open && selectedTest) {
-            const fileTests = filtered.filter(t => t.filePath === selectedTest.filePath);
-            const currIdx = fileTests.findIndex(t => t.key === selectedTest.key);
-            if (currIdx > 0) {
-              const prevTest = fileTests[currIdx - 1];
-              prevIdx = filtered.findIndex(t => t.key === prevTest.key);
-            }
-          } else {
-            prevIdx = focusedIndex > 0 ? focusedIndex - 1 : 0;
-          }
-
-          if (prevIdx !== -1) {
+          const prevIdx = focusedIndex > 0 ? focusedIndex - 1 : 0;
+          if (prevIdx !== -1 && prevIdx !== focusedIndex) {
             setFocusedIndex(prevIdx);
-            if (open && prevIdx !== focusedIndex) handleTestClick(filtered[prevIdx]);
+            const prevTest = filtered[prevIdx];
+            setExpandedFiles((prev) => {
+              if (!prev.has(prevTest.filePath)) {
+                const next = new Set(prev);
+                next.add(prevTest.filePath);
+                return next;
+              }
+              return prev;
+            });
+            if (open) handleTestClick(prevTest);
           }
         } else if (key === "enter" && focusedIndex >= 0) {
           handleTestClick(filtered[focusedIndex]);
@@ -194,14 +188,14 @@ export const TestList = memo(
 
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [filtered, focusedIndex, open, handleTestClick, selectedTest]);
+    }, [filtered, focusedIndex, open, handleTestClick]);
 
     /** ─────────────────────────────
      * Virtualization Logic
      */
     const virtualData = useMemo(() => {
       const data: any[] = [];
-      Object.entries(tests.tests ?? {}).map(([filePath, suites]) => {
+      Object.entries(tests.tests ?? {}).forEach(([filePath, suites]) => {
         const hasVisible = Object.values(suites ?? {}).some(suiteData =>
           ensureArray(suiteData).some(t => filteredKeys.has(t.key))
         );
@@ -211,8 +205,8 @@ export const TestList = memo(
         data.push({ type: 'header', filePath, suites, key: `header:${filePath}` });
 
         if (expandedFiles.has(filePath)) {
-          Object.entries(suites ?? {}).map(([suiteName, suiteData]) => {
-            ensureArray(suiteData).map(t => {
+          Object.entries(suites ?? {}).forEach(([suiteName, suiteData]) => {
+            ensureArray(suiteData).forEach(t => {
               if (filteredKeys.has(t.key)) {
                 data.push({ type: 'test', test: { ...t, suite: suiteName }, key: t.key });
               }

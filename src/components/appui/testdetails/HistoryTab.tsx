@@ -6,7 +6,7 @@ import type { TestHistory } from "@/lib/types/OrtoniReportData";
 
 export function HistoryTab({ history }: { history?: TestHistory }) {
   return (
-    <TabsContent value="history" className="space-y-6">
+    <TabsContent value="history" className="pt-1.5 space-y-6">
       {history ? (
         <TestHistoryTrendChart history={history.history ?? []} />
       ) : (

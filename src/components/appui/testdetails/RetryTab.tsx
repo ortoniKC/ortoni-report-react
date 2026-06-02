@@ -163,7 +163,7 @@ export function RetryTab({
   );
 
   return (
-    <TabsContent value="retries" className="space-y-6 pt-4">
+    <TabsContent value="retries" className="pt-1.5 space-y-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {sortedAttempts.map((test, i) => renderAttemptSummary(test, i))}
       </div>

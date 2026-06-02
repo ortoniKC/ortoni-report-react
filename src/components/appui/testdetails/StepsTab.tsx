@@ -60,7 +60,7 @@ function ErrorSnippetBlock({ snippet }: { snippet: string }) {
 
       <div className="relative">
         <pre
-          className={`text-xs text-muted-foreground whitespace-pre-wrap font-mono p-3 bg-muted/10 rounded border border-border/10 transition-all overflow-hidden ${
+          className={`text-[11px] text-muted-foreground whitespace-pre-wrap font-mono p-3 bg-muted/10 rounded border border-border/10 transition-all overflow-hidden ${
             isLong && !isExpanded ? "max-h-[160px] pb-8" : ""
           }`}
           dangerouslySetInnerHTML={{
@@ -127,7 +127,7 @@ function StepItem({
     <div className="mb-1">
       <div className="flex items-start gap-2 justify-between py-1 group rounded-lg hover:bg-muted/10 px-1.5 -mx-1.5 transition-colors">
         <div className="flex items-start gap-1.5 flex-1 min-w-0">
-          <span className="text-muted-foreground/60 font-mono text-xs w-6 text-right select-none pt-0.5 flex-shrink-0">
+          <span className="text-muted-foreground/60 font-mono text-[11px] w-6 text-right select-none pt-0.5 flex-shrink-0">
             {numbering}
           </span>
 
@@ -141,17 +141,17 @@ function StepItem({
                   aria-expanded={expanded}
                 >
                   <ChevronRight
-                    className={`size-3.5 transition-transform duration-200 ${
+                    className={`size-3 transition-transform duration-200 ${
                       expanded ? "rotate-90" : ""
                     }`}
                   />
                 </button>
               ) : (
-                <div className="w-[22px] flex-shrink-0" />
+                <div className="w-4 flex-shrink-0" />
               )}
               <span
-                className={`text-sm font-medium break-words leading-tight ${
-                  s.snippet ? "text-destructive font-semibold" : "text-foreground/90"
+                className={`text-xs font-semibold break-words leading-tight ${
+                  s.snippet ? "text-destructive" : "text-foreground/90"
                 }`}
               >
                 {s.title}
@@ -164,7 +164,7 @@ function StepItem({
 
         <div className="flex items-center gap-2 flex-shrink-0 self-start pt-0.5">
           {s.duration && (
-            <span className="text-muted-foreground/60 font-mono text-xs">
+            <span className="text-muted-foreground/60 font-mono text-[10px]">
               {s.duration} ms
             </span>
           )}
@@ -209,6 +209,17 @@ function renderStepsRecursive(
   ));
 }
 
+/**
+ * Recursively checks if any step in the list has nested child steps.
+ */
+function hasAnySubSteps(steps: Steps[]): boolean {
+  return steps.some(
+    (s) =>
+      (s.category === "test.step" && s.steps && s.steps.length > 0) ||
+      (s.steps && hasAnySubSteps(s.steps))
+  );
+}
+
 export function StepsTab({
   steps,
   testStatus,
@@ -221,25 +232,29 @@ export function StepsTab({
 
   if (!steps?.length) return null;
 
+  const showHeader = hasAnySubSteps(steps);
+
   return (
-    <TabsContent value="steps" className="pt-4 space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-muted-foreground">Test Execution Steps</h3>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setExpandTrigger((c) => c + 1)}
-            className="text-xs px-2.5 py-1 rounded-md border border-border bg-background hover:bg-muted text-foreground font-medium transition-all shadow-sm active:scale-95"
-          >
-            Expand All
-          </button>
-          <button
-            onClick={() => setCollapseTrigger((c) => c + 1)}
-            className="text-xs px-2.5 py-1 rounded-md border border-border bg-background hover:bg-muted text-foreground font-medium transition-all shadow-sm active:scale-95"
-          >
-            Collapse All
-          </button>
+    <TabsContent value="steps" className="pt-1.5 space-y-4">
+      {showHeader && (
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs font-medium text-muted-foreground">Test Execution Steps</h3>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setExpandTrigger((c) => c + 1)}
+              className="text-[10px] px-2 py-0.5 rounded-md border border-border bg-background hover:bg-muted text-foreground font-medium transition-all shadow-sm active:scale-95"
+            >
+              Expand All
+            </button>
+            <button
+              onClick={() => setCollapseTrigger((c) => c + 1)}
+              className="text-[10px] px-2 py-0.5 rounded-md border border-border bg-background hover:bg-muted text-foreground font-medium transition-all shadow-sm active:scale-95"
+            >
+              Collapse All
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       <EllipsisBlock title="Test Steps" key="steps">
         <div className="font-sans space-y-1 text-left">
           {renderStepsRecursive(
