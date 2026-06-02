@@ -90,7 +90,7 @@ export function TestTabs({
           </TabsTrigger>
         </TabsList>
 
-        <StepsTab steps={test.steps} testStatus={test.status} />
+        <StepsTab key={test.testId} steps={test.steps} testStatus={test.status} />
         <ErrorsTab test={test} />
         <LogsTab logs={test.logs} />
         <RetryTab attempts={allAttempts} currentKey={test.key} />
