@@ -19,6 +19,10 @@ export function TestDetails({
   testHistories: TestHistory[];
   allTests?: TestResultItem[];
 }) {
+  const allAttempts = useMemo(() => {
+    return test ? allTests.filter((t) => t.testId === test.testId) : [];
+  }, [allTests, test]);
+
   if (!test) {
     return (
       <div className="h-full flex items-center justify-center rounded-lg bg-muted/20 border">
@@ -34,11 +38,6 @@ export function TestDetails({
       </div>
     );
   }
-
-  const allAttempts = useMemo(() => {
-    if (!test) return [];
-    return allTests.filter((t) => t.testId === test.testId);
-  }, [allTests, test]);
 
   const testHistory = testHistories.find((h) => h.testId === test.testId);
 
