@@ -25,6 +25,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { TruncatedTooltip } from "@/components/ui/truncated-tooltip";
 
 export const TestList = memo(
   (props: { tests: TestResult }) => {
@@ -315,10 +316,13 @@ export const TestList = memo(
             handleTestClick(test);
           }}
         >
-          <div className="flex items-center justify-between gap-3">
-            <span className="inline-flex items-center gap-2">
+          <div className="flex items-center justify-between gap-3 min-w-0">
+            <span className="inline-flex items-center gap-2 min-w-0 flex-1">
               <StatusDot status={test.status} />
-              <span className="font-semibold text-xs text-foreground group-hover:text-primary transition-colors truncate">{test.title}</span>
+              <TruncatedTooltip
+                text={test.title}
+                className="font-semibold text-xs text-foreground group-hover:text-primary transition-colors flex-1"
+              />
             </span>
           </div>
           <div className="mt-1.5 text-muted-foreground text-[10.5px] flex flex-wrap gap-x-4 gap-y-1.5">
