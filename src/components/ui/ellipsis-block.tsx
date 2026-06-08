@@ -55,19 +55,19 @@ export const EllipsisBlock = memo(
     return (
       <div className="relative w-full max-w-5xl rounded-xl p-0.5">
         <div className="rounded-xl p-4">
-          <div className="flex items-center justify-between rounded-t-xl border-b border-gray-700 bg-neutral-900 px-4 py-2">
+          <div className="flex items-center justify-between rounded-t-xl border-b border-neutral-200 dark:border-gray-700 bg-neutral-100 dark:bg-neutral-900 px-4 py-2">
             <div className="flex items-center justify-center gap-2">
               <span className="size-3 rounded-full bg-[#FF5F56]" />
               <span className="size-3 rounded-full bg-[#FFBD2E]" />
               <span className="size-3 rounded-full bg-[#27C93F]" />
             </div>
 
-            <p className="text-sm font-medium text-gray-400">{title}</p>
+            <p className="text-sm font-medium text-neutral-500 dark:text-gray-400">{title}</p>
 
             <button
               aria-label="Copy"
               onClick={handleCopy}
-              className="rounded-xl bg-gray-800 p-2 text-gray-100 hover:bg-gray-700 focus:outline-none"
+              className="rounded-xl bg-neutral-200 dark:bg-gray-800 p-2 text-neutral-700 dark:text-gray-100 hover:bg-neutral-300 dark:hover:bg-gray-700 focus:outline-none"
             >
               <motion.div
                 key={status}
@@ -83,7 +83,7 @@ export const EllipsisBlock = memo(
 
           <pre
             ref={contentRef}
-            className="overflow-x-auto rounded-b-xl bg-stone-900 p-4 text-xs text-blue-100"
+            className="overflow-x-auto rounded-b-xl bg-stone-50 dark:bg-stone-900 p-4 text-xs text-blue-950 dark:text-blue-100"
           >
             {children}
             {Array.isArray(errors) ? (
