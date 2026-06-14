@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Clock, Folder, Copy, Check } from "lucide-react";
+import { Clock, Folder, Copy, Check, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,
@@ -19,12 +19,14 @@ export function TestMeta({
   projectName,
   suite,
   location,
+  retryAttemptCount
 }: {
   status: TestStatus;
   duration: string;
   projectName: string;
   suite: string;
   location: string;
+  retryAttemptCount: number;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -46,6 +48,12 @@ export function TestMeta({
       className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
     >
       <StatusPill status={status} />
+      {retryAttemptCount > 0 && (
+        <div className="flex items-center gap-1">
+          <RefreshCw className="h-4 w-4" />
+          <span className="truncate max-w-[120px]">Retried: {retryAttemptCount}</span>
+        </div>
+      )}
       <div className="flex items-center gap-1">
         {duration ? (
           <>
@@ -58,6 +66,7 @@ export function TestMeta({
         <Folder className="h-4 w-4" />
         <span className="truncate max-w-[120px]">{projectName}</span>
       </div>
+
       {suite.length > 0 && (
         <Badge variant="outline" className="text-xs">
           {suite}

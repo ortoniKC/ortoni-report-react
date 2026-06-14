@@ -1,6 +1,13 @@
 "use client";
 
-import { memo, useState, useMemo, useEffect, useCallback, useRef } from "react";
+import {
+  memo,
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn, ensureArray, formatDuration } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -27,6 +34,7 @@ import {
 } from "@/components/ui/tooltip";
 import { TruncatedTooltip } from "@/components/ui/truncated-tooltip";
 
+
 export const TestList = memo(
   (props: { tests: TestResult }) => {
     const { tests } = props;
@@ -38,7 +46,14 @@ export const TestList = memo(
     const [expandedFiles, setExpandedFiles] = useState<Set<string>>(new Set());
     const [searchParams, setSearchParams] = useSearchParams();
     const [focusedIndex, setFocusedIndex] = useState(-1);
+    // #9: edge-shake animation trigger
+    const [shakeEdge, setShakeEdge] = useState<"top" | "bottom" | null>(null);
     const parentRef = useRef<HTMLDivElement>(null);
+    // #12: ref to the currently focused test row DOM element
+    const focusedRowRef = useRef<HTMLDivElement | null>(null);
+    // Scroll should only trigger from keyboard navigation, not from virtualData
+    // recomputes caused by header expand/collapse clicks.
+    const shouldScrollRef = useRef(false);
 
     const toggleFile = (filePath: string) => {
       setExpandedFiles((prev) => {
@@ -95,7 +110,16 @@ export const TestList = memo(
     const [filtered, setFiltered] = useState(flattened);
     const [filteredKeys, setFilteredKeys] = useState<Set<string>>(new Set());
 
+    // #10: O(1) key → filtered-index lookup (avoids findIndex per virtualizer row)
+    const filteredIndexMap = useMemo<Map<string, number>>(() => {
+      const map = new Map<string, number>();
+      filtered.forEach((t, i) => map.set(t.key, i));
+      return map;
+    }, [filtered]);
+
     // Deep linking: Handle id from URL
+    // Bug fix: use filteredIndexMap (not flattened) so focusedIndex matches the
+    // position in the filtered array that keyboard navigation operates on.
     useEffect(() => {
       const id = searchParams.get("id");
       if (id && flattened.length > 0) {
@@ -103,14 +127,14 @@ export const TestList = memo(
         if (targetTest && (!selectedTest || selectedTest.key !== id)) {
           setSelectedTest(targetTest);
           setOpen(true);
-          // Sync focused index for keyboard navigation
-          const idx = flattened.findIndex((t) => t.key === id);
+          // Use filtered index so J/K navigation stays in sync
+          const idx = filteredIndexMap.get(id) ?? -1;
           if (idx !== -1) setFocusedIndex(idx);
         }
       }
-    }, [searchParams, flattened, selectedTest]);
+    }, [searchParams, flattened, selectedTest, filteredIndexMap]);
 
-    // Clear search params when sheet is closed manually
+    // #6: Clear search params when sheet is closed manually
     const handleClose = useCallback(() => {
       setOpen(false);
       setSearchParams((prev) => {
@@ -126,7 +150,19 @@ export const TestList = memo(
     useEffect(() => {
       const keys = new Set(filtered.map((t) => t.key));
       setFilteredKeys(keys);
-      setFocusedIndex(-1);
+
+      // Bug fix: if the sheet is open with a selectedTest, resync focusedIndex
+      // to that test's new position in the filtered array instead of blindly
+      // resetting to -1 (which would desync the sheet from keyboard navigation).
+      setFocusedIndex((_prev) => {
+        if (selectedTest) {
+          const newIdx = filtered.findIndex((t) => t.key === selectedTest.key);
+          // If the selected test is still in the filtered set, keep it focused;
+          // otherwise fall back to -1 (it was filtered out).
+          return newIdx !== -1 ? newIdx : -1;
+        }
+        return -1;
+      });
 
       // If filtering is active, auto-expand files that have matches
       if (filtered.length !== flattened.length) {
@@ -137,9 +173,30 @@ export const TestList = memo(
           return next;
         });
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filtered, flattened.length]);
 
-    // Keyboard navigation J/K
+    // ─── #9: Edge shake helper ───────────────────────────────────────────────
+    const triggerEdgeShake = useCallback((edge: "top" | "bottom") => {
+      setShakeEdge(edge);
+      setTimeout(() => setShakeEdge(null), 500);
+    }, []);
+
+    // ─── #3: Ensure the file for a given test is expanded ───────────────────
+    const ensureFileExpanded = useCallback((filePath: string) => {
+      setExpandedFiles(prev => {
+        if (prev.has(filePath)) return prev;
+        const next = new Set(prev);
+        next.add(filePath);
+        return next;
+      });
+    }, []);
+
+    /** ─────────────────────────────
+     * Keyboard navigation J/K (and aliases ArrowDown/ArrowUp, Enter, Escape)
+     * Fixes: #1 cross-file nav, #3 auto-expand, #4 K at -1, #5 spurious click,
+     *        #6 Escape, #7 arrow aliases
+     */
     useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
         if (
@@ -150,52 +207,82 @@ export const TestList = memo(
         }
 
         const key = e.key.toLowerCase();
-        if (["j", "k", "enter"].includes(key)) {
-          e.preventDefault();
+        const isNext = key === "j" || key === "arrowdown";
+        const isPrev = key === "k" || key === "arrowup";
+        const isEnter = key === "enter";
+        const isEscape = key === "escape";
+
+        if (isNext || isPrev || isEnter || isEscape) {
+          // Prevent default scroll for arrow keys, vim keys, enter
+          if (isNext || isPrev || isEnter) e.preventDefault();
+        } else {
+          return;
         }
 
-        if (key === "j") {
-          let nextIdx = focusedIndex;
-          if (open && selectedTest) {
-            const fileTests = filtered.filter(t => t.filePath === selectedTest.filePath);
-            const currIdx = fileTests.findIndex(t => t.key === selectedTest.key);
-            if (currIdx < fileTests.length - 1) {
-              const nextTest = fileTests[currIdx + 1];
-              nextIdx = filtered.findIndex(t => t.key === nextTest.key);
-            }
-          } else {
-            nextIdx = focusedIndex < filtered.length - 1 ? focusedIndex + 1 : Math.max(0, focusedIndex);
-          }
+        // #6: Escape closes the sheet
+        if (isEscape) {
+          if (open) handleClose();
+          return;
+        }
 
-          if (nextIdx !== -1) {
+        if (isNext) {
+          // #4/#11: Unified cross-file navigation, no per-file constraint
+          if (focusedIndex < filtered.length - 1) {
+            const nextIdx = focusedIndex + 1;
+            const nextTest = filtered[nextIdx];
+            // #3: Auto-expand if collapsed
+            ensureFileExpanded(nextTest.filePath);
+            shouldScrollRef.current = true;
             setFocusedIndex(nextIdx);
-            if (open && nextIdx !== focusedIndex) handleTestClick(filtered[nextIdx]);
-          }
-        } else if (key === "k") {
-          let prevIdx = focusedIndex;
-          if (open && selectedTest) {
-            const fileTests = filtered.filter(t => t.filePath === selectedTest.filePath);
-            const currIdx = fileTests.findIndex(t => t.key === selectedTest.key);
-            if (currIdx > 0) {
-              const prevTest = fileTests[currIdx - 1];
-              prevIdx = filtered.findIndex(t => t.key === prevTest.key);
+            // #5: Only call handleTestClick if sheet is open AND test actually changed
+            if (open && nextTest.key !== selectedTest?.key) {
+              handleTestClick(nextTest);
             }
           } else {
-            prevIdx = focusedIndex > 0 ? focusedIndex - 1 : 0;
+            // #9: At end of list — shake
+            triggerEdgeShake("bottom");
           }
-
-          if (prevIdx !== -1) {
+        } else if (isPrev) {
+          // #4: Fix K when focusedIndex is -1 or 0
+          if (focusedIndex > 0) {
+            const prevIdx = focusedIndex - 1;
+            const prevTest = filtered[prevIdx];
+            // #3: Auto-expand if collapsed
+            ensureFileExpanded(prevTest.filePath);
+            shouldScrollRef.current = true;
             setFocusedIndex(prevIdx);
-            if (open && prevIdx !== focusedIndex) handleTestClick(filtered[prevIdx]);
+            // #5: Only call handleTestClick if sheet is open AND test actually changed
+            if (open && prevTest.key !== selectedTest?.key) {
+              handleTestClick(prevTest);
+            }
+          } else if (focusedIndex === -1 && filtered.length > 0) {
+            // #4: K when nothing selected → jump to first item
+            const firstTest = filtered[0];
+            ensureFileExpanded(firstTest.filePath);
+            shouldScrollRef.current = true;
+            setFocusedIndex(0);
+            if (open) handleTestClick(firstTest);
+          } else {
+            // #9: At start of list — shake
+            triggerEdgeShake("top");
           }
-        } else if (key === "enter" && focusedIndex >= 0) {
+        } else if (isEnter && focusedIndex >= 0) {
           handleTestClick(filtered[focusedIndex]);
         }
       };
 
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [filtered, focusedIndex, open, handleTestClick, selectedTest]);
+    }, [
+      filtered,
+      focusedIndex,
+      open,
+      handleTestClick,
+      selectedTest,
+      handleClose,
+      ensureFileExpanded,
+      triggerEdgeShake,
+    ]);
 
     /** ─────────────────────────────
      * Virtualization Logic
@@ -231,8 +318,12 @@ export const TestList = memo(
       overscan: 10,
     });
 
-    // Scroll to focused index when navigating with keys
+    // Scroll to focused index — only when triggered by keyboard navigation.
+    // Using shouldScrollRef prevents header expand/collapse clicks from
+    // scrolling to the last-focused test whenever virtualData recomputes.
     useEffect(() => {
+      if (!shouldScrollRef.current) return;
+      shouldScrollRef.current = false;
       if (focusedIndex >= 0 && filtered[focusedIndex]) {
         const testKey = filtered[focusedIndex].key;
         const virtualIdx = virtualData.findIndex(item => item.key === testKey);
@@ -241,6 +332,13 @@ export const TestList = memo(
         }
       }
     }, [focusedIndex, filtered, virtualData, rowVirtualizer]);
+
+    // #12: Move native browser focus to the focused row element
+    useEffect(() => {
+      if (focusedIndex >= 0 && focusedRowRef.current) {
+        focusedRowRef.current.focus({ preventScroll: true });
+      }
+    }, [focusedIndex]);
 
     /** ─────────────────────────────
      * Calculate summary for a file/suite
@@ -295,18 +393,27 @@ export const TestList = memo(
 
     /** ─────────────────────────────
      * Render leaf node test
+     * #10: Uses filteredIndexMap for O(1) lookup instead of findIndex
+     * #12: Sets tabIndex and focusedRowRef for native focus
      */
-    const renderTest = (test: TestResultItem, idx: number) => {
+    const renderTest = (test: TestResultItem) => {
+      // #10: O(1) lookup
+      const idx = filteredIndexMap.get(test.key) ?? -1;
       const isFocused = idx === focusedIndex;
       return (
         <motion.div
           key={test.key}
+          ref={isFocused ? focusedRowRef : null}
+          // #12: Accessibility — native focus for keyboard users
+          tabIndex={isFocused ? 0 : -1}
+          role="option"
+          aria-selected={isFocused}
           initial={{ y: -6, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -6, opacity: 0 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
           className={cn(
-            "text-xs cursor-pointer transition-all duration-300 group rounded-xl border border-transparent p-3 my-1 hover:border-border/60 hover:bg-muted/40",
+            "text-xs cursor-pointer transition-all duration-300 group rounded-xl border border-transparent p-3 my-1 hover:border-border/60 hover:bg-muted/40 outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
             isFocused
               ? "bg-primary/[0.06] dark:bg-primary/[0.1] border-primary/20 dark:border-primary/30 shadow-inner"
               : "bg-card/30 dark:bg-card/10"
@@ -314,6 +421,11 @@ export const TestList = memo(
           onClick={() => {
             setFocusedIndex(idx);
             handleTestClick(test);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleTestClick(test);
+            }
           }}
         >
           <div className="flex items-center justify-between gap-3 min-w-0">
@@ -416,74 +528,89 @@ export const TestList = memo(
             No tests match the current filters
           </p>
         ) : (
-          <div
-            ref={parentRef}
-            className="h-[calc(100vh-14rem)] overflow-auto rounded-2xl border border-border/40 bg-gradient-to-br from-card/30 to-card/10 dark:from-card/20 dark:to-card/5 p-2 custom-scrollbar shadow-sm"
+          // #9: Edge-shake animation wrapper
+          <motion.div
+            animate={
+              shakeEdge === "bottom"
+                ? { x: [0, -6, 6, -4, 4, -2, 2, 0] }
+                : shakeEdge === "top"
+                  ? { x: [0, 6, -6, 4, -4, 2, -2, 0] }
+                  : { x: 0 }
+            }
+            transition={{ duration: 0.45, ease: "easeInOut" }}
           >
             <div
-              style={{
-                height: `${rowVirtualizer.getTotalSize()}px`,
-                width: '100%',
-                position: 'relative',
-              }}
+              ref={parentRef}
+              role="listbox"
+              aria-label="Test list"
+              className="h-[calc(100vh-14rem)] overflow-auto rounded-2xl border border-border/40 bg-gradient-to-br from-card/30 to-card/10 dark:from-card/20 dark:to-card/5 p-2 custom-scrollbar shadow-sm"
             >
-              {rowVirtualizer.getVirtualItems().map((virtualItem) => {
-                const item = virtualData[virtualItem.index];
-                if (!item) return null;
+              <div
+                style={{
+                  height: `${rowVirtualizer.getTotalSize()}px`,
+                  width: '100%',
+                  position: 'relative',
+                }}
+              >
+                {rowVirtualizer.getVirtualItems().map((virtualItem) => {
+                  const item = virtualData[virtualItem.index];
+                  if (!item) return null;
 
-                const isHeader = item.type === 'header';
+                  const isHeader = item.type === 'header';
 
-                return (
-                  <div
-                    key={virtualItem.key}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: `${virtualItem.size}px`,
-                      transform: `translateY(${virtualItem.start}px)`,
-                    }}
-                    className="px-2 py-0.5"
-                  >
-                    {isHeader ? (
-                      <div
-                        className={cn(
-                          "border border-border/40 rounded-xl bg-gradient-to-r from-card/80 to-card/40 dark:from-card/30 dark:to-card/10 transition-all duration-300 cursor-pointer flex items-center justify-between py-2.5 px-4 h-full shadow-sm hover:border-border hover:from-card hover:to-card",
-                          expandedFiles.has(item.filePath) && "border-primary/20 dark:border-primary/10 bg-primary/[0.01] dark:bg-primary/[0.03] shadow-inner"
-                        )}
-                        onClick={() => toggleFile(item.filePath)}
-                      >
-                        <div className="flex flex-1 items-center justify-between min-w-0 mr-2">
-                          <h3 className="text-left font-semibold text-[13.5px] truncate text-foreground/90 mr-4">
-                            {item.filePath}
-                          </h3>
-                          <div className="shrink-0">
-                            {getStatusSummary(
-                              Object.values(item.suites ?? {}).flatMap((s) => ensureArray(s))
-                            )}
-                          </div>
-                        </div>
-                        <motion.div
-                          animate={{ rotate: expandedFiles.has(item.filePath) ? 180 : 0 }}
+                  return (
+                    <div
+                      key={virtualItem.key}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: `${virtualItem.size}px`,
+                        transform: `translateY(${virtualItem.start}px)`,
+                      }}
+                      className="px-2 py-0.5"
+                    >
+                      {isHeader ? (
+                        <div
                           className={cn(
-                            "shrink-0 rounded-full p-0.5 transition-colors",
-                            expandedFiles.has(item.filePath) ? "text-primary" : "text-muted-foreground"
+                            "border border-border/40 rounded-xl bg-gradient-to-r from-card/80 to-card/40 dark:from-card/30 dark:to-card/10 transition-all duration-300 cursor-pointer flex items-center justify-between py-2.5 px-4 h-full shadow-sm hover:border-border hover:from-card hover:to-card",
+                            expandedFiles.has(item.filePath) && "border-primary/20 dark:border-primary/10 bg-primary/[0.01] dark:bg-primary/[0.03] shadow-inner"
                           )}
+                          onClick={() => toggleFile(item.filePath)}
                         >
-                          <ChevronDown className="h-4 w-4" />
-                        </motion.div>
-                      </div>
-                    ) : (
-                      <div className="pl-6 h-full">
-                        {renderTest(item.test, filtered.findIndex(t => t.key === item.key))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                          <div className="flex flex-1 items-center justify-between min-w-0 mr-2">
+                            <h3 className="text-left font-semibold text-[13.5px] truncate text-foreground/90 mr-4">
+                              {item.filePath}
+                            </h3>
+                            <div className="shrink-0">
+                              {getStatusSummary(
+                                Object.values(item.suites ?? {}).flatMap((s) => ensureArray(s))
+                              )}
+                            </div>
+                          </div>
+                          <motion.div
+                            animate={{ rotate: expandedFiles.has(item.filePath) ? 180 : 0 }}
+                            className={cn(
+                              "shrink-0 rounded-full p-0.5 transition-colors",
+                              expandedFiles.has(item.filePath) ? "text-primary" : "text-muted-foreground"
+                            )}
+                          >
+                            <ChevronDown className="h-4 w-4" />
+                          </motion.div>
+                        </div>
+                      ) : (
+                        // #10: Pass test directly, no findIndex inside render
+                        <div className="pl-6 h-full">
+                          {renderTest(item.test)}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </motion.div>
         )}
       </>
     );

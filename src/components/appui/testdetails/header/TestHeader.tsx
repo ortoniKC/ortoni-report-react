@@ -15,6 +15,7 @@ export function TestHeader({ test }: { test: TestResultItem }) {
         projectName={test.projectName}
         suite={test.suiteHierarchy}
         location={test.location}
+        retryAttemptCount={test.retryAttemptCount}
       />
     </>
   );
