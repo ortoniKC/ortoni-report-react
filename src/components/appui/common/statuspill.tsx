@@ -1,26 +1,28 @@
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 
-import { AlertCircle, Check, ChevronRight, Clock, XCircle } from "lucide-react";
+import { AlertCircle, Check, Clock, XCircle, ChevronRightCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function StatusPill({
   status,
   size = "md",
+  iconOnly = false,
 }: {
   status: TestResultItem["status"];
   size?: "xs" | "sm" | "md";
+  iconOnly?: boolean;
 }) {
   const sizeMap = {
     xs: {
-      pill: "px-2 py-0.3 text-[8px] gap-0.5",
+      pill: iconOnly ? "p-0.5 aspect-square justify-center" : "px-2 py-0.3 text-[8px] gap-0.5",
       icon: "h-2 w-2",
     },
     sm: {
-      pill: "px-2.5 py-0.5 text-[11px] gap-1",
+      pill: iconOnly ? "p-1 aspect-square justify-center" : "px-2.5 py-0.5 text-[11px] gap-1",
       icon: "h-3.5 w-3.5",
     },
     md: {
-      pill: "px-3 py-1 text-xs gap-1.5",
+      pill: iconOnly ? "p-1.5 aspect-square justify-center" : "px-3 py-1 text-xs gap-1.5",
       icon: "h-4 w-4",
     },
   };
@@ -53,17 +55,17 @@ export function StatusPill({
     skipped: {
       class:
         "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className={sizes.icon} />,
+      icon: <ChevronRightCircle className={sizes.icon} />,
     },
     expected: {
       class:
         "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className={sizes.icon} />,
+      icon: <ChevronRightCircle className={sizes.icon} />,
     },
     unexpected: {
       class:
         "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className={sizes.icon} />,
+      icon: <ChevronRightCircle className={sizes.icon} />,
     },
   };
 
@@ -78,9 +80,10 @@ export function StatusPill({
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.2 }}
       className={`inline-flex items-center rounded-full border font-medium ${sizes.pill} ${config.class}`}
+      title={iconOnly ? status.charAt(0).toUpperCase() + status.slice(1) : undefined}
     >
       {config.icon}
-      {status.charAt(0).toUpperCase() + status.slice(1)}
+      {!iconOnly && status.charAt(0).toUpperCase() + status.slice(1)}
     </motion.span>
   );
 }

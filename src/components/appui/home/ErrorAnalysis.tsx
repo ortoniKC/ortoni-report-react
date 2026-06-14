@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { TruncatedTooltip } from "@/components/ui/truncated-tooltip";
 
 interface ErrorAnalysisProps {
     testResult: TestResult;
@@ -73,9 +74,11 @@ export const ErrorAnalysis = memo(({ testResult }: ErrorAnalysisProps) => {
                                         {group.count}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-xs font-semibold truncate leading-none mb-1 text-foreground group-hover:text-primary transition-colors">
-                                            {group.message.split("\n")[0]}
-                                        </p>
+                                        <TruncatedTooltip
+                                            as="p"
+                                            text={group.message.split("\n")[0]}
+                                            className="text-xs font-semibold leading-none mb-1 text-foreground group-hover:text-primary transition-colors"
+                                        />
                                         <p className="text-[11px] text-muted-foreground">
                                             Affecting {group.tests.length} {group.tests.length === 1 ? "test" : "tests"}
                                         </p>
@@ -97,17 +100,18 @@ export const ErrorAnalysis = memo(({ testResult }: ErrorAnalysisProps) => {
                                                 <motion.div
                                                     whileHover={{ y: -1.5 }}
                                                     key={test.key}
-                                                    className="flex items-start gap-2.5 p-2.5 rounded-lg border border-border/40 bg-card/50 dark:bg-card/20 text-[11px] hover:border-border hover:bg-muted/50 transition-all duration-300 cursor-pointer group"
-                                                    title={test.title}
+                                                    className="flex items-start gap-2.5 p-2.5 rounded-lg border border-border/40 bg-card/50 dark:bg-card/20 text-[11px] hover:border-border hover:bg-muted/50 transition-all duration-300 cursor-pointer group flex-1 min-w-0"
                                                     onClick={() => navigate(`/tests?id=${test.key}`)}
                                                 >
                                                     <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-muted border border-border/40 group-hover:bg-background group-hover:border-border transition-all duration-300">
                                                         <TestTube2 className="h-3 w-3 text-muted-foreground group-hover:text-foreground transition-colors" />
                                                     </div>
-                                                    <div className="min-w-0">
-                                                        <p className="font-medium truncate leading-normal text-xs text-foreground group-hover:text-primary transition-colors">
-                                                            {test.title}
-                                                        </p>
+                                                    <div className="min-w-0 flex-1">
+                                                        <TruncatedTooltip
+                                                            as="p"
+                                                            text={test.title}
+                                                            className="font-medium leading-normal text-xs text-foreground group-hover:text-primary transition-colors"
+                                                        />
                                                         <div className="flex items-center gap-1 text-[10px] text-muted-foreground mt-0.5">
                                                             <span className="truncate">{test.filePath}</span>
                                                             <ChevronRight className="h-2 w-2 text-muted-foreground/50" />

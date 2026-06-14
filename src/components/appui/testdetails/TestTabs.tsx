@@ -28,7 +28,9 @@ export function TestTabs({
       ? "steps"
       : test.errors?.length > 0
         ? "errors"
-        : "logs";
+        : test.logs
+          ? "logs"
+          : "history";
 
   const handleTabChange = () => {
     if (sectionRef.current) {

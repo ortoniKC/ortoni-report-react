@@ -83,7 +83,7 @@ function StepItem({
             {/* Error snippet — shown inline below the step title when present */}
             {s.snippet && (
               <pre
-                className="text-sm text-muted-foreground whitespace-pre-wrap font-mono p-2 bg-muted/10 rounded mt-1"
+                className="text-sm text-foreground/80 dark:text-muted-foreground whitespace-pre-wrap font-mono p-2 bg-muted/30 dark:bg-muted/10 rounded mt-1 border border-border/40"
                 dangerouslySetInnerHTML={{
                   __html: formatIfJson(decodeHtmlEntities(s.snippet)),
                 }}
@@ -99,7 +99,7 @@ function StepItem({
             </span>
           )}
           {s.status && (
-            <StatusPill status={s.status as TestStatus} size="xs" />
+            <StatusPill status={s.status as TestStatus} size="xs" iconOnly />
           )}
         </div>
       </div>

@@ -10,7 +10,7 @@ export function ErrorsTab({ test }: { test: TestResultItem }) {
   if (!errors?.length) return null;
 
   return (
-    <TabsContent value="errors" className="pt-4 space-y-4">
+    <TabsContent value="errors">
       {errors.map((e, i) => (
         <div key={i} className="flex flex-col gap-2">
           <EllipsisBlock errors={[e]} title="Error" />

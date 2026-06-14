@@ -1,17 +1,25 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-export function TestTitle({ title }: { title: string }) {
+export function TruncatedTooltip({
+  text,
+  className,
+  as = "span",
+}: {
+  text: string;
+  className?: string;
+  as?: "span" | "h2" | "h3" | "h4" | "p";
+}) {
   const [isOverflowing, setIsOverflowing] = useState(false);
-  const ref = useRef<HTMLHeadingElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
   const checkOverflow = () => {
     const el = ref.current;
     if (el) {
+      // Use scrollWidth > clientWidth to detect if the text is truncated
       setIsOverflowing(el.scrollWidth > el.clientWidth);
     }
   };
@@ -20,32 +28,31 @@ export function TestTitle({ title }: { title: string }) {
     checkOverflow();
     window.addEventListener("resize", checkOverflow);
     return () => window.removeEventListener("resize", checkOverflow);
-  }, [title]);
+  }, [text]);
 
-  const headingElement = (
-    <motion.h2
-      ref={ref}
+  const Tag = as;
+
+  const element = (
+    <Tag
+      ref={ref as any}
       onMouseEnter={checkOverflow}
-      initial={{ opacity: 0, y: -5 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25 }}
-      className={cn("text-xl font-semibold truncate mb-2", isOverflowing && "cursor-help")}
+      className={cn(className, "truncate", isOverflowing && "cursor-help")}
     >
-      {title}
-    </motion.h2>
+      {text}
+    </Tag>
   );
 
   if (!isOverflowing) {
-    return headingElement;
+    return element;
   }
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        {headingElement}
+        {element}
       </TooltipTrigger>
-      <TooltipContent side="bottom" align="start" className="max-w-md break-words">
-        {title}
+      <TooltipContent side="top" align="start" className="max-w-md break-words">
+        {text}
       </TooltipContent>
     </Tooltip>
   );

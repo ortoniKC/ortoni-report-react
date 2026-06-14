@@ -36,7 +36,7 @@ const menuItems = [
 ];
 
 export const DashboardSidebar = memo(() => {
-  const version = "4.0.9";
+  const version = "4.10.0";
   const location = useLocation();
   const { reportData } = useReport();
 
