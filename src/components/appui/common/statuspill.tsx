@@ -1,6 +1,6 @@
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 
-import { AlertCircle, Check, ChevronRight, Clock, XCircle } from "lucide-react";
+import { AlertCircle, Check, RefreshCw, Clock, XCircle, ChevronRightCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function StatusPill({
@@ -55,17 +55,17 @@ export function StatusPill({
     skipped: {
       class:
         "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className={sizes.icon} />,
+      icon: <ChevronRightCircle className={sizes.icon} />,
     },
     expected: {
       class:
         "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className={sizes.icon} />,
+      icon: <ChevronRightCircle className={sizes.icon} />,
     },
     unexpected: {
       class:
         "bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/20",
-      icon: <ChevronRight className={sizes.icon} />,
+      icon: <ChevronRightCircle className={sizes.icon} />,
     },
   };
 

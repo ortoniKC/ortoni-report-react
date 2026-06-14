@@ -437,19 +437,37 @@ export const TestList = memo(
               />
             </span>
           </div>
-          <div className="mt-1.5 text-muted-foreground text-[10.5px] flex flex-wrap gap-x-4 gap-y-1.5">
+          <div className="mt-1.5 text-muted-foreground text-[10.5px] flex flex-wrap gap-x-4 gap-y-1.5 min-w-0">
             {test.suite && (
-              <span className="font-medium text-foreground/70">
-                Suite: <span className="font-semibold text-foreground/80">{test.suite}</span>
+              <span className="font-medium text-foreground/70 inline-flex items-center gap-1 min-w-0">
+                Suite:&nbsp;
+                <TruncatedTooltip
+                  text={test.suite}
+                  className="font-semibold text-foreground/80 max-w-[160px]"
+                />
               </span>
             )}
             <span>Duration: <span className="font-semibold text-foreground/80">{formatDuration(test.duration)}</span></span>
             {test.retryAttemptCount > 0 && (
               <span className="text-amber-500 dark:text-amber-400 font-semibold bg-amber-500/[0.08] px-1.5 py-0.2 rounded-md">Retry: {test.retryAttemptCount}</span>
             )}
-            {test.projectName && <span>Project: <span className="font-semibold text-foreground/80">{String(test.projectName)}</span></span>}
+            {test.projectName && (
+              <span className="inline-flex items-center gap-1 min-w-0">
+                Project:&nbsp;
+                <TruncatedTooltip
+                  text={String(test.projectName)}
+                  className="font-semibold text-foreground/80 max-w-[120px]"
+                />
+              </span>
+            )}
             {test.testTags?.length ? (
-              <span className="truncate">Tags: <span className="font-semibold text-foreground/80">{test.testTags.join(", ")}</span></span>
+              <span className="inline-flex items-center gap-1 min-w-0">
+                Tags:&nbsp;
+                <TruncatedTooltip
+                  text={test.testTags.join(", ")}
+                  className="font-semibold text-foreground/80 max-w-[160px]"
+                />
+              </span>
             ) : null}
           </div>
         </motion.div>
