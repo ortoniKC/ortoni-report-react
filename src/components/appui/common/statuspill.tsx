@@ -1,6 +1,6 @@
 import type { TestResultItem } from "@/lib/types/OrtoniReportData";
 
-import { AlertCircle, Check, RefreshCw, Clock, XCircle, ChevronRightCircle } from "lucide-react";
+import { AlertCircle, Check, Clock, XCircle, ChevronRightCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function StatusPill({
